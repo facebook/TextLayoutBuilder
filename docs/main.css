@@ -31,8 +31,30 @@ a {
 /**
  * Common classes.
  */
-.wrapper {
-  margin: 0px 120px;
+@media only screen and (min-width: 480px) {
+  .wrapper {
+    margin: 0px 20px;
+  }
+}
+@media only screen and (min-width: 900px) {
+  .wrapper {
+    margin: 0px 40px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .wrapper {
+    margin: 0px 80px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .wrapper {
+    margin: 0px 120px;
+  }
+}
+@media only screen and (min-width: 1500px) {
+  .wrapper {
+    margin: 0px 120px;
+  }
 }
 .spacer {
   flex-grow: 1;
@@ -202,7 +224,7 @@ section h3 {
   color: #6A51B2;
 }
 section ol, section ul {
-  margin: 20px 0px;
+  margin: 20px 0px 0px;
 }
 section ol {
   list-style: decimal none inside;
@@ -212,12 +234,26 @@ section ol {
  */
 .introContainer, .featureContainer {
   display: flex;
-  flex-direction: row;
   margin-top: 20px;
+  flex-direction: column;
+}
+@media only screen and (min-width: 480px) {
+  .introContainer, .featureContainer {
+    flex-direction: column;
+  }
+}
+@media only screen and (min-width: 900px) {
+  .featureContainer {
+    flex-direction: row;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .introContainer {
+    flex-direction: row;
+  }
 }
 .intro {
   flex: 1;
-  margin: 24px;
 }
 .intro ul {
   list-style: circle inside;
@@ -230,12 +266,26 @@ section ol {
   flex: 1;
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
-  margin: 24px;
   padding: 12px 24px;
 }
 .feature p {
   padding: 24px 0px 12px;
   font-style: italic;
+}
+@media only screen and (min-width: 480px) {
+  .intro, .feature {
+    margin: 12px 0px;
+  }
+}
+@media only screen and (min-width: 900px) {
+  .feature {
+    margin: 12px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .intro, .feature {
+    margin: 24px;
+  }
 }
 h4 {
   display: block;
@@ -260,8 +310,19 @@ pre {
 pre.highlight {
   background-color: #fff;
   color: #4c4c4c;
-  padding: 24px;
+  padding: 12px;
+  margin: 0px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+@media only screen and (min-width: 480px) {
+  pre.highlight {
+    padding: 12px;
+  }
+}
+@media only screen and (min-width: 900px) {
+  pre.highlight {
+    padding: 24px;
+  }
 }
 code {
   color: #6A51B2;
