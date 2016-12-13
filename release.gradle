@@ -1,0 +1,5 @@
+// Common Android tasks for all releases that generate Javadocs, sources, etc.
+apply from: rootProject.file('gradle/android-tasks.gradle')
+
+// Upload to Sonatype
+apply from: rootProject.file('release-sonatype.gradle')
