@@ -6,10 +6,10 @@ Build text [Layout](https://developer.android.com/reference/android/text/Layout.
 
 Features
 --------
-- Allows creating text `Layout`s easily.
-- Re-use the same builder to create `Layout`s of similar style.
+- Create text `Layout`s easily.
+- Reuse the same builder to create `Layout`s of similar style.
 - Cache `Layout`s of commonly used strings.
-- Glyph warming to improve performance.
+- Improve performance using glyph warming.
 
 Usage
 -----
