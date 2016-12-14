@@ -306,6 +306,11 @@ pre {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   line-height: 1.5em;
   font-family: Consolas, Monaco, Menlo, monospace;
+  white-space: pre-wrap;       /* CSS 3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 pre.highlight {
   background-color: #fff;
