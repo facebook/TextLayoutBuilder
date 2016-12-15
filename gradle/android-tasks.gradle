@@ -30,6 +30,7 @@ afterEvaluate { project ->
     task androidSourcesJar(type: Jar) {
         classifier = 'sources'
         from android.sourceSets.main.java.srcDirs
+        exclude '**/BUCK'
     }
 
     android.libraryVariants.all { variant ->
@@ -39,6 +40,8 @@ afterEvaluate { project ->
         }
     }
 
-    artifacts.add('archives', androidJavadocJar)
-    artifacts.add('archives', androidSourcesJar)
+    artifacts {
+        archives androidSourcesJar
+        archives androidJavadocJar
+    }
 }
