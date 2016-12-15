@@ -2,7 +2,7 @@ TextLayoutBuilder
 =================
 Build text [Layout](https://developer.android.com/reference/android/text/Layout.html)s easily on Android.
 
-![TextLayoutBuilder logo](https://facebookincubator.github.io/TextLayoutBuilder/logo.png)
+![TextLayoutBuilder logo](./docs/logo.png)
 
 Features
 --------
