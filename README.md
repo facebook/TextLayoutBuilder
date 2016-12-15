@@ -2,14 +2,32 @@ TextLayoutBuilder
 =================
 Build text [Layout](https://developer.android.com/reference/android/text/Layout.html)s easily on Android.
 
-![TextLayoutBuilder logo](https://facebookincubator.github.io/TextLayoutBuilder/logo.png)
+![TextLayoutBuilder logo](./docs/logo.png)
 
 Features
 --------
 - Create text `Layout`s easily.
-- Reuse the same builder to create `Layout`s of similar style.
+- Reuse builders to create similarly styled `Layout`s.
 - Cache `Layout`s of commonly used strings.
 - Improve performance using glyph warming.
+
+Download
+--------
+Grab via Gradle:
+
+```groovy
+compile 'com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0'
+```
+
+or Maven:
+
+```xml
+<dependency>
+  <groupId>com.facebook.fbui.textlayoutbuilder</groupId>
+  <artifactId>textlayoutbuilder</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
 
 Usage
 -----
@@ -76,21 +94,3 @@ Turn this on and pass in a `GlyphWarmer` for the `TextLayoutBuilder`.
       mContext,           // Activity context
       resId);             // style resource id
   ```
-
-Download
---------
-Grab via Gradle:
-
-```groovy
-compile 'com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0'
-```
-
-or Maven:
-
-```xml
-<dependency>
-  <groupId>com.facebook.fbui.textlayoutbuilder</groupId>
-  <artifactId>textlayoutbuilder</artifactId>
-  <version>1.0.0</version>
-</dependency>
-```
