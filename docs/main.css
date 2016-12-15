@@ -18,7 +18,7 @@ ol, ul {
 }
 body {
   color: #4B4F56;
-  font: normal 16px --apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: normal 16px -apple-system, 'BlinkMacSystemFont', 'Roboto', sans-serif;
   text-align: left;
   display: flex;
   flex-direction: column;
