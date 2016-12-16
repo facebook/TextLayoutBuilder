@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+dependencies {
+  compileOnly project(':library:libs:android-text')
+  compileOnly project(':library:libs:android-support-v4-text')
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+jar {
+    baseName = 'staticlayout-proxy'
+    version = '1.0'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+    exclude '**/BUCK'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+apply from: rootProject.file('release-sonatype.gradle')

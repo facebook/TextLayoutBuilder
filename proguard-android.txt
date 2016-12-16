@@ -1,0 +1,7 @@
+# This is a configuration file for ProGuard.
+# For more details about adding this proguard file to your app:
+# https://developer.android.com/studio/projects/android-library.html
+
+# This library uses a non-public Android constructor within StaticLayout.
+# See libs/proxy/src/main/java/com/facebook/fbui/textlayoutbuilder/proxy for details.
+-dontwarn android.text.StaticLayout

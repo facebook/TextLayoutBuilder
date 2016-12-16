@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2016-present, Facebook, Inc.
+    All rights reserved.
+
+    This source code is licensed under the BSD-style license found in the
+    LICENSE file in the root directory of this source tree. An additional grant
+    of patent rights can be found in the PATENTS file in the same directory.
+-->
+
+<resources>
+
+  <!--
+      Text attributes provided as a Style resource
+      used by ResourceTextLayoutHelper to update values
+      in a TextLayoutBuilder
+  -->
+  <declare-styleable name="TextStyle">
+    <attr name="android:textAppearance" />
+    <attr name="android:textColor"/>
+    <attr name="android:textSize"/>
+    <attr name="android:textStyle"/>
+    <attr name="android:shadowColor"/>
+    <attr name="android:shadowDx"/>
+    <attr name="android:shadowDy"/>
+    <attr name="android:shadowRadius"/>
+    <attr name="android:singleLine" />
+    <attr name="android:maxLines" />
+    <attr name="android:ellipsize" />
+  </declare-styleable>
+
+  <!-- TextAppearance used by ResourceTextLayoutHelper -->
+  <declare-styleable name="TextAppearance">
+    <attr name="android:textColor"/>
+    <attr name="android:textSize"/>
+    <attr name="android:textStyle"/>
+    <attr name="android:shadowColor"/>
+    <attr name="android:shadowDx"/>
+    <attr name="android:shadowDy"/>
+    <attr name="android:shadowRadius"/>
+  </declare-styleable>
+
+</resources>

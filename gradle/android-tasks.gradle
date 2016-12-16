@@ -1,0 +1,47 @@
+// Android tasks for Javadoc and sources.jar generation
+
+afterEvaluate { project ->
+    task androidJavadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        exclude '**/pom.xml'
+        exclude '**/proguard_annotations.pro'
+        exclude '**/BUCK'
+        classpath += files(android.bootClasspath)
+        classpath += configurations.compile
+        title = 'TextLayoutBuilder API'
+        options {
+            links 'http://docs.oracle.com/javase/7/docs/api/'
+            linksOffline 'https://developer.android.com/reference/', "file://${android.sdkDirectory}/docs/reference/"
+        }
+    }
+
+    androidJavadoc.doLast {
+        copy {
+            from new File(projectDir, 'src/javadoc/stylesheet.css')
+            into new File(buildDir, 'docs/javadoc/')
+        }
+    }
+
+    task androidJavadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from androidJavadoc.destinationDir
+    }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+        exclude '**/BUCK'
+    }
+
+    android.libraryVariants.all { variant ->
+        def name = variant.name.capitalize()
+        task "jar${name}"(type: Jar, dependsOn: variant.javaCompile) {
+            from variant.javaCompile.destinationDir
+        }
+    }
+
+    artifacts {
+        archives androidSourcesJar
+        archives androidJavadocJar
+    }
+}
