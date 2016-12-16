@@ -9,7 +9,7 @@ Features
 - Create text `Layout`s easily.
 - Reuse builders to create similarly styled `Layout`s.
 - Cache `Layout`s of commonly used strings.
-- Improve performance using glyph warming.
+- Improve performance by warming up the FreeType cache.
 
 Download
 --------
@@ -37,7 +37,7 @@ Usage
   TextLayoutBuilder builder = new TextLayoutBuilder()
       .setTextAppearance(context, resId)
       .setText("TextLayoutBuilder makes life easy")
-      .setWidth(400);
+      .setWidth(400 /*, MEASURE_MODE_EXACTLY */);
   ```
 
 2. Call `build()` on the builder to get a `Layout`:

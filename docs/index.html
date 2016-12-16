@@ -61,7 +61,7 @@
                 <li>Create text layouts easily.</li>
                 <li>Reuse builders to create similarly styled layouts.</li>
                 <li>Cache layouts of commonly used strings.</li>
-                <li>Improve performance with glyph warming.</li>
+                <li>Improve performance with FreeType cache warming.</li>
               </ul>
             </div>
             <div class="intro">
@@ -69,7 +69,7 @@
 Layout layout = new TextLayoutBuilder()
     .setTextAppearance(context, resId)
     .setText("TextLayoutBuilder makes life easy")
-    .setWidth(400)
+    .setWidth(400 /*, MEASURE_MODE_EXACTLY */)
     .build();</pre>
             </div>
           </div>
@@ -99,9 +99,9 @@ Layout layout = new TextLayoutBuilder()
             </div>
             <div class="feature">
               <h4>Glyph Warming</h4>
-              <p>On 4.0+ devices, Android uses a texture cache to warm up the glyphs. By drawing these
+              <p>On 4.0+ devices, TextLayoutBuilder can warm up the FreeType font cache. By drawing these
                 glyphs on a background thread onto a <code>Picture</code>, <code>TextLayoutBuilder</code> warms
-                these glyphs and can help them render at 0ms.</p>
+                these glyphs and can help reduce their render time.</p>
             </div>
           </div>
         </section>

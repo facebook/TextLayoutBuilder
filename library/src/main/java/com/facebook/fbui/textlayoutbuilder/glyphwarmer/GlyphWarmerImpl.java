@@ -25,7 +25,7 @@ import com.facebook.fbui.textlayoutbuilder.util.LayoutMeasureUtil;
 /**
  * Default {@link GlyphWarmer} that runs a {@link HandlerThread}
  * to draw a text {@link Layout} on a {@link Picture}.
- * This helps in warming up the glyph cache in Android 4.0+.
+ * This helps in warming up the FreeType cache in Android 4.0+.
  */
 public class GlyphWarmerImpl implements GlyphWarmer {
 
