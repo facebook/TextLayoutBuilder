@@ -60,7 +60,7 @@ Usage
 
       @Override
       protected void onDraw(Canvas canvas) {
-          super.draw(canvas);
+          super.onDraw(canvas);
 
           // Draw the layout.
           mLayout.draw(canvas);
