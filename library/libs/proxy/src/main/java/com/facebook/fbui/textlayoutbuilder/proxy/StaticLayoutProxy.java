@@ -35,20 +35,42 @@ public class StaticLayoutProxy {
       int ellipsisWidth,
       int maxLines,
       TextDirectionHeuristicCompat textDirection) {
-    return new StaticLayout(
-        text,
-        start,
-        end,
-        paint,
-        width,
-        alignment,
-        fromTextDirectionHeuristicCompat(textDirection),
-        spacingMult,
-        spacingAdd,
-        includePadding,
-        ellipsize,
-        ellipsisWidth,
-        maxLines);
+    try {
+      return new StaticLayout(
+          text,
+          start,
+          end,
+          paint,
+          width,
+          alignment,
+          fromTextDirectionHeuristicCompat(textDirection),
+          spacingMult,
+          spacingAdd,
+          includePadding,
+          ellipsize,
+          ellipsisWidth,
+          maxLines);
+    } catch (IllegalArgumentException e) {
+      // Retry creating the layout if the first attempt failed due to a race condition.
+      // See https://code.google.com/p/android/issues/detail?id=188163
+      if (e.getMessage().contains("utext_close")) {
+        return new StaticLayout(
+            text,
+            start,
+            end,
+            paint,
+            width,
+            alignment,
+            fromTextDirectionHeuristicCompat(textDirection),
+            spacingMult,
+            spacingAdd,
+            includePadding,
+            ellipsize,
+            ellipsisWidth,
+            maxLines);
+      }
+      throw e;
+    }
   }
 
   private static TextDirectionHeuristic fromTextDirectionHeuristicCompat(
