@@ -58,6 +58,14 @@ public class TextLayoutBuilder {
   // Default maxLines.
   public static final int DEFAULT_MAX_LINES = Integer.MAX_VALUE;
 
+  private static final int EMS = 1;
+  private static final int PIXELS = 2;
+
+  private int mMinWidth = 0;
+  private int mMinWidthMode = PIXELS;
+  private int mMaxWidth = Integer.MAX_VALUE;
+  private int mMaxWidthMode = PIXELS;
+
   // Cache for text layouts.
   @VisibleForTesting
   static final LruCache<Integer, Layout> sCache = new LruCache<>(100);
@@ -99,6 +107,10 @@ public class TextLayoutBuilder {
         paint = new ComparableTextPaint(paint);
         mForceNewPaint = false;
       }
+    }
+
+    int getLineHeight() {
+      return Math.round(paint.getFontMetricsInt(null) * spacingMult + spacingAdd);
     }
 
     @Override
@@ -619,6 +631,88 @@ public class TextLayoutBuilder {
   }
 
   /**
+   * Sets the min width expressed in ems (equivalent to setMinEms() in TextView)
+   *
+   * @param minEms min width expressed in ems
+   */
+  public TextLayoutBuilder setMinEms(int minEms) {
+    mMinWidth = minEms;
+    mMinWidthMode = EMS;
+    return this;
+  }
+
+  /**
+   * @return the min width expressed in ems (equivalent to getMinEms() in TextView) or -1
+   * if min width is set in pixels instead by using {@link #setMinWidth(int)}
+   *
+   * @see #setMinEms(int)
+   */
+  public int getMinEms() {
+    return mMinWidthMode == EMS ? mMinWidth : -1;
+  }
+
+  /**
+   * Sets the min width expressed in pixels
+   * @param minWidth
+   */
+  public TextLayoutBuilder setMinWidth(@Px int minWidth) {
+    mMinWidth = minWidth;
+    mMinWidthMode = PIXELS;
+    return this;
+  }
+
+  /**
+   * @return the min width expressed in pixels or -1 if the min width was set in ems instead
+   *
+   * @see #setMinWidth(int)
+   */
+  @Px
+  public int getMinWidth() {
+    return mMinWidthMode == PIXELS ? mMinWidth : -1;
+  }
+
+  /**
+   * Sets the max width expressed in ems (equivalent to setMaxEms() in TextView)
+   *
+   * @param maxEms max width expressed in ems
+   */
+  public TextLayoutBuilder setMaxEms(int maxEms) {
+    mMaxWidth = maxEms;
+    mMaxWidthMode = EMS;
+    return this;
+  }
+
+  /**
+   * @return the max width expressed in ems (equivalent to getMaxEms() in TextView) or -1
+   * if max width is set in pixels instead by using {@link #setMaxWidth(int)}
+   *
+   * @see #setMaxEms(int)
+   */
+  public int getMaxEms() {
+    return mMaxWidthMode == EMS ? mMaxWidth : -1;
+  }
+
+  /**
+   * Sets the max width expressed in pixels
+   * @param maxWidth
+   */
+  public TextLayoutBuilder setMaxWidth(@Px int maxWidth) {
+    mMaxWidth = maxWidth;
+    mMaxWidthMode = PIXELS;
+    return this;
+  }
+
+  /**
+   * @return the max width expressed in pixels or -1 if the max width was set in ems instead
+   *
+   * @see #setMaxWidth(int)
+   */
+  @Px
+  public int getMaxWidth() {
+    return mMaxWidthMode == PIXELS ? mMaxWidth : -1;
+  }
+
+  /**
    * Builds and returns a {@link Layout}.
    *
    * @return A {@link Layout} based on the parameters set
@@ -683,6 +777,19 @@ public class TextLayoutBuilder {
         break;
       default:
         throw new IllegalStateException("Unexpected measure mode " + mParams.measureMode);
+    }
+
+    final int lineHeight = mParams.getLineHeight();
+    if (mMaxWidthMode == EMS) {
+      width = Math.min(width, mMaxWidth * lineHeight);
+    } else {
+      width = Math.min(width, mMaxWidth);
+    }
+
+    if (mMinWidthMode == EMS) {
+      width = Math.max(width, mMinWidth * lineHeight);
+    } else {
+      width = Math.max(width, mMinWidth);
     }
 
     Layout layout;

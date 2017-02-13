@@ -200,6 +200,46 @@ public class TextLayoutBuilderTest {
   }
 
   @Test
+  public void testMinEms() {
+    mBuilder
+        .setText(LONG_TEXT)
+        .setMinEms(10)
+        .build();
+    assertEquals(mBuilder.getMinEms(), 10);
+    assertEquals(mBuilder.getMinWidth(), -1);
+  }
+
+  @Test
+  public void testMaxEms() {
+    mBuilder
+        .setText(LONG_TEXT)
+        .setMaxEms(10)
+        .build();
+    assertEquals(mBuilder.getMaxEms(), 10);
+    assertEquals(mBuilder.getMaxWidth(), -1);
+  }
+
+  @Test
+  public void testMinWidth() {
+    mBuilder
+        .setText(LONG_TEXT)
+        .setMinWidth(100)
+        .build();
+    assertEquals(mBuilder.getMinWidth(), 100);
+    assertEquals(mBuilder.getMinEms(), -1);
+  }
+
+  @Test
+  public void testMaxWidth() {
+    mBuilder
+        .setText(LONG_TEXT)
+        .setMaxWidth(100)
+        .build();
+    assertEquals(mBuilder.getMaxWidth(), 100);
+    assertEquals(mBuilder.getMaxEms(), -1);
+  }
+
+  @Test
   public void testDrawableState() {
     int[] drawableState = {0, 1};
     mLayout = mBuilder.setDrawableState(drawableState).build();
