@@ -631,9 +631,22 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * Sets the min width expressed in ems (equivalent to setMinEms() in TextView)
+   * Returns the min width expressed in ems.
+   *
+   * @return the min width expressed in ems or -1
+   * @see #setMinEms(int)
+   */
+  public int getMinEms() {
+    return mMinWidthMode == EMS ? mMinWidth : -1;
+  }
+
+  /**
+   * Sets the min width expressed in ems.
    *
    * @param minEms min width expressed in ems
+   * @return This {@link TextLayoutBuilder} instance
+   * @see #setMaxEms(int)
+   * @see #setMinWidth(int)
    */
   public TextLayoutBuilder setMinEms(int minEms) {
     mMinWidth = minEms;
@@ -642,28 +655,9 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * @return the min width expressed in ems (equivalent to getMinEms() in TextView) or -1
-   * if min width is set in pixels instead by using {@link #setMinWidth(int)}
+   * Returns the min width expressed in pixels.
    *
-   * @see #setMinEms(int)
-   */
-  public int getMinEms() {
-    return mMinWidthMode == EMS ? mMinWidth : -1;
-  }
-
-  /**
-   * Sets the min width expressed in pixels
-   * @param minWidth
-   */
-  public TextLayoutBuilder setMinWidth(@Px int minWidth) {
-    mMinWidth = minWidth;
-    mMinWidthMode = PIXELS;
-    return this;
-  }
-
-  /**
-   * @return the min width expressed in pixels or -1 if the min width was set in ems instead
-   *
+   * @return the min width expressed in pixels or -1, if the min width was set in ems instead
    * @see #setMinWidth(int)
    */
   @Px
@@ -672,9 +666,36 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * Sets the max width expressed in ems (equivalent to setMaxEms() in TextView)
+   * Sets the min width expressed in pixels.
+   *
+   * @param minWidth min width expressed in pixels.
+   * @return This {@link TextLayoutBuilder} instance
+   * @see #setMaxWidth(int)
+   * @see #setMinEms(int)
+   */
+  public TextLayoutBuilder setMinWidth(@Px int minWidth) {
+    mMinWidth = minWidth;
+    mMinWidthMode = PIXELS;
+    return this;
+  }
+
+  /**
+   * Returns the max width expressed in ems.
+   *
+   * @return the max width expressed in ems or -1, if max width is set in pixels instead
+   * @see #setMaxEms(int)
+   */
+  public int getMaxEms() {
+    return mMaxWidthMode == EMS ? mMaxWidth : -1;
+  }
+
+  /**
+   * Sets the max width expressed in ems.
    *
    * @param maxEms max width expressed in ems
+   * @return This {@link TextLayoutBuilder} instance
+   * @see #setMaxWidth(int)
+   * @see #setMinEms(int)
    */
   public TextLayoutBuilder setMaxEms(int maxEms) {
     mMaxWidth = maxEms;
@@ -683,33 +704,28 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * @return the max width expressed in ems (equivalent to getMaxEms() in TextView) or -1
-   * if max width is set in pixels instead by using {@link #setMaxWidth(int)}
+   * Returns the max width expressed in pixels.
    *
-   * @see #setMaxEms(int)
-   */
-  public int getMaxEms() {
-    return mMaxWidthMode == EMS ? mMaxWidth : -1;
-  }
-
-  /**
-   * Sets the max width expressed in pixels
-   * @param maxWidth
-   */
-  public TextLayoutBuilder setMaxWidth(@Px int maxWidth) {
-    mMaxWidth = maxWidth;
-    mMaxWidthMode = PIXELS;
-    return this;
-  }
-
-  /**
-   * @return the max width expressed in pixels or -1 if the max width was set in ems instead
-   *
+   * @return the max width expressed in pixels or -1, if the max width was set in ems instead
    * @see #setMaxWidth(int)
    */
   @Px
   public int getMaxWidth() {
     return mMaxWidthMode == PIXELS ? mMaxWidth : -1;
+  }
+
+  /**
+   * Sets the max width expressed in pixels.
+   *
+   * @param maxWidth max width expressed in pixels
+   * @return This {@link TextLayoutBuilder} instance
+   * @see #setMaxEms(int)
+   * @see #setMinWidth(int)
+   */
+  public TextLayoutBuilder setMaxWidth(@Px int maxWidth) {
+    mMaxWidth = maxWidth;
+    mMaxWidthMode = PIXELS;
+    return this;
   }
 
   /**
