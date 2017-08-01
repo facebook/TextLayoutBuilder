@@ -9,16 +9,15 @@
 
 package com.facebook.fbui.textlayoutbuilder.util;
 
+import static org.junit.Assert.assertEquals;
+
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Tests {@link LayoutMeasureUtil}

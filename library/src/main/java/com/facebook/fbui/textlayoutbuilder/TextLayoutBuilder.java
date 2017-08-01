@@ -9,7 +9,8 @@
 
 package com.facebook.fbui.textlayoutbuilder;
 
-import java.lang.annotation.Retention;
+import static android.text.Layout.Alignment;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -29,9 +30,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.util.Log;
-
-import static android.text.Layout.Alignment;
-import static java.lang.annotation.RetentionPolicy.SOURCE;
+import java.lang.annotation.Retention;
 
 /**
  * An utility class to create text {@link Layout}s easily.

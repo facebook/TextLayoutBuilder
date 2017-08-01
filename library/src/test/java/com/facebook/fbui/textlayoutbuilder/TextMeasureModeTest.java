@@ -9,20 +9,18 @@
 
 package com.facebook.fbui.textlayoutbuilder;
 
-import android.graphics.Typeface;
-import android.text.Layout;
-
-import com.facebook.fbui.textlayoutbuilder.shadows.ShadowLayout;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 import static com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_AT_MOST;
 import static com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_EXACTLY;
 import static com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_UNSPECIFIED;
 import static org.junit.Assert.assertEquals;
+
+import android.graphics.Typeface;
+import android.text.Layout;
+import com.facebook.fbui.textlayoutbuilder.shadows.ShadowLayout;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 @Config(manifest = Config.NONE, shadows = {ShadowLayout.class})
 @RunWith(RobolectricTestRunner.class)

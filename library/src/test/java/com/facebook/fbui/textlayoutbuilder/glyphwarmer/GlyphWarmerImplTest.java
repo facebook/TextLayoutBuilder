@@ -9,11 +9,12 @@
 
 package com.facebook.fbui.textlayoutbuilder.glyphwarmer;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+
 import android.graphics.Canvas;
 import android.text.Layout;
-
 import com.facebook.fbui.textlayoutbuilder.shadows.ShadowPicture;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,9 +24,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.internal.ShadowExtractor;
 import org.robolectric.shadows.ShadowLooper;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Matchers.any;
 
 /**
  * Tests {@link GlyphWarmerImpl}.

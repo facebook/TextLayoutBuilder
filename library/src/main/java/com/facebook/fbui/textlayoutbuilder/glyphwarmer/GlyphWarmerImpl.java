@@ -18,7 +18,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.VisibleForTesting;
 import android.text.Layout;
-
 import com.facebook.fbui.textlayoutbuilder.GlyphWarmer;
 import com.facebook.fbui.textlayoutbuilder.util.LayoutMeasureUtil;
 

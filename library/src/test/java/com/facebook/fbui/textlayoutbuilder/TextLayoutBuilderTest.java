@@ -9,6 +9,10 @@
 
 package com.facebook.fbui.textlayoutbuilder;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import android.content.res.ColorStateList;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -20,18 +24,12 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
-
 import com.facebook.fbui.textlayoutbuilder.shadows.ShadowPicture;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Tests {@link TextLayoutBuilder}

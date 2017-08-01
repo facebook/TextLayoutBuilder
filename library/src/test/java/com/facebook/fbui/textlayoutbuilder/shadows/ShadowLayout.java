@@ -11,7 +11,6 @@ package com.facebook.fbui.textlayoutbuilder.shadows;
 
 import android.text.Layout;
 import android.text.TextPaint;
-
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 

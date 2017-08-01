@@ -9,15 +9,13 @@
 
 package com.facebook.fbui.textlayoutbuilder;
 
-import java.lang.reflect.Field;
-
 import android.support.v4.text.TextDirectionHeuristicCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
-
 import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy;
+import java.lang.reflect.Field;
 
 /**
  * Helper class to get around the {@link StaticLayout} constructor limitation in ICS.

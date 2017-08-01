@@ -9,16 +9,15 @@
 
 package com.facebook.fbui.textlayoutbuilder.proxy;
 
-import java.lang.CharSequence;
-
 import android.support.v4.text.TextDirectionHeuristicCompat;
 import android.support.v4.text.TextDirectionHeuristicsCompat;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.text.Layout;
-import android.text.TextUtils;
+import android.text.StaticLayout;
 import android.text.TextDirectionHeuristic;
 import android.text.TextDirectionHeuristics;
+import android.text.TextPaint;
+import android.text.TextUtils;
+import java.lang.CharSequence;
 
 public class StaticLayoutProxy {
   public static StaticLayout create(
