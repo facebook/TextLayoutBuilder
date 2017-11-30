@@ -64,18 +64,18 @@ afterEvaluate { project ->
                 artifactId POM_ARTIFACT_ID
                 packaging POM_PACKAGING
                 description POM_DESCRIPTION
-                url 'https://github.com/facebookincubator/TextLayoutBuilder'
+                url 'https://github.com/facebook/TextLayoutBuilder'
 
                 scm {
-                    url 'https://github.com/facebookincubator/TextLayoutBuilder.git'
-                    connection 'scm:git:https://github.com/facebookincubator/TextLayoutBuilder.git'
-                    developerConnection 'scm:git:git@github.com:facebookincubator/TextLayoutBuilder.git'
+                    url 'https://github.com/facebook/TextLayoutBuilder.git'
+                    connection 'scm:git:https://github.com/facebook/TextLayoutBuilder.git'
+                    developerConnection 'scm:git:git@github.com:facebook/TextLayoutBuilder.git'
                 }
 
                 licenses {
                     license {
                         name 'BSD License'
-                        url 'https://github.com/facebookincubator/TextLayoutBuilder/blob/master/LICENSE'
+                        url 'https://github.com/facebook/TextLayoutBuilder/blob/master/LICENSE'
                         distribution 'repo'
                     }
                 }
