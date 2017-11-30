@@ -31,10 +31,11 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-/**
- * Tests {@link TextLayoutBuilder}
- */
-@Config(manifest = Config.NONE, shadows = {ShadowPicture.class})
+/** Tests {@link TextLayoutBuilder} */
+@Config(
+  manifest = Config.NONE,
+  shadows = {ShadowPicture.class}
+)
 @RunWith(RobolectricTestRunner.class)
 public class TextLayoutBuilderTest {
 
@@ -54,7 +55,7 @@ public class TextLayoutBuilderTest {
     mBuilder.setText(TEST);
 
     // Clear the cache.
-    mBuilder.sCache.evictAll();
+    TextLayoutBuilder.sCache.evictAll();
   }
 
   // Test setters.
