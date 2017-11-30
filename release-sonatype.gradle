@@ -16,22 +16,22 @@ def isReleaseBuild() {
 }
 
 def getRepositoryUrl() {
-    return hasProperty('repositoryUrl') ? property('repositoryUrl') : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+    return findProperty('repositoryUrl') ? property('repositoryUrl') : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 }
 
 def getRepositoryUsername() {
-    return hasProperty('repositoryUsername') ? property('repositoryUsername') : ""
+    return findProperty('repositoryUsername') ? property('repositoryUsername') : ""
 }
 
 def getRepositoryPassword() {
-    return hasProperty('repositoryPassword') ? property('repositoryPassword') : ""
+    return findProperty('repositoryPassword') ? property('repositoryPassword') : ""
 }
 
 def getPassword(String passwordName) {
     return new String(System.console().readPassword("\nProvide $passwordName:"))
 }
 
-if (hasProperty('askForPasswords')) {
+if (findProperty('askForPasswords')) {
     ext.'repositoryPassword' = getPassword('repository password');
     ext.'signing.password' = getPassword('signing password');
 }
