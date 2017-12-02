@@ -4,7 +4,7 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 jar {
-    baseName = 'android-support-v4-text'
+    baseName = 'android-graphics'
     version = '1.1'
 }
 

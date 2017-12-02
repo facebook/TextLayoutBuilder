@@ -1,10 +1,14 @@
 apply plugin: 'java'
 
+dependencies {
+    compileOnly project(':library:libs:android-graphics')
+}
+
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 jar {
     baseName = 'android-text'
-    version = '1.0'
+    version = '1.1'
 }
 
