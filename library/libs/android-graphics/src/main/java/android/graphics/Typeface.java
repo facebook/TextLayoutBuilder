@@ -23,10 +23,7 @@
  * limitations under the License
  */
 
-package android.text;
+package android.graphics;
 
-public class TextPaint extends Paint {
-  public TextPaint() {}
-  public TextPaint(int flags) {}
-  public TextPaint(Paint p) {}
-} 
+public class Typeface {
+}

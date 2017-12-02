@@ -25,8 +25,36 @@
 
 package android.text;
 
-public class TextPaint extends Paint {
-  public TextPaint() {}
-  public TextPaint(int flags) {}
-  public TextPaint(Paint p) {}
-} 
+import android.graphics.Typeface;
+
+public class Paint {
+  protected int linkColor;
+  protected int[] drawableState;
+
+  public Paint() {}
+  public Paint(int flags) {}
+  public Paint(Paint p) {}
+
+  public static class FontMetrics {
+  }
+
+  public float getTextSize() {
+    throw new RuntimeException("Stub!");
+  }
+
+  public void setTextSize(float textSize) {
+    // Stub
+  }
+
+  public Typeface getTypeface() {
+    throw new RuntimeException("Stub!");
+  }
+
+  public void setShadowLayer(float radius, float dx, float dy, int shadowColor) {
+    throw new RuntimeException("Stub!");
+  }
+
+  public FontMetrics getFontMetricsInt() {
+    throw new RuntimeException("Stub!");
+  }
+}
