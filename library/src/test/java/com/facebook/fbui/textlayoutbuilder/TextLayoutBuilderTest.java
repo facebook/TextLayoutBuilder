@@ -171,6 +171,32 @@ public class TextLayoutBuilderTest {
   }
 
   @Test
+  public void testSetBreakStrategy() {
+    mLayout = mBuilder.setBreakStrategy(1).build();
+    assertEquals(mBuilder.getBreakStrategy(), 1);
+  }
+
+  @Test
+  public void testSetHyphenationFrequency() {
+    mLayout = mBuilder.setHyphenationFrequency(1).build();
+    assertEquals(mBuilder.getHyphenationFrequency(), 1);
+  }
+
+  @Test
+  public void testSetLeftIndents() {
+    int[] leftIndents = new int[] {0, 1};
+    mLayout = mBuilder.setIndents(leftIndents, null).build();
+    assertEquals(mBuilder.getLeftIndents(), leftIndents);
+  }
+
+  @Test
+  public void testSetRightIndents() {
+    int[] rightIndents = new int[] {0, 1};
+    mLayout = mBuilder.setIndents(null, rightIndents).build();
+    assertEquals(mBuilder.getRightIndents(), rightIndents);
+  }
+
+  @Test
   public void testSetGlyphWarmer() {
     FakeGlyphWarmer glyphWarmer = new FakeGlyphWarmer();
     mLayout = mBuilder.setGlyphWarmer(glyphWarmer).build();

@@ -9,6 +9,7 @@
 
 package com.facebook.fbui.textlayoutbuilder;
 
+import android.os.Build;
 import android.support.v4.text.TextDirectionHeuristicCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -149,6 +150,10 @@ import java.lang.reflect.Field;
    * @param ellipsisWidth The width of the ellipsis
    * @param maxLines The maximum number of lines for this layout
    * @param textDirection The text direction
+   * @param breakStrategy The break strategy
+   * @param hyphenationFrequency The hyphenation frequency
+   * @param leftIndents The array of left indent margins in pixels
+   * @param rightIndents The array of left indent margins in pixels
    * @return A {@link StaticLayout}
    */
   public static StaticLayout make(
@@ -164,7 +169,27 @@ import java.lang.reflect.Field;
       TextUtils.TruncateAt ellipsize,
       int ellipsisWidth,
       int maxLines,
-      TextDirectionHeuristicCompat textDirection) {
+      TextDirectionHeuristicCompat textDirection,
+      int breakStrategy,
+      int hyphenationFrequency,
+      int[] leftIndents,
+      int[] rightIndents) {
+
+    // Use the new Builder on 23+.
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      return StaticLayout.Builder.obtain(text, start, end, paint, width)
+          .setAlignment(alignment)
+          .setLineSpacing(spacingAdd, spacingMult)
+          .setIncludePad(includePadding)
+          .setEllipsize(ellipsize)
+          .setEllipsizedWidth(ellipsisWidth)
+          .setMaxLines(maxLines)
+          .setTextDirection(StaticLayoutProxy.fromTextDirectionHeuristicCompat(textDirection))
+          .setBreakStrategy(breakStrategy)
+          .setHyphenationFrequency(hyphenationFrequency)
+          .setIndents(leftIndents, rightIndents)
+          .build();
+    }
 
     StaticLayout layout = getStaticLayoutMaybeMaxLines(
         text,
