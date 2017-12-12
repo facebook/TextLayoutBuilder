@@ -72,7 +72,7 @@ public class StaticLayoutProxy {
     }
   }
 
-  private static TextDirectionHeuristic fromTextDirectionHeuristicCompat(
+  public static TextDirectionHeuristic fromTextDirectionHeuristicCompat(
       TextDirectionHeuristicCompat textDirection) {
     if (textDirection == TextDirectionHeuristicsCompat.LTR) {
       return TextDirectionHeuristics.LTR;

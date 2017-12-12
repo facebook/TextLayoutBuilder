@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import java.lang.annotation.Retention;
+import java.util.Arrays;
 
 /**
  * An utility class to create text {@link Layout}s easily.
@@ -92,6 +93,11 @@ public class TextLayoutBuilder {
     TextDirectionHeuristicCompat textDirection =
         TextDirectionHeuristicsCompat.FIRSTSTRONG_LTR;
 
+    int breakStrategy = 0;
+    int hyphenationFrequency = 0;
+    int[] leftIndents;
+    int[] rightIndents;
+
     boolean mForceNewPaint = false;
 
     /**
@@ -126,6 +132,11 @@ public class TextLayoutBuilder {
       hashCode = 31 * hashCode + maxLines;
       hashCode = 31 * hashCode + (alignment != null ? alignment.hashCode() : 0);
       hashCode = 31 * hashCode + (textDirection != null ? textDirection.hashCode() : 0);
+      hashCode = 31 * hashCode + breakStrategy;
+      hashCode = 31 * hashCode + hyphenationFrequency;
+      hashCode = 31 * hashCode + breakStrategy;
+      hashCode = 31 * hashCode + Arrays.hashCode(leftIndents);
+      hashCode = 31 * hashCode + Arrays.hashCode(rightIndents);
       hashCode = 31 * hashCode + (text != null ? text.hashCode() : 0);
 
       return hashCode;
@@ -563,6 +574,87 @@ public class TextLayoutBuilder {
   }
 
   /**
+   * Returns the break strategy for this TextLayoutBuilder.
+   *
+   * @return The break strategy for this TextLayoutBuilder
+   */
+  public int getBreakStrategy() {
+    return mParams.breakStrategy;
+  }
+
+  /**
+   * Sets a break strategy breaking paragraphs into lines.
+   *
+   * @param breakStrategy The break strategy for breaking paragraphs into lines
+   * @return This {@link TextLayoutBuilder} instance
+   */
+  public TextLayoutBuilder setBreakStrategy(int breakStrategy) {
+    if (mParams.breakStrategy != breakStrategy) {
+      mParams.breakStrategy = breakStrategy;
+      mSavedLayout = null;
+    }
+    return this;
+  }
+
+  /**
+   * Returns the hyphenation frequency for this TextLayoutBuilder.
+   *
+   * @return The hyphenation frequency for this TextLayoutBuilder
+   */
+  public int getHyphenationFrequency() {
+    return mParams.hyphenationFrequency;
+  }
+
+  /**
+   * Sets the frequency of automatic hyphenation to use when determining word breaks.
+   *
+   * @param hyphenationFrequency The frequency of automatic hyphenation to use for word breaks
+   * @return This {@link TextLayoutBuilder} instance
+   */
+  public TextLayoutBuilder setHyphenationFrequency(int hyphenationFrequency) {
+    if (mParams.hyphenationFrequency != hyphenationFrequency) {
+      mParams.hyphenationFrequency = hyphenationFrequency;
+      mSavedLayout = null;
+    }
+    return this;
+  }
+
+  /**
+   * Returns the left indents set on this TextLayoutBuilder.
+   *
+   * @return The left indents set on this TextLayoutBuilder
+   */
+  public int[] getLeftIndents() {
+    return mParams.leftIndents;
+  }
+
+  /**
+   * Returns the right indents set on this TextLayoutBuilder.
+   *
+   * @return The right indents set on this TextLayoutBuilder
+   */
+  public int[] getRightIndents() {
+    return mParams.rightIndents;
+  }
+
+  /**
+   * Sets the left and right indents for this TextLayoutBuilder.
+   * <p>
+   * The arrays hold an indent amount, one per line, measured in pixels.
+   * For lines past the last element in the array, the last element repeats.
+   *
+   * @param leftIndents The left indents for the paragraph
+   * @param rightIndents The left indents for the paragraph
+   * @return This {@link TextLayoutBuilder} instance
+   */
+  public TextLayoutBuilder setIndents(int[] leftIndents, int[] rightIndents) {
+    mParams.leftIndents = leftIndents;
+    mParams.rightIndents = rightIndents;
+    mSavedLayout = null;
+    return this;
+  }
+
+  /**
    * Returns whether the TextLayoutBuilder should cache the layout.
    *
    * @return Whether the TextLayoutBuilder should cache the layout
@@ -823,20 +915,25 @@ public class TextLayoutBuilder {
     } else {
       while (true) {
         try {
-          layout = StaticLayoutHelper.make(
-              mParams.text,
-              0,
-              mParams.text.length(),
-              mParams.paint,
-              width,
-              mParams.alignment,
-              mParams.spacingMult,
-              mParams.spacingAdd,
-              mParams.includePadding,
-              mParams.ellipsize,
-              width,
-              numLines,
-              mParams.textDirection);
+          layout =
+              StaticLayoutHelper.make(
+                  mParams.text,
+                  0,
+                  mParams.text.length(),
+                  mParams.paint,
+                  width,
+                  mParams.alignment,
+                  mParams.spacingMult,
+                  mParams.spacingAdd,
+                  mParams.includePadding,
+                  mParams.ellipsize,
+                  width,
+                  numLines,
+                  mParams.textDirection,
+                  mParams.breakStrategy,
+                  mParams.hyphenationFrequency,
+                  mParams.leftIndents,
+                  mParams.rightIndents);
         } catch (IndexOutOfBoundsException e) {
           // Workaround for https://code.google.com/p/android/issues/detail?id=35412
           if (!(mParams.text instanceof String)) {
@@ -916,15 +1013,7 @@ public class TextLayoutBuilder {
       hashCode = 31 * hashCode + Float.floatToIntBits(mShadowRadius);
       hashCode = 31 * hashCode + mShadowColor;
       hashCode = 31 * hashCode + linkColor;
-
-      // Array.
-      if (drawableState == null) {
-        hashCode = 31 * hashCode + 0;
-      } else {
-        for (int i = 0; i < drawableState.length; i++) {
-          hashCode = 31 * hashCode + drawableState[i];
-        }
-      }
+      hashCode = 31 * hashCode + Arrays.hashCode(drawableState);
 
       return hashCode;
     }
