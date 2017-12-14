@@ -1,27 +1,31 @@
 buildscript {
+    ext {
+        kotlinVersion = '1.2.10'
+        minSdkVersion = 9
+        targetSdkVersion = 26
+        compileSdkVersion = 26
+        buildToolsVersion = '26.0.2'
+
+        junitVersion = '4.12'
+        mockitoCoreVersion = '1.10.19'
+        robolectricVersion = '3.0'
+        supportLibVersion = '24.2.1'
+    }
+
     repositories {
         jcenter()
         google()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.ext.kotlinVersion"
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        google()
     }
-}
-
-ext {
-    minSdkVersion = 9
-    targetSdkVersion = 26
-    compileSdkVersion = 26
-    buildToolsVersion = '26.0.2'
-
-    junitVersion = '4.12'
-    mockitoCoreVersion = '1.10.19'
-    robolectricVersion = '3.0'
-    supportLibVersion = '24.2.1'
 }
