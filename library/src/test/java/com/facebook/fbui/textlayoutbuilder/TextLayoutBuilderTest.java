@@ -265,6 +265,12 @@ public class TextLayoutBuilderTest {
   }
 
   @Test
+  public void testDensity() {
+    mBuilder.setDensity(1.5f).build();
+    assertEquals(mBuilder.getDensity(), 1.5f, 0.001f);
+  }
+
+  @Test
   public void testDrawableState() {
     int[] drawableState = {0, 1};
     mLayout = mBuilder.setDrawableState(drawableState).build();

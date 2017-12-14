@@ -819,6 +819,26 @@ public class TextLayoutBuilder {
     return this;
   }
 
+  /** @return The density of this layout. If unset, defaults to 1.0 */
+  public float getDensity() {
+    return mParams.paint.density;
+  }
+
+  /**
+   * Sets the density of this layout. This should typically be set to your current display's density
+   *
+   * @param density The density desired
+   * @return This {@link TextLayoutBuilder}
+   */
+  public TextLayoutBuilder setDensity(float density) {
+    if (mParams.paint.density != density) {
+      mParams.createNewPaintIfNeeded();
+      mParams.paint.density = density;
+      mSavedLayout = null;
+    }
+    return this;
+  }
+
   /**
    * Builds and returns a {@link Layout}.
    *
@@ -988,6 +1008,10 @@ public class TextLayoutBuilder {
 
     public ComparableTextPaint(Paint p) {
       super(p);
+      if (p instanceof TextPaint) {
+        // super doesn't copy TextPaint specific attributes
+        set((TextPaint) p);
+      }
     }
 
     @Override
