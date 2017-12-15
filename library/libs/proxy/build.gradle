@@ -10,7 +10,7 @@ targetCompatibility = 1.7
 
 jar {
     baseName = 'staticlayout-proxy'
-    version = '1.2'
+    version = '1.3'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
