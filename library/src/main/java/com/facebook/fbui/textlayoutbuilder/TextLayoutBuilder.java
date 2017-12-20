@@ -75,7 +75,7 @@ public class TextLayoutBuilder {
    */
   @VisibleForTesting
   static class Params {
-    TextPaint paint = new ComparableTextPaint(Paint.ANTI_ALIAS_FLAG);
+    TextPaint paint = new TextLayoutPaint(Paint.ANTI_ALIAS_FLAG);
     int width;
     @MeasureMode int measureMode;
 
@@ -109,7 +109,7 @@ public class TextLayoutBuilder {
       // Hence we create a new paint object,
       // if we ever change one of the paint's properties.
       if (mForceNewPaint) {
-        paint = new ComparableTextPaint(paint);
+        paint = new TextLayoutPaint(paint);
         mForceNewPaint = false;
       }
     }
@@ -985,61 +985,5 @@ public class TextLayoutBuilder {
     }
 
     return layout;
-  }
-
-  /**
-   * A comparable version of {@link TextPaint}.
-   */
-  private static class ComparableTextPaint extends TextPaint {
-
-    private float mShadowDx;
-    private float mShadowDy;
-    private float mShadowRadius;
-    private int mShadowColor;
-
-    public ComparableTextPaint() {
-      super();
-    }
-
-    public ComparableTextPaint(int flags) {
-      super(flags);
-    }
-
-    public ComparableTextPaint(Paint p) {
-      super(p);
-      if (p instanceof TextPaint) {
-        // super doesn't copy TextPaint specific attributes
-        set((TextPaint) p);
-      }
-    }
-
-    @Override
-    public void setShadowLayer(float radius, float dx, float dy, int color) {
-      mShadowRadius = radius;
-      mShadowDx = dx;
-      mShadowDy = dy;
-      mShadowColor = color;
-
-      super.setShadowLayer(radius, dx, dy, color);
-    }
-
-    @Override
-    public int hashCode() {
-      Typeface tf = getTypeface();
-
-      int hashCode = 1;
-      hashCode = 31 * hashCode + getColor();
-      hashCode = 31 * hashCode + Float.floatToIntBits(getTextSize());
-      hashCode = 31 * hashCode + (tf != null ? tf.hashCode() : 0);
-      hashCode = 31 * hashCode + Float.floatToIntBits(mShadowDx);
-      hashCode = 31 * hashCode + Float.floatToIntBits(mShadowDy);
-      hashCode = 31 * hashCode + Float.floatToIntBits(mShadowRadius);
-      hashCode = 31 * hashCode + mShadowColor;
-      hashCode = 31 * hashCode + linkColor;
-      hashCode = 31 * hashCode + Float.floatToIntBits(density);
-      hashCode = 31 * hashCode + Arrays.hashCode(drawableState);
-
-      return hashCode;
-    }
   }
 }
