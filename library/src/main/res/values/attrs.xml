@@ -27,6 +27,8 @@
     <attr name="android:singleLine" />
     <attr name="android:maxLines" />
     <attr name="android:ellipsize" />
+    <attr name="android:breakStrategy" />
+    <attr name="android:hyphenationFrequency" />
   </declare-styleable>
 
   <!-- TextAppearance used by ResourceTextLayoutHelper -->
