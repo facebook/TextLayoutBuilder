@@ -125,6 +125,14 @@ public class ResourceTextLayoutHelper {
         R.styleable.TextStyle_android_maxLines,
         TextLayoutBuilder.DEFAULT_MAX_LINES);
 
+    int breakStrategy = customAttrs.getInt(
+        R.styleable.TextStyle_android_breakStrategy,
+        -1);
+
+    int hyphenationFrequency = customAttrs.getInt(
+        R.styleable.TextStyle_android_hyphenationFrequency,
+        -1);
+
     customAttrs.recycle();
 
     builder.setTextColor(textColor);
@@ -147,6 +155,14 @@ public class ResourceTextLayoutHelper {
 
     builder.setSingleLine(singleLine);
     builder.setMaxLines(maxLines);
+
+    if (breakStrategy > -1) {
+      builder.setBreakStrategy(breakStrategy);
+    }
+
+    if (hyphenationFrequency > -1) {
+      builder.setHyphenationFrequency(hyphenationFrequency);
+    }
   }
 
   /**
