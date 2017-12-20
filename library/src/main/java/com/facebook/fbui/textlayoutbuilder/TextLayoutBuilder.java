@@ -134,7 +134,6 @@ public class TextLayoutBuilder {
       hashCode = 31 * hashCode + (textDirection != null ? textDirection.hashCode() : 0);
       hashCode = 31 * hashCode + breakStrategy;
       hashCode = 31 * hashCode + hyphenationFrequency;
-      hashCode = 31 * hashCode + breakStrategy;
       hashCode = 31 * hashCode + Arrays.hashCode(leftIndents);
       hashCode = 31 * hashCode + Arrays.hashCode(rightIndents);
       hashCode = 31 * hashCode + (text != null ? text.hashCode() : 0);
@@ -1037,6 +1036,7 @@ public class TextLayoutBuilder {
       hashCode = 31 * hashCode + Float.floatToIntBits(mShadowRadius);
       hashCode = 31 * hashCode + mShadowColor;
       hashCode = 31 * hashCode + linkColor;
+      hashCode = 31 * hashCode + Float.floatToIntBits(density);
       hashCode = 31 * hashCode + Arrays.hashCode(drawableState);
 
       return hashCode;
