@@ -1,12 +1,10 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc. All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * <p>This source code is licensed under the BSD-style license found in the LICENSE file in the root
+ * directory of this source tree. An additional grant of patent rights can be found in the PATENTS
+ * file in the same directory.
  */
-
 package com.facebook.fbui.textlayoutbuilder.glyphwarmer;
 
 import android.annotation.SuppressLint;
@@ -22,9 +20,8 @@ import com.facebook.fbui.textlayoutbuilder.GlyphWarmer;
 import com.facebook.fbui.textlayoutbuilder.util.LayoutMeasureUtil;
 
 /**
- * Default {@link GlyphWarmer} that runs a {@link HandlerThread}
- * to draw a text {@link Layout} on a {@link Picture}.
- * This helps in warming up the FreeType cache in Android 4.0+.
+ * Default {@link GlyphWarmer} that runs a {@link HandlerThread} to draw a text {@link Layout} on a
+ * {@link Picture}. This helps in warming up the FreeType cache in Android 4.0+.
  */
 public class GlyphWarmerImpl implements GlyphWarmer {
 
@@ -43,8 +40,8 @@ public class GlyphWarmerImpl implements GlyphWarmer {
   }
 
   @SuppressLint({
-      "BadMethodUse-android.os.HandlerThread._Constructor",
-      "BadMethodUse-java.lang.Thread.start"
+    "BadMethodUse-android.os.HandlerThread._Constructor",
+    "BadMethodUse-java.lang.Thread.start"
   })
   private WarmHandler getWarmHandler() {
     if (sWarmHandler == null) {
@@ -61,9 +58,7 @@ public class GlyphWarmerImpl implements GlyphWarmer {
     return sWarmHandler;
   }
 
-  /**
-   * A handler to send messages to the GlyphWarmerImpl thread.
-   */
+  /** A handler to send messages to the GlyphWarmerImpl thread. */
   private static class WarmHandler extends Handler {
 
     private static final int NO_OP = 1;
@@ -78,9 +73,9 @@ public class GlyphWarmerImpl implements GlyphWarmer {
     public void handleMessage(Message msg) {
       Layout layout = (Layout) msg.obj;
       try {
-        Canvas canvas = mPicture.beginRecording(
-            LayoutMeasureUtil.getWidth(layout),
-            LayoutMeasureUtil.getHeight(layout));
+        Canvas canvas =
+            mPicture.beginRecording(
+                LayoutMeasureUtil.getWidth(layout), LayoutMeasureUtil.getHeight(layout));
         layout.draw(canvas);
         mPicture.endRecording();
       } catch (Exception e) {

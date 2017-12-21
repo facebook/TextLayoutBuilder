@@ -1,12 +1,10 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc. All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * <p>This source code is licensed under the BSD-style license found in the LICENSE file in the root
+ * directory of this source tree. An additional grant of patent rights can be found in the PATENTS
+ * file in the same directory.
  */
-
 package com.facebook.fbui.textlayoutbuilder;
 
 import static android.text.Layout.Alignment;
@@ -35,9 +33,9 @@ import java.util.Arrays;
 
 /**
  * An utility class to create text {@link Layout}s easily.
- * <p>
- * This class uses a Builder pattern to allow re-using the same object
- * to create text {@link Layout}s with similar properties.
+ *
+ * <p>This class uses a Builder pattern to allow re-using the same object to create text {@link
+ * Layout}s with similar properties.
  */
 public class TextLayoutBuilder {
 
@@ -51,6 +49,7 @@ public class TextLayoutBuilder {
   @Retention(SOURCE)
   @IntDef({MEASURE_MODE_UNSPECIFIED, MEASURE_MODE_EXACTLY, MEASURE_MODE_AT_MOST})
   public @interface MeasureMode {}
+
   public static final int MEASURE_MODE_UNSPECIFIED = 0;
   public static final int MEASURE_MODE_EXACTLY = 1;
   public static final int MEASURE_MODE_AT_MOST = 2;
@@ -67,12 +66,9 @@ public class TextLayoutBuilder {
   private int mMaxWidthMode = PIXELS;
 
   // Cache for text layouts.
-  @VisibleForTesting
-  static final LruCache<Integer, Layout> sCache = new LruCache<>(100);
+  @VisibleForTesting static final LruCache<Integer, Layout> sCache = new LruCache<>(100);
 
-  /**
-   * Params for creating the layout.
-   */
+  /** Params for creating the layout. */
   @VisibleForTesting
   static class Params {
     TextPaint paint = new TextLayoutPaint(Paint.ANTI_ALIAS_FLAG);
@@ -90,8 +86,7 @@ public class TextLayoutBuilder {
     boolean singleLine = false;
     int maxLines = DEFAULT_MAX_LINES;
     Alignment alignment = Alignment.ALIGN_NORMAL;
-    TextDirectionHeuristicCompat textDirection =
-        TextDirectionHeuristicsCompat.FIRSTSTRONG_LTR;
+    TextDirectionHeuristicCompat textDirection = TextDirectionHeuristicsCompat.FIRSTSTRONG_LTR;
 
     int breakStrategy = 0;
     int hyphenationFrequency = 0;
@@ -100,9 +95,7 @@ public class TextLayoutBuilder {
 
     boolean mForceNewPaint = false;
 
-    /**
-     * Create a new paint after the builder builds for the first time.
-     */
+    /** Create a new paint after the builder builds for the first time. */
     void createNewPaintIfNeeded() {
       // Once after build() is called, it is not safe to set properties
       // on the paint as we cache the text layouts.
@@ -143,8 +136,7 @@ public class TextLayoutBuilder {
   }
 
   // Params for the builder.
-  @VisibleForTesting
-  final Params mParams = new Params();
+  @VisibleForTesting final Params mParams = new Params();
 
   // Locally cached layout for an instance.
   private Layout mSavedLayout = null;
@@ -166,9 +158,7 @@ public class TextLayoutBuilder {
    * @see #setWidth(int, int)
    */
   public TextLayoutBuilder setWidth(@Px int width) {
-    return setWidth(
-        width,
-        width <= 0 ? MEASURE_MODE_UNSPECIFIED : MEASURE_MODE_EXACTLY);
+    return setWidth(width, width <= 0 ? MEASURE_MODE_UNSPECIFIED : MEASURE_MODE_EXACTLY);
   }
 
   /**
@@ -204,8 +194,8 @@ public class TextLayoutBuilder {
    * @return This {@link TextLayoutBuilder} instance
    */
   public TextLayoutBuilder setText(CharSequence text) {
-    if (text == mParams.text ||
-        (text != null && mParams.text != null && text.equals(mParams.text))) {
+    if (text == mParams.text
+        || (text != null && mParams.text != null && text.equals(mParams.text))) {
       return this;
     }
     mParams.text = text;
@@ -356,10 +346,10 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * Set whether the text Layout includes extra top and bottom padding to make
-   * room for accents that go above the normal ascent and descent.
-   * <p>
-   * The default is true.
+   * Set whether the text Layout includes extra top and bottom padding to make room for accents that
+   * go above the normal ascent and descent.
+   *
+   * <p>The default is true.
    *
    * @param shouldInclude Whether to include font padding or not
    * @return This {@link TextLayoutBuilder} instance
@@ -406,9 +396,9 @@ public class TextLayoutBuilder {
 
   /**
    * Sets the text direction heuristic for the layout.
-   * <p>
-   * TextDirectionHeuristicCompat describes how to evaluate the text
-   * of this Layout to know whether to use RTL or LTR text direction
+   *
+   * <p>TextDirectionHeuristicCompat describes how to evaluate the text of this Layout to know
+   * whether to use RTL or LTR text direction
    *
    * @param textDirection The text direction heuristic for the layout
    * @return This {@link TextLayoutBuilder} instance
@@ -556,8 +546,8 @@ public class TextLayoutBuilder {
 
   /**
    * Sets a maximum number of lines to be shown by the Layout.
-   * <p>
-   * Note: Gingerbread always default to two lines max when ellipsized. This cannot be changed.
+   *
+   * <p>Note: Gingerbread always default to two lines max when ellipsized. This cannot be changed.
    * Use a TextView if you want more control over the number of lines.
    *
    * @param maxLines The number of maxLines to show in this Layout
@@ -638,9 +628,9 @@ public class TextLayoutBuilder {
 
   /**
    * Sets the left and right indents for this TextLayoutBuilder.
-   * <p>
-   * The arrays hold an indent amount, one per line, measured in pixels.
-   * For lines past the last element in the array, the last element repeats.
+   *
+   * <p>The arrays hold an indent amount, one per line, measured in pixels. For lines past the last
+   * element in the array, the last element repeats.
    *
    * @param leftIndents The left indents for the paragraph
    * @param rightIndents The left indents for the paragraph
@@ -664,8 +654,8 @@ public class TextLayoutBuilder {
 
   /**
    * Sets whether the text layout should be cached or not.
-   * <p>
-   * Note: If the Layout contains {@link ClickableSpan}s, the layout will not be cached.
+   *
+   * <p>Note: If the Layout contains {@link ClickableSpan}s, the layout will not be cached.
    *
    * @param shouldCacheLayout True to cache the text layout, false otherwise
    * @return This {@link TextLayoutBuilder} instance
@@ -686,9 +676,9 @@ public class TextLayoutBuilder {
 
   /**
    * Sets whether the text should be warmed or not.
-   * <p>
-   * Note: Setting this true is highly effective for large blurbs of text.
-   * This method has to be called before the draw pass.
+   *
+   * <p>Note: Setting this true is highly effective for large blurbs of text. This method has to be
+   * called before the draw pass.
    *
    * @param shouldWarmText True to warm the text layout, false otherwise
    * @return This {@link TextLayoutBuilder} instance
@@ -857,10 +847,8 @@ public class TextLayoutBuilder {
     int hashCode = -1;
 
     if (mShouldCacheLayout && mParams.text instanceof Spannable) {
-      ClickableSpan[] spans = ((Spannable) mParams.text).getSpans(
-          0,
-          mParams.text.length() - 1,
-          ClickableSpan.class);
+      ClickableSpan[] spans =
+          ((Spannable) mParams.text).getSpans(0, mParams.text.length() - 1, ClickableSpan.class);
       hasClickableSpans = spans.length > 0;
     }
 
@@ -920,17 +908,18 @@ public class TextLayoutBuilder {
 
     Layout layout;
     if (metrics != null) {
-      layout = BoringLayout.make(
-          mParams.text,
-          mParams.paint,
-          width,
-          mParams.alignment,
-          mParams.spacingMult,
-          mParams.spacingAdd,
-          metrics,
-          mParams.includePadding,
-          mParams.ellipsize,
-          width);
+      layout =
+          BoringLayout.make(
+              mParams.text,
+              mParams.paint,
+              width,
+              mParams.alignment,
+              mParams.spacingMult,
+              mParams.spacingAdd,
+              metrics,
+              mParams.includePadding,
+              mParams.ellipsize,
+              width);
     } else {
       while (true) {
         try {

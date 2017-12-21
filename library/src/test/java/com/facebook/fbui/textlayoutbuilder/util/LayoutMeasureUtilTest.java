@@ -1,12 +1,10 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc. All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * <p>This source code is licensed under the BSD-style license found in the LICENSE file in the root
+ * directory of this source tree. An additional grant of patent rights can be found in the PATENTS
+ * file in the same directory.
  */
-
 package com.facebook.fbui.textlayoutbuilder.util;
 
 import static org.junit.Assert.assertEquals;
@@ -19,9 +17,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-/**
- * Tests {@link LayoutMeasureUtil}
- */
+/** Tests {@link LayoutMeasureUtil} */
 @Config(manifest = Config.NONE)
 @RunWith(RobolectricTestRunner.class)
 public class LayoutMeasureUtilTest {
@@ -88,10 +84,7 @@ public class LayoutMeasureUtilTest {
   }
 
   private static class StaticLayoutHelper {
-    public static Layout makeStaticLayout(
-        CharSequence text,
-        float spacingMult,
-        float spacingAdd) {
+    public static Layout makeStaticLayout(CharSequence text, float spacingMult, float spacingAdd) {
       return new StaticLayout(
           text,
           new DummyTextPaint(),

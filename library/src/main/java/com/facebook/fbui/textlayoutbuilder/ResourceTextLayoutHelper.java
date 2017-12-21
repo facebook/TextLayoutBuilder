@@ -1,12 +1,10 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc. All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * <p>This source code is licensed under the BSD-style license found in the LICENSE file in the root
+ * directory of this source tree. An additional grant of patent rights can be found in the PATENTS
+ * file in the same directory.
  */
-
 package com.facebook.fbui.textlayoutbuilder;
 
 import android.content.Context;
@@ -19,9 +17,7 @@ import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-/**
- * An utility class to update a {@link TextLayoutBuilder} from an Android resource.
- */
+/** An utility class to update a {@link TextLayoutBuilder} from an Android resource. */
 public class ResourceTextLayoutHelper {
 
   // Font size in pixels.
@@ -35,9 +31,7 @@ public class ResourceTextLayoutHelper {
    * @param styleRes The style resource identifier
    */
   public static void updateFromStyleResource(
-      TextLayoutBuilder builder,
-      Context context,
-      @StyleRes int styleRes) {
+      TextLayoutBuilder builder, Context context, @StyleRes int styleRes) {
     updateFromStyleResource(builder, context, 0, styleRes);
   }
 
@@ -50,10 +44,7 @@ public class ResourceTextLayoutHelper {
    * @param styleRes The style resource identifier
    */
   public static void updateFromStyleResource(
-      TextLayoutBuilder builder,
-      Context context,
-      @AttrRes int styleAttr,
-      @StyleRes int styleRes) {
+      TextLayoutBuilder builder, Context context, @AttrRes int styleAttr, @StyleRes int styleRes) {
     updateFromStyleResource(builder, context, null, styleAttr, styleRes);
   }
 
@@ -72,66 +63,46 @@ public class ResourceTextLayoutHelper {
       AttributeSet attrs,
       @AttrRes int styleAttr,
       @StyleRes int styleRes) {
-    TypedArray customAttrs = context.obtainStyledAttributes(
-        attrs,
-        R.styleable.TextStyle,
-        styleAttr,
-        styleRes);
+    TypedArray customAttrs =
+        context.obtainStyledAttributes(attrs, R.styleable.TextStyle, styleAttr, styleRes);
 
-    int textAppearanceId = customAttrs.getResourceId(
-        R.styleable.TextStyle_android_textAppearance,
-        -1);
+    int textAppearanceId =
+        customAttrs.getResourceId(R.styleable.TextStyle_android_textAppearance, -1);
 
     if (textAppearanceId > 0) {
       setTextAppearance(builder, context, textAppearanceId);
     }
 
-    ColorStateList textColor = customAttrs.getColorStateList(
-        R.styleable.TextStyle_android_textColor);
+    ColorStateList textColor =
+        customAttrs.getColorStateList(R.styleable.TextStyle_android_textColor);
 
-    int textSize = customAttrs.getDimensionPixelSize(
-        R.styleable.TextStyle_android_textSize,
-        DEFAULT_TEXT_SIZE_PX);
+    int textSize =
+        customAttrs.getDimensionPixelSize(
+            R.styleable.TextStyle_android_textSize, DEFAULT_TEXT_SIZE_PX);
 
-    int shadowColor = customAttrs.getInt(
-        R.styleable.TextStyle_android_shadowColor,
-        Color.TRANSPARENT);
+    int shadowColor =
+        customAttrs.getInt(R.styleable.TextStyle_android_shadowColor, Color.TRANSPARENT);
 
-    float dx = customAttrs.getFloat(
-        R.styleable.TextStyle_android_shadowDx,
-        0.0f);
+    float dx = customAttrs.getFloat(R.styleable.TextStyle_android_shadowDx, 0.0f);
 
-    float dy = customAttrs.getFloat(
-        R.styleable.TextStyle_android_shadowDy,
-        0.0f);
+    float dy = customAttrs.getFloat(R.styleable.TextStyle_android_shadowDy, 0.0f);
 
-    float radius = customAttrs.getFloat(
-        R.styleable.TextStyle_android_shadowRadius,
-        0.0f);
+    float radius = customAttrs.getFloat(R.styleable.TextStyle_android_shadowRadius, 0.0f);
 
-    int textStyle = customAttrs.getInt(
-        R.styleable.TextStyle_android_textStyle,
-        -1);
+    int textStyle = customAttrs.getInt(R.styleable.TextStyle_android_textStyle, -1);
 
-    int ellipsize = customAttrs.getInt(
-        R.styleable.TextStyle_android_ellipsize,
-        0);
+    int ellipsize = customAttrs.getInt(R.styleable.TextStyle_android_ellipsize, 0);
 
-    boolean singleLine = customAttrs.getBoolean(
-        R.styleable.TextStyle_android_singleLine,
-        false);
+    boolean singleLine = customAttrs.getBoolean(R.styleable.TextStyle_android_singleLine, false);
 
-    int maxLines = customAttrs.getInt(
-        R.styleable.TextStyle_android_maxLines,
-        TextLayoutBuilder.DEFAULT_MAX_LINES);
+    int maxLines =
+        customAttrs.getInt(
+            R.styleable.TextStyle_android_maxLines, TextLayoutBuilder.DEFAULT_MAX_LINES);
 
-    int breakStrategy = customAttrs.getInt(
-        R.styleable.TextStyle_android_breakStrategy,
-        -1);
+    int breakStrategy = customAttrs.getInt(R.styleable.TextStyle_android_breakStrategy, -1);
 
-    int hyphenationFrequency = customAttrs.getInt(
-        R.styleable.TextStyle_android_hyphenationFrequency,
-        -1);
+    int hyphenationFrequency =
+        customAttrs.getInt(R.styleable.TextStyle_android_hyphenationFrequency, -1);
 
     customAttrs.recycle();
 
@@ -173,43 +144,29 @@ public class ResourceTextLayoutHelper {
    * @param resId The resource identifier of the text appearance
    */
   public static void setTextAppearance(
-      TextLayoutBuilder builder,
-      Context context,
-      @StyleRes int resId) {
-    TypedArray customAttrs = context.obtainStyledAttributes(
-        resId,
-        R.styleable.TextAppearance);
+      TextLayoutBuilder builder, Context context, @StyleRes int resId) {
+    TypedArray customAttrs = context.obtainStyledAttributes(resId, R.styleable.TextAppearance);
 
-    ColorStateList textColor = customAttrs.getColorStateList(
-        R.styleable.TextAppearance_android_textColor);
+    ColorStateList textColor =
+        customAttrs.getColorStateList(R.styleable.TextAppearance_android_textColor);
 
-    int textSize = customAttrs.getDimensionPixelSize(
-        R.styleable.TextAppearance_android_textSize,
-        0);
+    int textSize =
+        customAttrs.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, 0);
 
-    int shadowColor = customAttrs.getInt(
-        R.styleable.TextAppearance_android_shadowColor,
-        Color.TRANSPARENT);
+    int shadowColor =
+        customAttrs.getInt(R.styleable.TextAppearance_android_shadowColor, Color.TRANSPARENT);
 
     if (shadowColor != Color.TRANSPARENT) {
-      float dx = customAttrs.getFloat(
-          R.styleable.TextAppearance_android_shadowDx,
-          0.0f);
+      float dx = customAttrs.getFloat(R.styleable.TextAppearance_android_shadowDx, 0.0f);
 
-      float dy = customAttrs.getFloat(
-          R.styleable.TextAppearance_android_shadowDy,
-          0.0f);
+      float dy = customAttrs.getFloat(R.styleable.TextAppearance_android_shadowDy, 0.0f);
 
-      float radius = customAttrs.getFloat(
-          R.styleable.TextAppearance_android_shadowRadius,
-          0.0f);
+      float radius = customAttrs.getFloat(R.styleable.TextAppearance_android_shadowRadius, 0.0f);
 
       builder.setShadowLayer(radius, dx, dy, shadowColor);
     }
 
-    int textStyle = customAttrs.getInt(
-        R.styleable.TextAppearance_android_textStyle,
-        -1);
+    int textStyle = customAttrs.getInt(R.styleable.TextAppearance_android_textStyle, -1);
 
     customAttrs.recycle();
 

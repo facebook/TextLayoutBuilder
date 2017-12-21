@@ -1,12 +1,10 @@
 /**
- * Copyright (c) 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc. All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * <p>This source code is licensed under the BSD-style license found in the LICENSE file in the root
+ * directory of this source tree. An additional grant of patent rights can be found in the PATENTS
+ * file in the same directory.
  */
-
 package com.facebook.fbui.textlayoutbuilder;
 
 import android.os.Build;
@@ -18,9 +16,7 @@ import android.text.TextUtils;
 import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy;
 import java.lang.reflect.Field;
 
-/**
- * Helper class to get around the {@link StaticLayout} constructor limitation in ICS.
- */
+/** Helper class to get around the {@link StaticLayout} constructor limitation in ICS. */
 /* package */ class StaticLayoutHelper {
 
   // Space and ellipsis to append at the end of a string to ellipsize it
@@ -191,20 +187,21 @@ import java.lang.reflect.Field;
           .build();
     }
 
-    StaticLayout layout = getStaticLayoutMaybeMaxLines(
-        text,
-        start,
-        end,
-        paint,
-        width,
-        alignment,
-        spacingMult,
-        spacingAdd,
-        includePadding,
-        ellipsize,
-        ellipsisWidth,
-        maxLines,
-        textDirection);
+    StaticLayout layout =
+        getStaticLayoutMaybeMaxLines(
+            text,
+            start,
+            end,
+            paint,
+            width,
+            alignment,
+            spacingMult,
+            spacingAdd,
+            includePadding,
+            ellipsize,
+            ellipsisWidth,
+            maxLines,
+            textDirection);
 
     // Returned layout may not have correct line count (either because it is not supported
     // pre-ICS, or because there is a bug in Android pre-Lollipop that causes the text to span
@@ -230,38 +227,39 @@ import java.lang.reflect.Field;
 
         end = newEnd;
 
-        layout = getStaticLayoutMaybeMaxLines(
-            text,
-            start,
-            end,
-            paint,
-            width,
-            alignment,
-            spacingMult,
-            spacingAdd,
-            includePadding,
-            ellipsize,
-            ellipsisWidth,
-            maxLines,
-            textDirection);
+        layout =
+            getStaticLayoutMaybeMaxLines(
+                text,
+                start,
+                end,
+                paint,
+                width,
+                alignment,
+                spacingMult,
+                spacingAdd,
+                includePadding,
+                ellipsize,
+                ellipsisWidth,
+                maxLines,
+                textDirection);
 
-        if (layout.getLineCount() >= maxLines &&
-            layout.getEllipsisCount(maxLines - 1) == 0) {
+        if (layout.getLineCount() >= maxLines && layout.getEllipsisCount(maxLines - 1) == 0) {
           CharSequence ellipsizedText = text.subSequence(start, end) + SPACE_AND_ELLIPSIS;
-          layout = getStaticLayoutMaybeMaxLines(
-              ellipsizedText,
-              0,
-              ellipsizedText.length(),
-              paint,
-              width,
-              alignment,
-              spacingMult,
-              spacingAdd,
-              includePadding,
-              ellipsize,
-              ellipsisWidth,
-              maxLines,
-              textDirection);
+          layout =
+              getStaticLayoutMaybeMaxLines(
+                  ellipsizedText,
+                  0,
+                  ellipsizedText.length(),
+                  paint,
+                  width,
+                  alignment,
+                  spacingMult,
+                  spacingAdd,
+                  includePadding,
+                  ellipsize,
+                  ellipsisWidth,
+                  maxLines,
+                  textDirection);
         }
       }
     }
@@ -274,8 +272,8 @@ import java.lang.reflect.Field;
   }
 
   /**
-   * Attempts to fix a StaticLayout with wrong layout information
-   * that can result in StringIndexOutOfBoundsException during layout.draw().
+   * Attempts to fix a StaticLayout with wrong layout information that can result in
+   * StringIndexOutOfBoundsException during layout.draw().
    *
    * @param layout The {@link StaticLayout} to fix
    * @return Whether the layout was fixed or not
