@@ -9,6 +9,7 @@ buildscript {
         junitVersion = '4.12'
         mockitoCoreVersion = '1.10.19'
         robolectricVersion = '3.0'
+        espressoVersion = '3.0.1'
         supportLibVersion = '24.2.1'
     }
 
@@ -18,8 +19,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath "com.android.tools.build:gradle:3.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.ext.kotlinVersion"
+        classpath "com.facebook.testing.screenshot:plugin:0.5.0"
     }
 }
 

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.facebook.testing.screenshot'
+apply plugin: 'kotlin-android'
 
 dependencies {
   implementation project(':library:libs:proxy')
@@ -14,6 +16,9 @@ dependencies {
       exclude group: 'org.apache.httpcomponents', module: 'httpclient'
   }
 
+  androidTestImplementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.ext.kotlinVersion"
+  androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+  androidTestImplementation "com.android.support:support-compat:${rootProject.ext.supportLibVersion}"
   androidTestImplementation "junit:junit:${rootProject.ext.junitVersion}"
 }
 
@@ -24,6 +29,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 }
 
