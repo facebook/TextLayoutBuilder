@@ -51,8 +51,7 @@ to do this as soon as possible for all commits.
 ## Coding Style  
 * 2 spaces for indentation rather than tabs
 * 100 character line length
-* Although officially archived, we still follow the practice of Oracle's 
-[Coding Conventions for the Java Programming Language](http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html).
+* Everything else mentioned in [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 
 ## License
 By contributing to TextLayoutBuilder, you agree that your contributions will be licensed
