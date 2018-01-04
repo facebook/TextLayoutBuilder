@@ -19,5 +19,5 @@ public interface GlyphWarmer {
    *
    * @param layout The layout
    */
-  public void warmLayout(Layout layout);
+  void warmLayout(Layout layout);
 }

@@ -65,7 +65,7 @@ public class GlyphWarmerImpl implements GlyphWarmer {
 
     private final Picture mPicture = new Picture();
 
-    public WarmHandler(Looper looper) {
+    WarmHandler(Looper looper) {
       super(looper);
     }
 
