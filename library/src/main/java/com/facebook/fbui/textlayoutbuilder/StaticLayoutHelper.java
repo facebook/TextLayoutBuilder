@@ -19,6 +19,9 @@ import java.lang.reflect.Field;
 /** Helper class to get around the {@link StaticLayout} constructor limitation in ICS. */
 /* package */ class StaticLayoutHelper {
 
+  // Hardcoding this as a constant to enable building against older APIs.
+  private static final int ANDROID_O = 26;
+
   // Space and ellipsis to append at the end of a string to ellipsize it
   private static final String SPACE_AND_ELLIPSIS = " \u2026";
 
@@ -171,8 +174,9 @@ import java.lang.reflect.Field;
       int[] leftIndents,
       int[] rightIndents) {
 
-    // Use the new Builder on 23+.
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    // We would like to use the new Builder on 23+, but some obscure texts have a bug on M. Fall
+    // back to old paths for now.
+    if (Build.VERSION.SDK_INT >= ANDROID_O) {
       return StaticLayout.Builder.obtain(text, start, end, paint, width)
           .setAlignment(alignment)
           .setLineSpacing(spacingAdd, spacingMult)
