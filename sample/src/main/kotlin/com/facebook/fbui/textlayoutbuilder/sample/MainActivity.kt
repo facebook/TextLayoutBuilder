@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private fun addSample(block: () -> Layout) {
-    val layout = block()
+  private fun addSample(block: () -> Layout?) {
+    val layout = block() ?: return
     parent.addView(SampleView(this, layout).apply {
       layoutParams = LinearLayout.LayoutParams(layout.width, layout.height)
     })

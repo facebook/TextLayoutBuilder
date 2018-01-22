@@ -16,6 +16,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.support.annotation.Px;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.text.TextDirectionHeuristicCompat;
@@ -853,8 +854,9 @@ public class TextLayoutBuilder {
   /**
    * Builds and returns a {@link Layout}.
    *
-   * @return A {@link Layout} based on the parameters set
+   * @return A {@link Layout} based on the parameters set or null if no text was specified
    */
+  @Nullable
   public Layout build() {
     // Return the cached layout if no property changed.
     if (mShouldCacheLayout && mSavedLayout != null) {
