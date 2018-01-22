@@ -32,8 +32,8 @@ or, if using Maven:
 1. Set the properties on the `TextLayoutBuilder`:
   ```java
   TextLayoutBuilder builder = new TextLayoutBuilder()
-      .setTextAppearance(context, resId)
       .setText("TextLayoutBuilder makes life easy")
+      .setTextColor(Color.BLUE)
       .setWidth(400 /*, MEASURE_MODE_EXACTLY */);
   ```
 
@@ -45,14 +45,14 @@ or, if using Maven:
 3. Use the `Layout` in your code:
   ```java
   public class CustomView extends View {
-      private Layout mLayout;
+      private Layout layout;
 
-      public CustomView(Context context, AttributeSet attrs) {
-          super(context, attrs);
+      public CustomView(Context context) {
+          super(context);
       }
 
       public void setLayout(Layout layout) {
-          mLayout = layout;
+          this.layout = layout;
       }
 
       @Override
@@ -60,7 +60,7 @@ or, if using Maven:
           super.onDraw(canvas);
 
           // Draw the layout.
-          mLayout.draw(canvas);
+          layout.draw(canvas);
       }
   }
   ```
@@ -68,13 +68,13 @@ or, if using Maven:
 ## Additional Usage
 1. Cache the layouts for commonly used strings by turning on caching in the `TextLayoutBuilder`.
   ```java
-  mTextLayoutBuilder.setShouldCacheLayout(true);
+  textLayoutBuilder.setShouldCacheLayout(true);
   ```
 
 2. Glyph warming provides significant performance boost for large blurbs of text.
 Turn this on and pass in a `GlyphWarmer` for the `TextLayoutBuilder`.
   ```java
-  mTextLayoutBuilder
+  textLayoutBuilder
       .setShouldWarmText(true)
       .setGlyphWarmer(new GlyphWarmerImpl());
   ```
@@ -82,9 +82,9 @@ Turn this on and pass in a `GlyphWarmer` for the `TextLayoutBuilder`.
 3. Import a style defined in XML into a `TextLayoutBuilder` object.
   ```java
   ResourceTextLayoutHelper.updateFromStyleResource(
-      mTextLayoutBuilder, // builder object
-      mContext,           // Activity context
-      resId);             // style resource id
+      textLayoutBuilder, // builder object
+      context,           // Activity context
+      resId);            // style resource id
   ```
 
 ## License
