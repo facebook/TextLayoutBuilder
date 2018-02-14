@@ -14,6 +14,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -893,7 +894,17 @@ public class TextLayoutBuilder {
 
     // Try creating a boring layout only if singleLine is requested.
     if (numLines == 1) {
-      metrics = BoringLayout.isBoring(mParams.text, mParams.paint);
+      try {
+        metrics = BoringLayout.isBoring(mParams.text, mParams.paint);
+      } catch (NullPointerException e) {
+        // On older Samsung devices (< M), we sometimes run into a NPE here where a FontMetricsInt
+        // object created within BoringLayout is not properly null-checked within TextLine.
+        // Its ok to ignore this exception since we'll create a regular StaticLayout later.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+          // If we see this on M or above, then its something else.
+          throw e;
+        }
+      }
     }
 
     // getDesiredWidth here is used to ensure we layout text at the same size which it is measured.
