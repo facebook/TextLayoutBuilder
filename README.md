@@ -89,5 +89,4 @@ Turn this on and pass in a `GlyphWarmer` for the `TextLayoutBuilder`.
 
 ## License
 
-TextLayoutBuilder is BSD-licensed. We also provide an
-additional patent grant.
+TextLayoutBuilder is Apache-2-licensed.
