@@ -371,8 +371,9 @@ public class TextLayoutBuilder {
      * @return The text letter-space value in ems.
      * @see #setLetterSpacing(float)
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public float getLetterSpacing() {
-        return mParams.letterSpacing;
+        return mParams.paint.getLetterSpacing();
     }
 
     /**
@@ -384,7 +385,7 @@ public class TextLayoutBuilder {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public TextLayoutBuilder setLetterSpacing(float letterSpacing) {
-        if (mParams.paint.getLetterSpacing() != letterSpacing) {
+        if (getLetterSpacing() != letterSpacing) {
             mParams.createNewPaintIfNeeded();
             mParams.paint.setLetterSpacing(letterSpacing);
             mSavedLayout = null;
