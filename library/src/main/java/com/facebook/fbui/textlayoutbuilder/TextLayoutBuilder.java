@@ -363,6 +363,34 @@ public class TextLayoutBuilder {
     }
     return this;
   }
+  
+  /**
+     * Gets the text letter-space value, which determines the spacing between characters.
+     * The value returned is in ems. Normally, this value is 0.0.
+     *
+     * @return The text letter-space value in ems.
+     * @see #setLetterSpacing(float)
+     */
+    public float getLetterSpacing() {
+        return mParams.letterSpacing;
+    }
+
+    /**
+     * Sets text letter-spacing in em units.  Typical values
+     * for slight expansion will be around 0.05.  Negative values tighten text.
+     *
+     * @param letterSpacing A text letter-space value in ems.
+     * @see #getLetterSpacing()
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public TextLayoutBuilder setLetterSpacing(float letterSpacing) {
+        if (mParams.paint.getLetterSpacing() != letterSpacing) {
+            mParams.createNewPaintIfNeeded();
+            mParams.paint.setLetterSpacing(letterSpacing);
+            mSavedLayout = null;
+        }
+        return this;
+    }
 
   /**
    * Returns whether this TextLayoutBuilder should include font padding.
