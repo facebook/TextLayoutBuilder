@@ -27,6 +27,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.annotation.Px;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.text.TextDirectionHeuristicCompat;
 import android.support.v4.text.TextDirectionHeuristicsCompat;
@@ -359,6 +360,35 @@ public class TextLayoutBuilder {
   public TextLayoutBuilder setTextSpacingMultiplier(float spacingMultiplier) {
     if (mParams.spacingMult != spacingMultiplier) {
       mParams.spacingMult = spacingMultiplier;
+      mSavedLayout = null;
+    }
+    return this;
+  }
+
+  /**
+   * Gets the text letter-space value, which determines the spacing between characters. The value
+   * returned is in ems. Normally, this value is 0.0.
+   *
+   * @return The text letter-space value in ems.
+   * @see #setLetterSpacing(float)
+   */
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+  public float getLetterSpacing() {
+    return mParams.paint.getLetterSpacing();
+  }
+
+  /**
+   * Sets text letter-spacing in em units. Typical values for slight expansion will be around 0.05.
+   * Negative values tighten text.
+   *
+   * @param letterSpacing A text letter-space value in ems.
+   * @see #getLetterSpacing()
+   */
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+  public TextLayoutBuilder setLetterSpacing(float letterSpacing) {
+    if (getLetterSpacing() != letterSpacing) {
+      mParams.createNewPaintIfNeeded();
+      mParams.paint.setLetterSpacing(letterSpacing);
       mSavedLayout = null;
     }
     return this;
