@@ -179,6 +179,7 @@ import java.lang.reflect.Field;
       TextDirectionHeuristicCompat textDirection,
       int breakStrategy,
       int hyphenationFrequency,
+      int justificationMode,
       int[] leftIndents,
       int[] rightIndents) {
 
@@ -195,6 +196,7 @@ import java.lang.reflect.Field;
           .setTextDirection(StaticLayoutProxy.fromTextDirectionHeuristicCompat(textDirection))
           .setBreakStrategy(breakStrategy)
           .setHyphenationFrequency(hyphenationFrequency)
+          .setJustificationMode(justificationMode)
           .setIndents(leftIndents, rightIndents)
           .build();
     }

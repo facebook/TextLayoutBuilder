@@ -189,6 +189,12 @@ public class TextLayoutBuilderTest {
   }
 
   @Test
+  public void testSetJustificationMode() {
+    mLayout = mBuilder.setJustificationMode(1).build();
+    assertEquals(mBuilder.getJustificationMode(), 1);
+  }
+
+  @Test
   public void testSetLeftIndents() {
     int[] leftIndents = new int[] {0, 1};
     mLayout = mBuilder.setIndents(leftIndents, null).build();

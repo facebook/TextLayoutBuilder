@@ -105,6 +105,7 @@ public class TextLayoutBuilder {
 
     int breakStrategy = 0;
     int hyphenationFrequency = 0;
+    int justificationMode = 0; // JUSTIFICATION_MODE_NONE
     int[] leftIndents;
     int[] rightIndents;
 
@@ -890,6 +891,30 @@ public class TextLayoutBuilder {
     return this;
   }
 
+  /** @return The justification mode of this layout. */
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  public int getJustificationMode() {
+    return mParams.justificationMode;
+  }
+
+  /**
+   * Set justification mode. The default value is JUSTIFICATION_MODE_NONE. If the last line is
+   * too short for justification, the last line will be displayed with the alignment
+   *
+   * @param justificationMode The justification mode to use
+   * @return This {@link TextLayoutBuilder} instance
+   */
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  public TextLayoutBuilder setJustificationMode(int justificationMode) {
+    if (mParams.justificationMode != justificationMode) {
+      mParams.justificationMode = justificationMode;
+      if (Build.VERSION.SDK_INT < 26) {
+        mSavedLayout = null;
+      }
+    }
+    return this;
+  }
+
   /**
    * Builds and returns a {@link Layout}.
    *
@@ -1013,6 +1038,7 @@ public class TextLayoutBuilder {
                   mParams.textDirection,
                   mParams.breakStrategy,
                   mParams.hyphenationFrequency,
+                  mParams.justificationMode,
                   mParams.leftIndents,
                   mParams.rightIndents);
         } catch (IndexOutOfBoundsException e) {
