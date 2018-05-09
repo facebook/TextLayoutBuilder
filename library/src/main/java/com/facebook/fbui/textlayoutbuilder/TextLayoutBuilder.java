@@ -666,7 +666,9 @@ public class TextLayoutBuilder {
   public TextLayoutBuilder setHyphenationFrequency(int hyphenationFrequency) {
     if (mParams.hyphenationFrequency != hyphenationFrequency) {
       mParams.hyphenationFrequency = hyphenationFrequency;
-      mSavedLayout = null;
+      if (Build.VERSION.SDK_INT >= 23) {
+        mSavedLayout = null;
+      }
     }
     return this;
   }
