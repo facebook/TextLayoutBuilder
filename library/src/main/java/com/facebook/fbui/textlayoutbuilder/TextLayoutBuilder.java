@@ -910,7 +910,7 @@ public class TextLayoutBuilder {
   public TextLayoutBuilder setJustificationMode(int justificationMode) {
     if (mParams.justificationMode != justificationMode) {
       mParams.justificationMode = justificationMode;
-      if (Build.VERSION.SDK_INT < 26) {
+      if (Build.VERSION.SDK_INT >= 26) {
         mSavedLayout = null;
       }
     }
