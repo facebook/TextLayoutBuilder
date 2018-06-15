@@ -122,6 +122,16 @@ public class TextLayoutBuilderTest {
   }
 
   @Test
+  public void testSetTextLineHeight() {
+    final float lineHeight = 15f;
+    mLayout = mBuilder.setLineHeight(lineHeight).build();
+    assertEquals(mBuilder.getLineHeight(), 15f, 0.0f);
+    assertEquals(mLayout.getSpacingMultiplier(), 1.0f, 0.0f);
+    assertEquals(
+        mLayout.getSpacingAdd(), lineHeight - mLayout.getPaint().getFontMetrics(null), 0.0f);
+  }
+
+  @Test
   public void testSetIncludeFontPadding() {
     mLayout = mBuilder.setIncludeFontPadding(false).build();
     assertEquals(mBuilder.getIncludeFontPadding(), false);

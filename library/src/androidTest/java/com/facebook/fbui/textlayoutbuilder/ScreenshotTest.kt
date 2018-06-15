@@ -113,6 +113,23 @@ class ScreenshotTest {
     Screenshot.snap(view).record()
   }
 
+  @Test
+  fun testLineHeight() {
+    val context = InstrumentationRegistry.getTargetContext()
+    val layout = TextLayoutBuilder()
+        .setText(paragraph)
+        .setTextSize(dp(12f))
+        .setTextLineHeight(dp(20f))
+        .build()
+    val view = TestView(context, layout)
+
+    ViewHelpers.setupView(view)
+        .setExactWidthPx(layout.width)
+        .setExactHeightPx(layout.height)
+        .layout()
+    Screenshot.snap(view).record()
+  }
+
   private fun dp(value: Float): Int {
     return (value * DENSITY + 0.5f).toInt()
   }

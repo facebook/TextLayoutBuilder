@@ -68,6 +68,10 @@ public class TextLayoutBuilder {
   // Default maxLines.
   public static final int DEFAULT_MAX_LINES = Integer.MAX_VALUE;
 
+  private static final float DEFAULT_SPACING_ADD = 0.0f;
+  private static final float DEFAULT_SPACING_MULT = 1.0f;
+  private static final float DEFAULT_LINE_HEIGHT = Float.MAX_VALUE;
+
   private static final int EMS = 1;
   private static final int PIXELS = 2;
 
@@ -93,8 +97,9 @@ public class TextLayoutBuilder {
     CharSequence text;
     ColorStateList color;
 
-    float spacingMult = 1.0f;
-    float spacingAdd = 0.0f;
+    float spacingMult = DEFAULT_SPACING_MULT;
+    float spacingAdd = DEFAULT_SPACING_ADD;
+    float lineHeight = DEFAULT_LINE_HEIGHT;
     boolean includePadding = true;
 
     TextUtils.TruncateAt ellipsize = null;
@@ -149,6 +154,7 @@ public class TextLayoutBuilder {
       hashCode = 31 * hashCode + measureMode;
       hashCode = 31 * hashCode + Float.floatToIntBits(spacingMult);
       hashCode = 31 * hashCode + Float.floatToIntBits(spacingAdd);
+      hashCode = 31 * hashCode + Float.floatToIntBits(lineHeight);
       hashCode = 31 * hashCode + (includePadding ? 1 : 0);
       hashCode = 31 * hashCode + (ellipsize != null ? ellipsize.hashCode() : 0);
       hashCode = 31 * hashCode + (singleLine ? 1 : 0);
@@ -330,13 +336,14 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * Sets the text extra spacing for the layout.
+   * Sets the text extra spacing for the layout. Extra spacing will be ignored if {@link
+   * TextLayoutBuilder#setLineHeight(float)} was used to set an explicit line height.
    *
    * @param spacingExtra the extra space that is added to the height of each line
    * @return This {@link TextLayoutBuilder} instance
    */
   public TextLayoutBuilder setTextSpacingExtra(float spacingExtra) {
-    if (mParams.spacingAdd != spacingExtra) {
+    if (mParams.lineHeight == DEFAULT_LINE_HEIGHT && mParams.spacingAdd != spacingExtra) {
       mParams.spacingAdd = spacingExtra;
       mSavedLayout = null;
     }
@@ -353,14 +360,45 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * Sets the line spacing multiplier for the layout.
+   * Sets the line spacing multiplier for the layout. Line spacing multiplier will be ignored if
+   * {@link TextLayoutBuilder#setLineHeight(float)} was used to set an explicit line height.
    *
    * @param spacingMultiplier the value by which each line's height is multiplied
    * @return This {@link TextLayoutBuilder} instance
    */
   public TextLayoutBuilder setTextSpacingMultiplier(float spacingMultiplier) {
-    if (mParams.spacingMult != spacingMultiplier) {
+    if (mParams.lineHeight == DEFAULT_LINE_HEIGHT && mParams.spacingMult != spacingMultiplier) {
       mParams.spacingMult = spacingMultiplier;
+      mSavedLayout = null;
+    }
+    return this;
+  }
+
+  /**
+   * Returns the line height for this TextLayoutBuilder.
+   *
+   * @return The line height used by this TextLayoutBuilder
+   */
+  public float getLineHeight() {
+    return mParams.getLineHeight();
+  }
+
+  /**
+   * Sets the line height for this layout.
+   *
+   * <p>This mimics the behavior of
+   * https://developer.android.com/reference/android/widget/TextView.html#setLineHeight(int) and
+   * should not be used with {@link TextLayoutBuilder#setTextSpacingExtra(float)} or {@link
+   * TextLayoutBuilder#setTextSpacingMultiplier(float)}.
+   *
+   * @param lineHeight the line height between two lines of text in px.
+   * @return This {@link TextLayoutBuilder} instance.
+   */
+  public TextLayoutBuilder setLineHeight(float lineHeight) {
+    if (mParams.lineHeight != lineHeight) {
+      mParams.lineHeight = lineHeight;
+      mParams.spacingAdd = lineHeight - mParams.paint.getFontMetrics(null);
+      mParams.spacingMult = 1.0f;
       mSavedLayout = null;
     }
     return this;
