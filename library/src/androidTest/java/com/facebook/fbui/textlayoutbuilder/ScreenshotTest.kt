@@ -66,7 +66,7 @@ class ScreenshotTest {
     val layout = TextLayoutBuilder()
         .setText(paragraph)
         .setDensity(DENSITY)
-        .build()
+        .build()!!
     val view = TestView(context, layout)
 
     ViewHelpers.setupView(view)
@@ -86,7 +86,7 @@ class ScreenshotTest {
         .setText(stringBuilder)
         .setTextSize(dp(12f))
         .setDensity(DENSITY)
-        .build()
+        .build()!!
     val view = TestView(context, layout)
 
     ViewHelpers.setupView(view)
@@ -103,7 +103,7 @@ class ScreenshotTest {
         .setText(paragraph)
         .setTextSize(dp(12f))
         .setAlignment(Layout.Alignment.ALIGN_CENTER)
-        .build()
+        .build()!!
     val view = TestView(context, layout)
 
     ViewHelpers.setupView(view)
@@ -119,8 +119,8 @@ class ScreenshotTest {
     val layout = TextLayoutBuilder()
         .setText(paragraph)
         .setTextSize(dp(12f))
-        .setTextLineHeight(dp(20f))
-        .build()
+        .setLineHeight(dp(20f).toFloat())
+        .build()!!
     val view = TestView(context, layout)
 
     ViewHelpers.setupView(view)
