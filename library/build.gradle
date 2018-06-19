@@ -49,4 +49,8 @@ android {
     }
 }
 
+screenshots {
+    multipleDevices false
+}
+
 apply from: rootProject.file('release.gradle')
