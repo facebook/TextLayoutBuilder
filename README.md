@@ -14,7 +14,7 @@ Build text [Layout](https://developer.android.com/reference/android/text/Layout.
 If using Gradle, add this to your `build.gradle`:
 
 ```groovy
-compile 'com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.3.1'
+compile 'com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.4.0'
 ```
 
 or, if using Maven:
