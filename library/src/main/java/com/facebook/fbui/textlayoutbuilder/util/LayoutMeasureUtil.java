@@ -61,8 +61,9 @@ public class LayoutMeasureUtil {
     int extra = 0;
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH
         && layout instanceof StaticLayout) {
-      int above = layout.getLineAscent(layout.getLineCount() - 1);
-      int below = layout.getLineDescent(layout.getLineCount() - 1);
+      int line = Math.max(0, layout.getLineCount() - 1);
+      int above = layout.getLineAscent(line);
+      int below = layout.getLineDescent(line);
       float originalSize = (below - above - layout.getSpacingAdd()) / layout.getSpacingMultiplier();
       float ex = below - above - originalSize;
       if (ex >= 0) {
