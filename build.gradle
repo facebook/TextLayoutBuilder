@@ -24,7 +24,7 @@ buildscript {
 
         junitVersion = '4.12'
         mockitoCoreVersion = '1.10.19'
-        robolectricVersion = '3.0'
+        robolectricVersion = '3.8'
         espressoVersion = '3.0.1'
         supportLibVersion = '24.2.1'
     }

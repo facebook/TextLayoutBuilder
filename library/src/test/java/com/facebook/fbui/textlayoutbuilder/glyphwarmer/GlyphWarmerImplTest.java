@@ -28,7 +28,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.internal.ShadowExtractor;
+import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowLooper;
 
 /** Tests {@link GlyphWarmerImpl}. */
@@ -49,7 +49,7 @@ public class GlyphWarmerImplTest {
     MockitoAnnotations.initMocks(this);
 
     mGlyphWarmerImpl = new GlyphWarmerImpl();
-    mShadowLooper = (ShadowLooper) ShadowExtractor.extract(mGlyphWarmerImpl.getWarmHandlerLooper());
+    mShadowLooper = (ShadowLooper) Shadow.extract(mGlyphWarmerImpl.getWarmHandlerLooper());
   }
 
   @Test
