@@ -35,6 +35,7 @@ import android.support.v4.util.LruCache;
 import android.text.BoringLayout;
 import android.text.Layout;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
@@ -230,10 +231,27 @@ public class TextLayoutBuilder {
    * @return This {@link TextLayoutBuilder} instance
    */
   public TextLayoutBuilder setText(CharSequence text) {
-    if (text == mParams.text
-        || (text != null && mParams.text != null && text.equals(mParams.text))) {
+    if (text == mParams.text) {
       return this;
     }
+
+    if (Build.VERSION.SDK_INT >= 21 && text instanceof SpannableStringBuilder) {
+      // Workaround for https://issuetracker.google.com/issues/117666255
+      // We cannot use getSpans here because it omits null spans, even though they exist
+      // So instead we just execute the bug repro and catch the NPE
+      try {
+        text.hashCode();
+      } catch (NullPointerException e) {
+        throw new IllegalArgumentException(
+            "The given text contains a null span. Due to an Android framework bug, this will cause an exception later down the line.",
+            e);
+      }
+    }
+
+    if (text != null && text.equals(mParams.text)) {
+      return this;
+    }
+
     mParams.text = text;
     mSavedLayout = null;
     return this;

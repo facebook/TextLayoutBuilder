@@ -376,6 +376,14 @@ public class TextLayoutBuilderTest {
     assertEquals(mBuilder.sCache.get(mBuilder.mParams.hashCode()), null);
   }
 
+  @Config(sdk = 21)
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullSpansAreCaught() {
+    SpannableStringBuilder ssb =
+        new SpannableStringBuilder().append("abcd", null, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+    mBuilder.setText(ssb).build();
+  }
+
   private static class FakeGlyphWarmer implements GlyphWarmer {
     private Layout mLayout = null;
 
