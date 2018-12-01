@@ -25,8 +25,8 @@ public class LayoutMeasureUtil {
   /**
    * Returns the width of the layout.
    *
-   * @param layout The layout
-   * @return The width of the layout
+   * @param layout The layout.
+   * @return The width of the layout.
    */
   public static int getWidth(Layout layout) {
     if (layout == null) {
@@ -50,8 +50,8 @@ public class LayoutMeasureUtil {
    * This bug was fixed in version 20. This method calculates the extra space and reduces the height
    * by that amount.
    *
-   * @param layout The layout
-   * @return The height of the layout
+   * @param layout The layout.
+   * @return The height of the layout.
    */
   public static int getHeight(Layout layout) {
     if (layout == null) {
@@ -73,5 +73,23 @@ public class LayoutMeasureUtil {
       }
     }
     return layout.getHeight() - extra;
+  }
+
+  /**
+   * Returns the leftmost position of the layout. This is helpful when there's space between the
+   * layout's left bound and its content's (lines) leftmost bound, e.g. StaticLayout when the text
+   * alignment is not ALIGN_NORMAL.
+   */
+  public static int getContentLeft(Layout layout) {
+    if (layout == null || layout.getLineCount() == 0) {
+      return 0;
+    }
+
+    int left = Integer.MAX_VALUE;
+    for (int i = 0; i < layout.getLineCount(); i++) {
+      left = Math.min(left, (int) layout.getLineLeft(i));
+    }
+
+    return left;
   }
 }
