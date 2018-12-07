@@ -96,14 +96,14 @@ public class TextLayoutBuilder {
     @MeasureMode int measureMode;
 
     CharSequence text;
-    ColorStateList color;
+    @Nullable ColorStateList color;
 
     float spacingMult = DEFAULT_SPACING_MULT;
     float spacingAdd = DEFAULT_SPACING_ADD;
     float lineHeight = DEFAULT_LINE_HEIGHT;
     boolean includePadding = true;
 
-    TextUtils.TruncateAt ellipsize = null;
+    @Nullable TextUtils.TruncateAt ellipsize = null;
     boolean singleLine = false;
     int maxLines = DEFAULT_MAX_LINES;
     Alignment alignment = Alignment.ALIGN_NORMAL;
@@ -176,7 +176,7 @@ public class TextLayoutBuilder {
   @VisibleForTesting final Params mParams = new Params();
 
   // Locally cached layout for an instance.
-  private Layout mSavedLayout = null;
+  private @Nullable Layout mSavedLayout = null;
 
   // Text layout glyph warmer.
   private GlyphWarmer mGlyphWarmer;
