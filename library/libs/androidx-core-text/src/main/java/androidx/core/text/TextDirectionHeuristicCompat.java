@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package androidx.core.text;
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
-jar {
-    baseName = 'android-support-v4-text'
-    version = '1.0'
-}
-
+public interface TextDirectionHeuristicCompat {}

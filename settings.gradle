@@ -17,5 +17,5 @@
 include ':library'
 include ':library:libs:proxy'
 include ':library:libs:android-text'
-include ':library:libs:android-support-v4-text'
+include ':library:libs:androidx-core-text'
 include ':sample'

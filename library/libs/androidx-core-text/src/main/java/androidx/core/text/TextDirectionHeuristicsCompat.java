@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
-package android.support.v4.text;
+package androidx.core.text;
 
-public interface TextDirectionHeuristicCompat {}
+public final class TextDirectionHeuristicsCompat {
+  public static final TextDirectionHeuristicCompat ANYRTL_LTR = null;
+  public static final TextDirectionHeuristicCompat FIRSTSTRONG_LTR = null;
+  public static final TextDirectionHeuristicCompat FIRSTSTRONG_RTL = null;
+  public static final TextDirectionHeuristicCompat LOCALE = null;
+  public static final TextDirectionHeuristicCompat LTR = null;
+  public static final TextDirectionHeuristicCompat RTL = null;
+}

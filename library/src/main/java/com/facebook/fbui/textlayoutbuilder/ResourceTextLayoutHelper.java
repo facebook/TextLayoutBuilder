@@ -20,10 +20,10 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.AttrRes;
-import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import androidx.annotation.AttrRes;
+import androidx.annotation.StyleRes;
 
 /** An utility class to update a {@link TextLayoutBuilder} from an Android resource. */
 public class ResourceTextLayoutHelper {

@@ -20,12 +20,12 @@ apply plugin: 'kotlin-android'
 
 dependencies {
   implementation project(':library:libs:proxy')
-  compileOnly "com.android.support:support-compat:${rootProject.ext.supportLibVersion}"
+  compileOnly "androidx.core:core:${rootProject.ext.androidXVersion}"
 
   testImplementation "junit:junit:${rootProject.ext.junitVersion}"
   testImplementation project(':library:libs:android-text')
-  testImplementation project(':library:libs:android-support-v4-text')
-  testImplementation "com.android.support:support-compat:${rootProject.ext.supportLibVersion}"
+  testImplementation project(':library:libs:androidx-core-text')
+  testImplementation "androidx.core:core:${rootProject.ext.androidXVersion}"
   testImplementation "org.mockito:mockito-core:${rootProject.ext.mockitoCoreVersion}"
   testImplementation("org.robolectric:robolectric:${rootProject.ext.robolectricVersion}") {
       exclude group: 'commons-logging', module: 'commons-logging'
@@ -33,8 +33,8 @@ dependencies {
   }
 
   androidTestImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlinVersion"
-  androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
-  androidTestImplementation "com.android.support:support-compat:${rootProject.ext.supportLibVersion}"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+  androidTestImplementation "androidx.core:core:${rootProject.ext.androidXVersion}"
   androidTestImplementation "junit:junit:${rootProject.ext.junitVersion}"
 }
 
@@ -45,7 +45,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 

@@ -16,11 +16,11 @@
 package com.facebook.fbui.textlayoutbuilder;
 
 import android.os.Build;
-import android.support.v4.text.TextDirectionHeuristicCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import androidx.core.text.TextDirectionHeuristicCompat;
 import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy;
 import java.lang.reflect.Field;
 
