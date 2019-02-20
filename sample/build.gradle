@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.ext.kotlinVersion"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlinVersion"
   implementation 'com.android.support:appcompat-v7:27.0.2'
   implementation project(':library')
 }
