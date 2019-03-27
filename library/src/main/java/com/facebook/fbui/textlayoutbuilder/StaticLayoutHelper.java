@@ -158,6 +158,7 @@ import java.lang.reflect.Field;
    * @param hyphenationFrequency The hyphenation frequency
    * @param leftIndents The array of left indent margins in pixels
    * @param rightIndents The array of left indent margins in pixels
+   * @param useLineSpacingFromFallbacks Whether to use the fallback font's line spacing
    * @return A {@link StaticLayout}
    */
   public static StaticLayout make(
@@ -178,7 +179,8 @@ import java.lang.reflect.Field;
       int hyphenationFrequency,
       int justificationMode,
       int[] leftIndents,
-      int[] rightIndents) {
+      int[] rightIndents,
+      boolean useLineSpacingFromFallbacks) {
 
     if (Build.VERSION.SDK_INT >= 23) {
       StaticLayout.Builder builder = StaticLayout.Builder.obtain(text, start, end, paint, width)
@@ -195,6 +197,10 @@ import java.lang.reflect.Field;
 
       if (Build.VERSION.SDK_INT >= 26) {
         builder.setJustificationMode(justificationMode);
+      }
+
+      if (Build.VERSION.SDK_INT >= 28) {
+        builder.setUseLineSpacingFromFallbacks(useLineSpacingFromFallbacks);
       }
 
       return builder.build();

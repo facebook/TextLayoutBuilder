@@ -102,6 +102,7 @@ public class TextLayoutBuilder {
     float spacingAdd = DEFAULT_SPACING_ADD;
     float lineHeight = DEFAULT_LINE_HEIGHT;
     boolean includePadding = true;
+    boolean useLineSpacingFromFallbacks = Build.VERSION.SDK_INT >= 28;
 
     @Nullable TextUtils.TruncateAt ellipsize = null;
     boolean singleLine = false;
@@ -157,6 +158,7 @@ public class TextLayoutBuilder {
       hashCode = 31 * hashCode + Float.floatToIntBits(spacingAdd);
       hashCode = 31 * hashCode + Float.floatToIntBits(lineHeight);
       hashCode = 31 * hashCode + (includePadding ? 1 : 0);
+      hashCode = 31 * hashCode + (useLineSpacingFromFallbacks ? 1 : 0);
       hashCode = 31 * hashCode + (ellipsize != null ? ellipsize.hashCode() : 0);
       hashCode = 31 * hashCode + (singleLine ? 1 : 0);
       hashCode = 31 * hashCode + maxLines;
@@ -631,6 +633,32 @@ public class TextLayoutBuilder {
   }
 
   /**
+   * Set whether to respect the ascent and descent of the fallback fonts that are used in displaying
+   * the text (which is needed to avoid text from consecutive lines running into each other).
+   *
+   * <p>If set, fallback fonts that end up getting used can increase the ascent and descent of the
+   * lines that they are used on.
+   *
+   * <p>This behavior is defaulted to true on API >= 28 and false otherwise.
+   */
+  @RequiresApi(api = 28)
+  public TextLayoutBuilder setUseLineSpacingFromFallbacks(boolean status) {
+    if (mParams.useLineSpacingFromFallbacks != status) {
+      mParams.useLineSpacingFromFallbacks = status;
+      mSavedLayout = null;
+    }
+    return this;
+  }
+
+  /**
+   * Returns whether to use line spacing from fallback fonts or not. See {@link
+   * #setUseLineSpacingFromFallbacks}
+   */
+  public boolean getUseLineSpacingFromFallbacks() {
+    return mParams.useLineSpacingFromFallbacks;
+  }
+
+  /**
    * Returns whether the TextLayoutBuilder should show a single line.
    *
    * @return Whether the TextLayoutBuilder should show a single line or not
@@ -1098,7 +1126,8 @@ public class TextLayoutBuilder {
                   mParams.hyphenationFrequency,
                   mParams.justificationMode,
                   mParams.leftIndents,
-                  mParams.rightIndents);
+                  mParams.rightIndents,
+                  mParams.useLineSpacingFromFallbacks);
         } catch (IndexOutOfBoundsException e) {
           // Workaround for https://code.google.com/p/android/issues/detail?id=35412
           if (!(mParams.text instanceof String)) {
