@@ -183,17 +183,18 @@ import java.lang.reflect.Field;
       boolean useLineSpacingFromFallbacks) {
 
     if (Build.VERSION.SDK_INT >= 23) {
-      StaticLayout.Builder builder = StaticLayout.Builder.obtain(text, start, end, paint, width)
-          .setAlignment(alignment)
-          .setLineSpacing(spacingAdd, spacingMult)
-          .setIncludePad(includePadding)
-          .setEllipsize(ellipsize)
-          .setEllipsizedWidth(ellipsisWidth)
-          .setMaxLines(maxLines)
-          .setTextDirection(StaticLayoutProxy.fromTextDirectionHeuristicCompat(textDirection))
-          .setBreakStrategy(breakStrategy)
-          .setHyphenationFrequency(hyphenationFrequency)
-          .setIndents(leftIndents, rightIndents);
+      StaticLayout.Builder builder =
+          StaticLayout.Builder.obtain(text, start, end, paint, width)
+              .setAlignment(alignment)
+              .setLineSpacing(spacingAdd, spacingMult)
+              .setIncludePad(includePadding)
+              .setEllipsize(ellipsize)
+              .setEllipsizedWidth(ellipsisWidth)
+              .setMaxLines(maxLines)
+              .setTextDirection(StaticLayoutProxy.fromTextDirectionHeuristicCompat(textDirection))
+              .setBreakStrategy(breakStrategy)
+              .setHyphenationFrequency(hyphenationFrequency)
+              .setIndents(leftIndents, rightIndents);
 
       if (Build.VERSION.SDK_INT >= 26) {
         builder.setJustificationMode(justificationMode);

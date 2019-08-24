@@ -984,8 +984,8 @@ public class TextLayoutBuilder {
   }
 
   /**
-   * Set justification mode. The default value is JUSTIFICATION_MODE_NONE. If the last line is
-   * too short for justification, the last line will be displayed with the alignment
+   * Set justification mode. The default value is JUSTIFICATION_MODE_NONE. If the last line is too
+   * short for justification, the last line will be displayed with the alignment
    *
    * @param justificationMode The justification mode to use
    * @return This {@link TextLayoutBuilder} instance

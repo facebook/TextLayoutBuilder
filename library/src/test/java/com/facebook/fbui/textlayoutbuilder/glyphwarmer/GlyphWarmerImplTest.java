@@ -33,9 +33,8 @@ import org.robolectric.shadows.ShadowLooper;
 
 /** Tests {@link GlyphWarmerImpl}. */
 @Config(
-  manifest = Config.NONE,
-  shadows = {ShadowPicture.class}
-)
+    manifest = Config.NONE,
+    shadows = {ShadowPicture.class})
 @RunWith(RobolectricTestRunner.class)
 public class GlyphWarmerImplTest {
 

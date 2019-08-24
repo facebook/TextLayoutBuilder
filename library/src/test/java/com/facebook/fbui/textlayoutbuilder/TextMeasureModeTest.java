@@ -29,9 +29,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 @Config(
-  manifest = Config.NONE,
-  shadows = {ShadowLayout.class}
-)
+    manifest = Config.NONE,
+    shadows = {ShadowLayout.class})
 @RunWith(RobolectricTestRunner.class)
 public class TextMeasureModeTest {
 

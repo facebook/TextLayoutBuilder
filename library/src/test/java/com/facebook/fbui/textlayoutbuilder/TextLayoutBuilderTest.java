@@ -39,9 +39,8 @@ import org.robolectric.annotation.Config;
 
 /** Tests {@link TextLayoutBuilder} */
 @Config(
-  manifest = Config.NONE,
-  shadows = {ShadowPicture.class}
-)
+    manifest = Config.NONE,
+    shadows = {ShadowPicture.class})
 @RunWith(RobolectricTestRunner.class)
 public class TextLayoutBuilderTest {
 
