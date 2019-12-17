@@ -19,6 +19,7 @@ package com.facebook.fbui.textlayoutbuilder;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.robolectric.annotation.TextLayoutMode.Mode.LEGACY;
 
 import android.content.res.ColorStateList;
 import android.graphics.Paint;
@@ -37,6 +38,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.TextLayoutMode;
 
 /** Tests {@link TextLayoutBuilder} */
 @Config(
@@ -122,6 +124,7 @@ public class TextLayoutBuilderTest {
   }
 
   @Test
+  @TextLayoutMode(LEGACY)
   public void testSetTextLineHeight() {
     final float lineHeight = 15f;
     mLayout = mBuilder.setLineHeight(lineHeight).build();
