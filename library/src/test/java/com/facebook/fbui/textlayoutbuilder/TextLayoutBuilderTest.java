@@ -82,6 +82,20 @@ public class TextLayoutBuilderTest {
   }
 
   @Test
+  public void testSetTextEmptyStringWithZeroLengthTextAllowed() {
+    mLayout = mBuilder.setText("").setShouldLayoutZeroLengthText(true).build();
+    assertEquals(mBuilder.getText(), "");
+    assertEquals(mLayout.getText(), "");
+  }
+
+  @Test
+  public void testSetTextEmptyStringWithZeroLengthTextNotAllowed() {
+    mLayout = mBuilder.setText("").setShouldLayoutZeroLengthText(false).build();
+    assertEquals(mBuilder.getText(), "");
+    assertEquals(mLayout, null);
+  }
+
+  @Test
   public void testSetTextSize() {
     mLayout = mBuilder.setTextSize(10).build();
     assertEquals(mBuilder.getTextSize(), 10.0f, 0.0f);

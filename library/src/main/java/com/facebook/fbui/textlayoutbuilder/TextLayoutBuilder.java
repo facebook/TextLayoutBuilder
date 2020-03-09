@@ -104,6 +104,7 @@ public class TextLayoutBuilder {
     float lineHeight = DEFAULT_LINE_HEIGHT;
     boolean includePadding = true;
     boolean useLineSpacingFromFallbacks = Build.VERSION.SDK_INT >= 28;
+    boolean shouldLayoutZeroLengthText = false;
 
     @Nullable TextUtils.TruncateAt ellipsize = null;
     boolean singleLine = false;
@@ -1003,9 +1004,27 @@ public class TextLayoutBuilder {
   }
 
   /**
+   * Sets whether zero-length text should be laid out or not.
+   *
+   * @param shouldLayoutZeroLengthText True to lay out zero-length text, false otherwise.
+   * @return This {@link TextLayoutBuilder} instance
+   */
+  public TextLayoutBuilder setShouldLayoutZeroLengthText(boolean shouldLayoutZeroLengthText) {
+    if (mParams.shouldLayoutZeroLengthText != shouldLayoutZeroLengthText) {
+      mParams.shouldLayoutZeroLengthText = shouldLayoutZeroLengthText;
+      if (mParams.text.length() == 0) {
+        mSavedLayout = null;
+      }
+    }
+
+    return this;
+  }
+
+  /**
    * Builds and returns a {@link Layout}.
    *
-   * @return A {@link Layout} based on the parameters set or null if no text was specified
+   * @return A {@link Layout} based on the parameters set. Returns null if no text was specified and
+   *     empty text is not explicitly allowed (see {@link #setShouldLayoutZeroLengthText(boolean)}).
    */
   @Nullable
   public Layout build() {
@@ -1014,7 +1033,8 @@ public class TextLayoutBuilder {
       return mSavedLayout;
     }
 
-    if (TextUtils.isEmpty(mParams.text)) {
+    if (mParams.text == null
+        || (mParams.text.length() == 0 && !mParams.shouldLayoutZeroLengthText)) {
       return null;
     }
 
