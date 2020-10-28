@@ -234,7 +234,7 @@ public class TextLayoutBuilder {
    * @param text The text for the layout
    * @return This {@link TextLayoutBuilder} instance
    */
-  public TextLayoutBuilder setText(CharSequence text) {
+  public TextLayoutBuilder setText(@Nullable CharSequence text) {
     if (text == mParams.text) {
       return this;
     }
