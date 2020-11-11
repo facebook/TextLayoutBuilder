@@ -18,10 +18,10 @@ package com.facebook.fbui.textlayoutbuilder.sample
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Layout
 import android.util.TypedValue
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder
 
 class MainActivity : AppCompatActivity() {
@@ -32,16 +32,15 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.activity_main)
     parent = findViewById(R.id.parent)
 
-    addSample {
-      TextLayoutBuilder().setText("Hello, world!").setTextSize(20f.dp(this)).build()
-    }
+    addSample { TextLayoutBuilder().setText("Hello, world!").setTextSize(20f.dp(this)).build() }
   }
 
   private fun addSample(block: () -> Layout?) {
     val layout = block() ?: return
-    parent.addView(SampleView(this, layout).apply {
-      layoutParams = LinearLayout.LayoutParams(layout.width, layout.height)
-    })
+    parent.addView(
+        SampleView(this, layout).apply {
+          layoutParams = LinearLayout.LayoutParams(layout.width, layout.height)
+        })
   }
 
   private fun Float.dp(context: Context): Int {
