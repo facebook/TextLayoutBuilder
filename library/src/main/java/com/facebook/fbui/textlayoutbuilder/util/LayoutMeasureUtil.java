@@ -19,6 +19,7 @@ package com.facebook.fbui.textlayoutbuilder.util;
 import android.os.Build;
 import android.text.Layout;
 import android.text.StaticLayout;
+import androidx.annotation.Nullable;
 
 /** Utility Class for measuring text {@link Layout}s. */
 public class LayoutMeasureUtil {
@@ -54,7 +55,7 @@ public class LayoutMeasureUtil {
    * @param layout The layout.
    * @return The height of the layout.
    */
-  public static int getHeight(Layout layout) {
+  public static int getHeight(@Nullable Layout layout) {
     if (layout == null) {
       return 0;
     }
