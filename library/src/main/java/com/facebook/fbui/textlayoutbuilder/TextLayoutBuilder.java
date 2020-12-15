@@ -575,7 +575,7 @@ public class TextLayoutBuilder {
    * @param typeface The typeface for this TextLayoutBuilder
    * @return This {@link TextLayoutBuilder} instance
    */
-  public TextLayoutBuilder setTypeface(Typeface typeface) {
+  public TextLayoutBuilder setTypeface(@Nullable Typeface typeface) {
     if (mParams.paint.getTypeface() != typeface) {
       mParams.createNewPaintIfNeeded();
       mParams.paint.setTypeface(typeface);
