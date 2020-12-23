@@ -23,4 +23,3 @@ jar {
     baseName = 'android-text'
     version = '1.0'
 }
-

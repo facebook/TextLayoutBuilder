@@ -23,4 +23,3 @@ jar {
     baseName = 'androidx-core-text'
     version = '1.0'
 }
-
