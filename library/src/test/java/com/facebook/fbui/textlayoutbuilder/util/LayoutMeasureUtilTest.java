@@ -27,7 +27,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 /** Tests {@link LayoutMeasureUtil} */
-@Config(manifest = Config.NONE)
+@Config(sdk = 21)
 @RunWith(RobolectricTestRunner.class)
 public class LayoutMeasureUtilTest {
 

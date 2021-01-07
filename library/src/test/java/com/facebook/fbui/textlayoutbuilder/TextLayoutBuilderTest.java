@@ -42,7 +42,7 @@ import org.robolectric.annotation.TextLayoutMode;
 
 /** Tests {@link TextLayoutBuilder} */
 @Config(
-    manifest = Config.NONE,
+    sdk = 21,
     shadows = {ShadowPicture.class})
 @RunWith(RobolectricTestRunner.class)
 public class TextLayoutBuilderTest {

@@ -35,6 +35,11 @@ public class ShadowPicture {
   }
 
   @Implementation
+  public void __constructor__(long nativePicture) {
+    // Do nothing.
+  }
+
+  @Implementation
   public void __constructor__() {
     // Do nothing.
   }
