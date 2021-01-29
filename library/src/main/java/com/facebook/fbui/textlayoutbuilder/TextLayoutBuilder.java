@@ -616,6 +616,7 @@ public class TextLayoutBuilder {
    *
    * @return The text ellipsize used by this TextLayoutBuilder
    */
+  @Nullable
   public TextUtils.TruncateAt getEllipsize() {
     return mParams.ellipsize;
   }
@@ -626,7 +627,7 @@ public class TextLayoutBuilder {
    * @param ellipsize The ellipsis location in the layout
    * @return This {@link TextLayoutBuilder} instance
    */
-  public TextLayoutBuilder setEllipsize(TextUtils.TruncateAt ellipsize) {
+  public TextLayoutBuilder setEllipsize(@Nullable TextUtils.TruncateAt ellipsize) {
     if (mParams.ellipsize != ellipsize) {
       mParams.ellipsize = ellipsize;
       mSavedLayout = null;
