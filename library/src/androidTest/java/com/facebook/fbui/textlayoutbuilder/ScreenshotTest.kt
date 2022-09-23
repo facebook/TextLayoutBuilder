@@ -46,7 +46,8 @@ class ScreenshotTest {
     turpis. Nullam vitae egestas leo, nec blandit dui. Morbi at ultrices justo, eu tempus lorem.
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ante et sapien vehicula,
     id ornare enim pharetra. Vestibulum interdum erat lorem, a consectetur ex rhoncus eget.
-    """.trimIndent()
+    """
+            .trimIndent()
 
     @BeforeClass
     @JvmStatic
