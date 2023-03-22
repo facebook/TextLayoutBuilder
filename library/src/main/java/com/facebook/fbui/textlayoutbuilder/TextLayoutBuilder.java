@@ -43,6 +43,12 @@ import androidx.core.text.TextDirectionHeuristicCompat;
 import androidx.core.text.TextDirectionHeuristicsCompat;
 import java.lang.annotation.Retention;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * An utility class to create text {@link Layout}s easily.
@@ -77,10 +83,14 @@ public class TextLayoutBuilder {
   private static final int EMS = 1;
   private static final int PIXELS = 2;
 
+  private static final long IS_BORING_CALL_TIMEOUT = 500;
+
   private int mMinWidth = 0;
   private int mMinWidthMode = PIXELS;
   private int mMaxWidth = Integer.MAX_VALUE;
   private int mMaxWidthMode = PIXELS;
+
+  private boolean mEnableIsBoringLayoutCheckTimeout = false;
 
   // Cache for text layouts.
   @VisibleForTesting static final LruCache<Integer, Layout> sCache = new LruCache<>(100);
@@ -216,6 +226,19 @@ public class TextLayoutBuilder {
       mParams.measureMode = measureMode;
       mSavedLayout = null;
     }
+    return this;
+  }
+
+  /**
+   * Method that can enable timeout for the check whether layout isBoringLayout. Temporary, do not
+   * use!
+   *
+   * @param enableIsBoringLayoutCheckTimeout - whether timeout is enabled
+   * @return This {@link TextLayoutBuilder} instance
+   */
+  public TextLayoutBuilder enableIsBoringLayoutCheckTimeout(
+      boolean enableIsBoringLayoutCheckTimeout) {
+    mEnableIsBoringLayoutCheckTimeout = enableIsBoringLayoutCheckTimeout;
     return this;
   }
 
@@ -1065,16 +1088,27 @@ public class TextLayoutBuilder {
 
     // Try creating a boring layout only if singleLine is requested.
     if (numLines == 1) {
-      try {
-        metrics = BoringLayout.isBoring(mParams.text, mParams.paint);
-      } catch (NullPointerException e) {
-        // On older Samsung devices (< M), we sometimes run into a NPE here where a FontMetricsInt
-        // object created within BoringLayout is not properly null-checked within TextLine.
-        // Its ok to ignore this exception since we'll create a regular StaticLayout later.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          // If we see this on M or above, then its something else.
-          throw e;
+      // T146855657 - add an experiment for timing out the call to isBoringLayout(), which is
+      // currently ANRing a lot. In case it doesn't respond within half a second, default to null,
+      // so StaticLayoutHelper is used later instead of BoringLayout.
+      if (mEnableIsBoringLayoutCheckTimeout) {
+        final ExecutorService executorService = Executors.newSingleThreadExecutor();
+        final Future<BoringLayout.Metrics> isBoringFuture =
+            executorService.submit(() -> isBoringLayout());
+        try {
+          metrics = isBoringFuture.get(IS_BORING_CALL_TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (ExecutionException e) {
+          // if there's execution exception return null
+          metrics = null;
+        } catch (InterruptedException e) {
+          // if there's interruption return null
+          metrics = null;
+        } catch (TimeoutException e) {
+          // if there's timeout return null
+          metrics = null;
         }
+      } else {
+        metrics = isBoringLayout();
       }
     }
 
@@ -1182,5 +1216,21 @@ public class TextLayoutBuilder {
     }
 
     return layout;
+  }
+
+  @Nullable
+  private BoringLayout.Metrics isBoringLayout() {
+    try {
+      return BoringLayout.isBoring(mParams.text, mParams.paint);
+    } catch (NullPointerException e) {
+      // On older Samsung devices (< M), we sometimes run into a NPE here where a FontMetricsInt
+      // object created within BoringLayout is not properly null-checked within TextLine.
+      // Its ok to ignore this exception since we'll create a regular StaticLayout later.
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        // If we see this on M or above, then its something else.
+        throw e;
+      }
+      return null;
+    }
   }
 }
