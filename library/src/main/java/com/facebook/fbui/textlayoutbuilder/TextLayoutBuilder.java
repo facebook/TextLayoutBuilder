@@ -43,6 +43,7 @@ import androidx.core.text.TextDirectionHeuristicCompat;
 import androidx.core.text.TextDirectionHeuristicsCompat;
 import java.lang.annotation.Retention;
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -1094,7 +1095,13 @@ public class TextLayoutBuilder {
       if (mEnableIsBoringLayoutCheckTimeout) {
         final ExecutorService executorService = Executors.newSingleThreadExecutor();
         final Future<BoringLayout.Metrics> isBoringFuture =
-            executorService.submit(() -> isBoringLayout());
+            executorService.submit(
+                new Callable<BoringLayout.Metrics>() {
+                  @Override
+                  public @Nullable BoringLayout.Metrics call() throws Exception {
+                    return isBoringLayout();
+                  }
+                });
         try {
           metrics = isBoringFuture.get(IS_BORING_CALL_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (ExecutionException e) {
