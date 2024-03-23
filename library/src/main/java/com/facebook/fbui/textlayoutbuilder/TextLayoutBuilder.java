@@ -249,7 +249,8 @@ public class TextLayoutBuilder {
         text.hashCode();
       } catch (NullPointerException e) {
         throw new IllegalArgumentException(
-            "The given text contains a null span. Due to an Android framework bug, this will cause an exception later down the line.",
+            "The given text contains a null span. Due to an Android framework bug, this will cause"
+                + " an exception later down the line.",
             e);
       }
     }
@@ -962,7 +963,9 @@ public class TextLayoutBuilder {
     return this;
   }
 
-  /** @return The density of this layout. If unset, defaults to 1.0 */
+  /**
+   * @return The density of this layout. If unset, defaults to 1.0
+   */
   public float getDensity() {
     return mParams.paint.density;
   }
@@ -982,7 +985,9 @@ public class TextLayoutBuilder {
     return this;
   }
 
-  /** @return The justification mode of this layout. */
+  /**
+   * @return The justification mode of this layout.
+   */
   @RequiresApi(api = Build.VERSION_CODES.O)
   public int getJustificationMode() {
     return mParams.justificationMode;
