@@ -15,4 +15,12 @@
   ~ limitations under the License.
   -->
 
-<manifest package="com.facebook.fbui.textlayoutbuilder" />
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.facebook.fbui.textlayoutbuilder"
+    >
+  <uses-sdk
+    android:minSdkVersion="21"
+    />
+
+</manifest>
