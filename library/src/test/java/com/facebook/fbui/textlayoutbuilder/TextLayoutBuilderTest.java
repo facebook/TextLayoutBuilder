@@ -33,6 +33,7 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import androidx.core.text.TextDirectionHeuristicsCompat;
 import com.facebook.fbui.textlayoutbuilder.shadows.ShadowPicture;
+import javax.annotation.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -402,7 +403,7 @@ public class TextLayoutBuilderTest {
   }
 
   private static class FakeGlyphWarmer implements GlyphWarmer {
-    private Layout mLayout = null;
+    @Nullable private Layout mLayout = null;
 
     @Override
     public void warmLayout(Layout layout) {
