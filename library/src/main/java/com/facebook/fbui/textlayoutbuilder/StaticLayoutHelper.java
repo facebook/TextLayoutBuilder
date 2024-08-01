@@ -21,6 +21,7 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import androidx.annotation.Nullable;
 import androidx.core.text.TextDirectionHeuristicCompat;
 import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy;
 import java.lang.reflect.Field;
@@ -59,7 +60,7 @@ import java.lang.reflect.Field;
       float spacingMult,
       float spacingAdd,
       boolean includePadding,
-      TextUtils.TruncateAt ellipsize,
+      @Nullable TextUtils.TruncateAt ellipsize,
       int ellipsisWidth,
       int maxLines,
       TextDirectionHeuristicCompat textDirection) {
@@ -122,7 +123,7 @@ import java.lang.reflect.Field;
       float spacingMult,
       float spacingAdd,
       boolean includePadding,
-      TextUtils.TruncateAt ellipsize,
+      @Nullable TextUtils.TruncateAt ellipsize,
       int ellipsisWidth) {
 
     return new StaticLayout(
@@ -172,15 +173,15 @@ import java.lang.reflect.Field;
       float spacingMult,
       float spacingAdd,
       boolean includePadding,
-      TextUtils.TruncateAt ellipsize,
+      @Nullable TextUtils.TruncateAt ellipsize,
       int ellipsisWidth,
       int maxLines,
       TextDirectionHeuristicCompat textDirection,
       int breakStrategy,
       int hyphenationFrequency,
       int justificationMode,
-      int[] leftIndents,
-      int[] rightIndents,
+      @Nullable int[] leftIndents,
+      @Nullable int[] rightIndents,
       boolean useLineSpacingFromFallbacks) {
 
     if (Build.VERSION.SDK_INT >= 23) {
