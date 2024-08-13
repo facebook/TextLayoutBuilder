@@ -25,8 +25,10 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import androidx.annotation.AttrRes;
 import androidx.annotation.StyleRes;
+import com.facebook.infer.annotation.Nullsafe;
 
 /** An utility class to update a {@link TextLayoutBuilder} from an Android resource. */
+@Nullsafe(Nullsafe.Mode.LOCAL)
 public class ResourceTextLayoutHelper {
 
   // Font size in pixels.
@@ -54,6 +56,7 @@ public class ResourceTextLayoutHelper {
    */
   public static void updateFromStyleResource(
       TextLayoutBuilder builder, Context context, @AttrRes int styleAttr, @StyleRes int styleRes) {
+    // NULLSAFE_FIXME[Parameter Not Nullable]
     updateFromStyleResource(builder, context, null, styleAttr, styleRes);
   }
 
@@ -115,6 +118,7 @@ public class ResourceTextLayoutHelper {
 
     customAttrs.recycle();
 
+    // NULLSAFE_FIXME[Parameter Not Nullable]
     builder.setTextColor(textColor);
 
     builder.setTextSize(textSize);
@@ -128,6 +132,7 @@ public class ResourceTextLayoutHelper {
 
     if (ellipsize > 0 && ellipsize < 4) {
       // TruncateAt doesn't have a value for NONE.
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       builder.setEllipsize(TextUtils.TruncateAt.values()[ellipsize - 1]);
     } else {
       builder.setEllipsize(null);
