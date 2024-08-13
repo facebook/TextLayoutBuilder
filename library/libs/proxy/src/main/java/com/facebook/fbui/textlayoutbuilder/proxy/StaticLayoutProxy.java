@@ -24,7 +24,9 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import androidx.core.text.TextDirectionHeuristicCompat;
 import androidx.core.text.TextDirectionHeuristicsCompat;
+import com.facebook.infer.annotation.Nullsafe;
 
+@Nullsafe(Nullsafe.Mode.LOCAL)
 public class StaticLayoutProxy {
   public static StaticLayout create(
       CharSequence text,
@@ -58,6 +60,7 @@ public class StaticLayoutProxy {
     } catch (IllegalArgumentException e) {
       // Retry creating the layout if the first attempt failed due to a race condition.
       // See https://code.google.com/p/android/issues/detail?id=188163
+      // NULLSAFE_FIXME[Nullable Dereference]
       if (e.getMessage().contains("utext_close")) {
         return new StaticLayout(
             text,
@@ -81,18 +84,25 @@ public class StaticLayoutProxy {
   public static TextDirectionHeuristic fromTextDirectionHeuristicCompat(
       TextDirectionHeuristicCompat textDirection) {
     if (textDirection == TextDirectionHeuristicsCompat.LTR) {
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       return TextDirectionHeuristics.LTR;
     } else if (textDirection == TextDirectionHeuristicsCompat.RTL) {
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       return TextDirectionHeuristics.RTL;
     } else if (textDirection == TextDirectionHeuristicsCompat.FIRSTSTRONG_LTR) {
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       return TextDirectionHeuristics.FIRSTSTRONG_LTR;
     } else if (textDirection == TextDirectionHeuristicsCompat.FIRSTSTRONG_RTL) {
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       return TextDirectionHeuristics.FIRSTSTRONG_RTL;
     } else if (textDirection == TextDirectionHeuristicsCompat.ANYRTL_LTR) {
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       return TextDirectionHeuristics.ANYRTL_LTR;
     } else if (textDirection == TextDirectionHeuristicsCompat.LOCALE) {
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       return TextDirectionHeuristics.LOCALE;
     } else {
+      // NULLSAFE_FIXME[Not Vetted Third-Party]
       return TextDirectionHeuristics.FIRSTSTRONG_LTR;
     }
   }
