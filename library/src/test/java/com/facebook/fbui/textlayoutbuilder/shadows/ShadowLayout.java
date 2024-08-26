@@ -18,9 +18,11 @@ package com.facebook.fbui.textlayoutbuilder.shadows;
 
 import android.text.Layout;
 import android.text.TextPaint;
+import com.facebook.infer.annotation.Nullsafe;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 
+@Nullsafe(Nullsafe.Mode.LOCAL)
 @Implements(Layout.class)
 public class ShadowLayout {
 
