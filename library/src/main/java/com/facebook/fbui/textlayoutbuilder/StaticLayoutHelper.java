@@ -24,10 +24,12 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import androidx.core.text.TextDirectionHeuristicCompat;
 import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy;
+import com.facebook.infer.annotation.Nullsafe;
 import java.lang.reflect.Field;
 
 /** Helper class to get around the {@link StaticLayout} constructor limitation in ICS. */
-/* package */ class StaticLayoutHelper {
+/* package */ @Nullsafe(Nullsafe.Mode.LOCAL)
+class StaticLayoutHelper {
 
   // Space and ellipsis to append at the end of a string to ellipsize it
   private static final String SPACE_AND_ELLIPSIS = " \u2026";
@@ -75,6 +77,7 @@ import java.lang.reflect.Field;
           spacingMult,
           spacingAdd,
           includePadding,
+          // NULLSAFE_FIXME[Parameter Not Nullable]
           ellipsize,
           ellipsisWidth,
           maxLines,
@@ -136,6 +139,7 @@ import java.lang.reflect.Field;
         spacingMult,
         spacingAdd,
         includePadding,
+        // NULLSAFE_FIXME[Parameter Not Nullable]
         ellipsize,
         ellipsisWidth);
   }
