@@ -27,11 +27,13 @@ import android.text.Layout;
 import androidx.annotation.VisibleForTesting;
 import com.facebook.fbui.textlayoutbuilder.GlyphWarmer;
 import com.facebook.fbui.textlayoutbuilder.util.LayoutMeasureUtil;
+import com.facebook.infer.annotation.Nullsafe;
 
 /**
  * Default {@link GlyphWarmer} that runs a {@link HandlerThread} to draw a text {@link Layout} on a
  * {@link Picture}. This helps in warming up the FreeType cache in Android 4.0+.
  */
+@Nullsafe(Nullsafe.Mode.LOCAL)
 public class GlyphWarmerImpl implements GlyphWarmer {
 
   // Handler for the HandlerThread.
@@ -61,6 +63,7 @@ public class GlyphWarmerImpl implements GlyphWarmer {
       warmerThread.start();
 
       // Note: warmerThread.getLooper() can return null.
+      // NULLSAFE_FIXME[Parameter Not Nullable]
       sWarmHandler = new WarmHandler(warmerThread.getLooper());
     }
 
@@ -84,7 +87,9 @@ public class GlyphWarmerImpl implements GlyphWarmer {
       try {
         Canvas canvas =
             mPicture.beginRecording(
+                // NULLSAFE_FIXME[Parameter Not Nullable]
                 LayoutMeasureUtil.getWidth(layout), LayoutMeasureUtil.getHeight(layout));
+        // NULLSAFE_FIXME[Nullable Dereference]
         layout.draw(canvas);
         mPicture.endRecording();
       } catch (Exception e) {
