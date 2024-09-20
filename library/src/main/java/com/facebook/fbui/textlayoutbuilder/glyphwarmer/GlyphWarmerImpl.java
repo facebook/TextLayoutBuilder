@@ -28,6 +28,7 @@ import androidx.annotation.VisibleForTesting;
 import com.facebook.fbui.textlayoutbuilder.GlyphWarmer;
 import com.facebook.fbui.textlayoutbuilder.util.LayoutMeasureUtil;
 import com.facebook.infer.annotation.Nullsafe;
+import javax.annotation.Nullable;
 
 /**
  * Default {@link GlyphWarmer} that runs a {@link HandlerThread} to draw a text {@link Layout} on a
@@ -37,7 +38,7 @@ import com.facebook.infer.annotation.Nullsafe;
 public class GlyphWarmerImpl implements GlyphWarmer {
 
   // Handler for the HandlerThread.
-  private static WarmHandler sWarmHandler;
+  @Nullable private static WarmHandler sWarmHandler;
 
   @Override
   public void warmLayout(Layout layout) {
