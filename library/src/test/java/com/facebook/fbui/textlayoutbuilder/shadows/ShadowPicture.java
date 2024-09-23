@@ -18,9 +18,11 @@ package com.facebook.fbui.textlayoutbuilder.shadows;
 
 import android.graphics.Canvas;
 import android.graphics.Picture;
+import com.facebook.infer.annotation.Nullsafe;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 
+@Nullsafe(Nullsafe.Mode.LOCAL)
 @Implements(Picture.class)
 public class ShadowPicture {
 
