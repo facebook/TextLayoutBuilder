@@ -14,40 +14,35 @@
  * limitations under the License.
  */
 
-package com.facebook.fbui.textlayoutbuilder.shadows;
+package com.facebook.fbui.textlayoutbuilder.shadows
 
-import android.graphics.Canvas;
-import android.graphics.Picture;
-import com.facebook.infer.annotation.Nullsafe;
-import org.robolectric.annotation.Implementation;
-import org.robolectric.annotation.Implements;
+import android.graphics.Canvas
+import android.graphics.Picture
+import org.robolectric.annotation.Implementation
+import org.robolectric.annotation.Implements
 
-@Nullsafe(Nullsafe.Mode.LOCAL)
-@Implements(Picture.class)
-public class ShadowPicture {
+@Implements(Picture::class)
+class ShadowPicture {
 
   @Implementation
-  public void __constructor__(int nativePicture, boolean fromStream) {
+  fun __constructor__(nativePicture: Int, fromStream: Boolean) {
     // Do nothing.
   }
 
   @Implementation
-  public void __constructor__(int nativePicture) {
+  fun __constructor__(nativePicture: Int) {
     // Do nothing.
   }
 
   @Implementation
-  public void __constructor__(long nativePicture) {
+  fun __constructor__(nativePicture: Long) {
     // Do nothing.
   }
 
   @Implementation
-  public void __constructor__() {
+  fun __constructor__() {
     // Do nothing.
   }
 
-  @Implementation
-  public Canvas beginRecording(int width, int height) {
-    return new Canvas();
-  }
+  @Implementation fun beginRecording(width: Int, height: Int): Canvas = Canvas()
 }
