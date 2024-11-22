@@ -28,6 +28,7 @@ import androidx.annotation.VisibleForTesting;
 import com.facebook.fbui.textlayoutbuilder.GlyphWarmer;
 import com.facebook.fbui.textlayoutbuilder.util.LayoutMeasureUtil;
 import com.facebook.infer.annotation.Nullsafe;
+import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
 
 /**
@@ -90,8 +91,7 @@ public class GlyphWarmerImpl implements GlyphWarmer {
             mPicture.beginRecording(
                 // NULLSAFE_FIXME[Parameter Not Nullable]
                 LayoutMeasureUtil.getWidth(layout), LayoutMeasureUtil.getHeight(layout));
-        // NULLSAFE_FIXME[Nullable Dereference]
-        layout.draw(canvas);
+        Preconditions.checkNotNull(layout).draw(canvas);
         mPicture.endRecording();
       } catch (Exception e) {
         // Do nothing.
