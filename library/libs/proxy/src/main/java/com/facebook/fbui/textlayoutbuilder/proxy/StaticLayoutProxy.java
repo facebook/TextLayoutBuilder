@@ -24,6 +24,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import androidx.core.text.TextDirectionHeuristicCompat;
 import androidx.core.text.TextDirectionHeuristicsCompat;
+import com.facebook.common.preconditions.Preconditions;
 import com.facebook.infer.annotation.Nullsafe;
 
 @Nullsafe(Nullsafe.Mode.LOCAL)
@@ -60,8 +61,7 @@ public class StaticLayoutProxy {
     } catch (IllegalArgumentException e) {
       // Retry creating the layout if the first attempt failed due to a race condition.
       // See https://code.google.com/p/android/issues/detail?id=188163
-      // NULLSAFE_FIXME[Nullable Dereference]
-      if (e.getMessage().contains("utext_close")) {
+      if (Preconditions.checkNotNull(e.getMessage()).contains("utext_close")) {
         return new StaticLayout(
             text,
             start,
