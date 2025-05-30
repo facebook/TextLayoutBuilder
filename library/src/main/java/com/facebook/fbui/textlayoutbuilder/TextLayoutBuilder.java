@@ -318,7 +318,7 @@ public class TextLayoutBuilder {
    * @param colorStateList The text color state list for the layout
    * @return This {@link TextLayoutBuilder} instance
    */
-  public TextLayoutBuilder setTextColor(ColorStateList colorStateList) {
+  public TextLayoutBuilder setTextColor(@Nullable ColorStateList colorStateList) {
     mParams.createNewPaintIfNeeded();
     mParams.color = colorStateList;
     mParams.paint.setColor(mParams.color != null ? mParams.color.getDefaultColor() : Color.BLACK);
