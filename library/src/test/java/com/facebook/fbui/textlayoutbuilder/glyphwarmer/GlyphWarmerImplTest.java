@@ -16,7 +16,7 @@
 
 package com.facebook.fbui.textlayoutbuilder.glyphwarmer;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 import android.graphics.Canvas;
@@ -44,7 +44,7 @@ public class GlyphWarmerImplTest {
 
   @Before
   public void setup() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
 
     mGlyphWarmerImpl = new GlyphWarmerImpl();
     mShadowLooper = (ShadowLooper) Shadow.extract(mGlyphWarmerImpl.getWarmHandlerLooper());
