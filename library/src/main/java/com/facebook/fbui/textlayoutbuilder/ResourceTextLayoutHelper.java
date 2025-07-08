@@ -118,7 +118,6 @@ public class ResourceTextLayoutHelper {
 
     customAttrs.recycle();
 
-    // NULLSAFE_FIXME[Parameter Not Nullable]
     builder.setTextColor(textColor);
 
     builder.setTextSize(textSize);
