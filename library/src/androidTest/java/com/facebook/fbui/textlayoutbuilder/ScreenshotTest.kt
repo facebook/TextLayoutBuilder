@@ -37,23 +37,25 @@ class ScreenshotTest {
 
     val paragraph =
         """
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus, odio a hendrerit
-    porttitor, tellus purus rhoncus massa, sit amet varius urna arcu non elit. Quisque rutrum
-    lacinia tempus. Mauris quis sapien nulla. Nam iaculis nec nibh eget posuere. Quisque sodales
-    interdum risus, eget commodo augue interdum ac. Integer libero eros, pellentesque eu maximus
-    at, tempus eu arcu. Duis sed elit auctor, imperdiet neque quis, viverra augue. In iaculis
-    eleifend arcu quis vulputate. Aliquam lorem ligula, condimentum sed odio non, aliquam blandit
-    turpis. Nullam vitae egestas leo, nec blandit dui. Morbi at ultrices justo, eu tempus lorem.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ante et sapien vehicula,
-    id ornare enim pharetra. Vestibulum interdum erat lorem, a consectetur ex rhoncus eget.
-    """
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus, odio a hendrerit
+        porttitor, tellus purus rhoncus massa, sit amet varius urna arcu non elit. Quisque rutrum
+        lacinia tempus. Mauris quis sapien nulla. Nam iaculis nec nibh eget posuere. Quisque sodales
+        interdum risus, eget commodo augue interdum ac. Integer libero eros, pellentesque eu maximus
+        at, tempus eu arcu. Duis sed elit auctor, imperdiet neque quis, viverra augue. In iaculis
+        eleifend arcu quis vulputate. Aliquam lorem ligula, condimentum sed odio non, aliquam blandit
+        turpis. Nullam vitae egestas leo, nec blandit dui. Morbi at ultrices justo, eu tempus lorem.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus ante et sapien vehicula,
+        id ornare enim pharetra. Vestibulum interdum erat lorem, a consectetur ex rhoncus eget.
+        """
             .trimIndent()
 
     @BeforeClass
     @JvmStatic
     fun before() {
       ScreenshotRunner.onCreate(
-          InstrumentationRegistry.getInstrumentation(), InstrumentationRegistry.getArguments())
+          InstrumentationRegistry.getInstrumentation(),
+          InstrumentationRegistry.getArguments(),
+      )
     }
 
     @AfterClass

@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity() {
   private fun Float.dp(context: Context): Int {
     return Math.round(
         TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, this, context.resources.displayMetrics))
+            TypedValue.COMPLEX_UNIT_DIP,
+            this,
+            context.resources.displayMetrics,
+        ))
   }
 }
