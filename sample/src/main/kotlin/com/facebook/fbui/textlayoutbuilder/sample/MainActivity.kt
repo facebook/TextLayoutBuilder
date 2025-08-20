@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
     parent.addView(
         SampleView(this, layout).apply {
           layoutParams = LinearLayout.LayoutParams(layout.width, layout.height)
-        })
+        }
+    )
   }
 
   private fun Float.dp(context: Context): Int {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             TypedValue.COMPLEX_UNIT_DIP,
             this,
             context.resources.displayMetrics,
-        ))
+        )
+    )
   }
 }
