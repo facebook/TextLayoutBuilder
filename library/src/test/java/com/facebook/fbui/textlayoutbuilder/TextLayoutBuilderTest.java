@@ -43,7 +43,7 @@ import org.robolectric.annotation.TextLayoutMode;
 
 /** Tests {@link TextLayoutBuilder} */
 @Config(
-    sdk = 21,
+    sdk = 23,
     shadows = {ShadowPicture.class})
 @RunWith(RobolectricTestRunner.class)
 public class TextLayoutBuilderTest {
@@ -394,7 +394,7 @@ public class TextLayoutBuilderTest {
     assertEquals(mBuilder.sCache.get(mBuilder.mParams.hashCode()), null);
   }
 
-  @Config(sdk = 21)
+  @Config(sdk = 23)
   @Test(expected = IllegalArgumentException.class)
   public void testNullSpansAreCaught() {
     SpannableStringBuilder ssb =
