@@ -27,7 +27,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 /** Tests {@link LayoutMeasureUtil} */
-@Config(sdk = 21)
+@Config(sdk = 23)
 @RunWith(RobolectricTestRunner.class)
 public class LayoutMeasureUtilTest {
 
@@ -39,37 +39,37 @@ public class LayoutMeasureUtilTest {
   @Test
   public void testOneLineWithAdd() {
     mLayout = StaticLayoutHelper.makeStaticLayout(ONE_LINE_TEXT, 1.0f, 5.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 10);
+    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 15);
   }
 
   @Test
   public void testTwoLinesWithAdd() {
     mLayout = StaticLayoutHelper.makeStaticLayout(TWO_LINE_TEXT, 1.0f, 5.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 25);
+    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 30);
   }
 
   @Test
   public void testOneLineWithMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(ONE_LINE_TEXT, 1.5f, 0.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 10);
+    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 15);
   }
 
   @Test
   public void testTwoLinesWithMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(TWO_LINE_TEXT, 1.5f, 0.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 25);
+    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 30);
   }
 
   @Test
   public void testOneLineWithAddAndMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(ONE_LINE_TEXT, 1.5f, 2.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 10);
+    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 17);
   }
 
   @Test
   public void testTwoLinesWithAddAndMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(TWO_LINE_TEXT, 1.5f, 2.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 27);
+    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 34);
   }
 
   @Test
