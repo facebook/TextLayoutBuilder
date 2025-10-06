@@ -16,9 +16,7 @@
 
 package com.facebook.fbui.textlayoutbuilder.util;
 
-import android.os.Build;
 import android.text.Layout;
-import android.text.StaticLayout;
 import androidx.annotation.Nullable;
 
 /** Utility Class for measuring text {@link Layout}s. */
@@ -47,10 +45,7 @@ public class LayoutMeasureUtil {
   }
 
   /**
-   * Prior to version 20, If the Layout specifies extra space between lines (either by spacingmult
-   * or spacingadd) the StaticLayout would erroneously add this space after the last line as well.
-   * This bug was fixed in version 20. This method calculates the extra space and reduces the height
-   * by that amount.
+   * Returns the height of the layout.
    *
    * @param layout The layout.
    * @return The height of the layout.
@@ -60,21 +55,7 @@ public class LayoutMeasureUtil {
       return 0;
     }
 
-    int extra = 0;
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH
-        && layout instanceof StaticLayout) {
-      int line = Math.max(0, layout.getLineCount() - 1);
-      int above = layout.getLineAscent(line);
-      int below = layout.getLineDescent(line);
-      float originalSize = (below - above - layout.getSpacingAdd()) / layout.getSpacingMultiplier();
-      float ex = below - above - originalSize;
-      if (ex >= 0) {
-        extra = (int) (ex + 0.5);
-      } else {
-        extra = -(int) (-ex + 0.5);
-      }
-    }
-    return layout.getHeight() - extra;
+    return layout.getHeight();
   }
 
   /**
