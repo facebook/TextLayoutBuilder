@@ -241,7 +241,7 @@ public class TextLayoutBuilder {
       return this;
     }
 
-    if (Build.VERSION.SDK_INT >= 21 && text instanceof SpannableStringBuilder) {
+    if (text instanceof SpannableStringBuilder) {
       // Workaround for https://issuetracker.google.com/issues/117666255
       // We cannot use getSpans here because it omits null spans, even though they exist
       // So instead we just execute the bug repro and catch the NPE
