@@ -19,7 +19,7 @@ package com.facebook.fbui.textlayoutbuilder;
 import static com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_AT_MOST;
 import static com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_EXACTLY;
 import static com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_UNSPECIFIED;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import android.graphics.Typeface;
 import android.text.Layout;
@@ -45,7 +45,7 @@ public class TextMeasureModeTest {
             .setTextSize(10)
             .build();
 
-    assertEquals(ShadowLayout.LONG_TEXT_LENGTH, layout.getWidth());
+    assertThat(layout.getWidth()).isEqualTo(ShadowLayout.LONG_TEXT_LENGTH);
   }
 
   @Test
@@ -58,7 +58,7 @@ public class TextMeasureModeTest {
             .setTextSize(10)
             .build();
 
-    assertEquals(20, layout.getWidth());
+    assertThat(layout.getWidth()).isEqualTo(20);
   }
 
   @Test
@@ -71,7 +71,7 @@ public class TextMeasureModeTest {
             .setTextSize(10)
             .build();
 
-    assertEquals(20, layout.getWidth());
+    assertThat(layout.getWidth()).isEqualTo(20);
   }
 
   @Test
@@ -84,7 +84,7 @@ public class TextMeasureModeTest {
             .setTextSize(10)
             .build();
 
-    assertEquals(ShadowLayout.SHORT_TEXT_LENGTH, layout.getWidth());
+    assertThat(layout.getWidth()).isEqualTo(ShadowLayout.SHORT_TEXT_LENGTH);
   }
 
   @Test
@@ -97,6 +97,6 @@ public class TextMeasureModeTest {
             .setTextSize(10)
             .build();
 
-    assertEquals(ShadowLayout.LONG_TEXT_LENGTH, layout.getWidth());
+    assertThat(layout.getWidth()).isEqualTo(ShadowLayout.LONG_TEXT_LENGTH);
   }
 }
