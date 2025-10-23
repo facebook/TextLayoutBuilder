@@ -16,7 +16,7 @@
 
 package com.facebook.fbui.textlayoutbuilder.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -39,43 +39,43 @@ public class LayoutMeasureUtilTest {
   @Test
   public void testOneLineWithAdd() {
     mLayout = StaticLayoutHelper.makeStaticLayout(ONE_LINE_TEXT, 1.0f, 5.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 15);
+    assertThat(LayoutMeasureUtil.getHeight(mLayout)).isEqualTo(15);
   }
 
   @Test
   public void testTwoLinesWithAdd() {
     mLayout = StaticLayoutHelper.makeStaticLayout(TWO_LINE_TEXT, 1.0f, 5.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 30);
+    assertThat(LayoutMeasureUtil.getHeight(mLayout)).isEqualTo(30);
   }
 
   @Test
   public void testOneLineWithMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(ONE_LINE_TEXT, 1.5f, 0.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 15);
+    assertThat(LayoutMeasureUtil.getHeight(mLayout)).isEqualTo(15);
   }
 
   @Test
   public void testTwoLinesWithMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(TWO_LINE_TEXT, 1.5f, 0.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 30);
+    assertThat(LayoutMeasureUtil.getHeight(mLayout)).isEqualTo(30);
   }
 
   @Test
   public void testOneLineWithAddAndMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(ONE_LINE_TEXT, 1.5f, 2.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 17);
+    assertThat(LayoutMeasureUtil.getHeight(mLayout)).isEqualTo(17);
   }
 
   @Test
   public void testTwoLinesWithAddAndMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout(TWO_LINE_TEXT, 1.5f, 2.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 34);
+    assertThat(LayoutMeasureUtil.getHeight(mLayout)).isEqualTo(34);
   }
 
   @Test
   public void testEmptyTextWithAddAndMulti() {
     mLayout = StaticLayoutHelper.makeStaticLayout("", 1.5f, 2.0f);
-    assertEquals(LayoutMeasureUtil.getHeight(mLayout), 10);
+    assertThat(LayoutMeasureUtil.getHeight(mLayout)).isEqualTo(10);
   }
 
   // TextPaint with a line height of 10.
