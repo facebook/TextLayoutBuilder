@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.facebook.fbui.textlayoutbuilder.util;
+package com.facebook.fbui.textlayoutbuilder.util
 
-import android.text.Layout;
-import androidx.annotation.Nullable;
+import android.text.Layout
 
-/** Utility Class for measuring text {@link Layout}s. */
-public class LayoutMeasureUtil {
+/** Utility Class for measuring text [Layout]s. */
+object LayoutMeasureUtil {
 
   /**
    * Returns the width of the layout.
@@ -28,20 +27,21 @@ public class LayoutMeasureUtil {
    * @param layout The layout.
    * @return The width of the layout.
    */
-  public static int getWidth(Layout layout) {
+  @JvmStatic
+  fun getWidth(layout: Layout?): Int {
     if (layout == null) {
-      return 0;
+      return 0
     }
 
     // Supplying VERY_WIDE will make layout.getWidth() return a very large value.
-    int count = layout.getLineCount();
-    int maxWidth = 0;
+    val count = layout.lineCount
+    var maxWidth = 0
 
-    for (int i = 0; i < count; i++) {
-      maxWidth = Math.max(maxWidth, (int) layout.getLineRight(i));
+    for (i in 0 until count) {
+      maxWidth = maxOf(maxWidth, layout.getLineRight(i).toInt())
     }
 
-    return maxWidth;
+    return maxWidth
   }
 
   /**
@@ -50,12 +50,13 @@ public class LayoutMeasureUtil {
    * @param layout The layout.
    * @return The height of the layout.
    */
-  public static int getHeight(@Nullable Layout layout) {
+  @JvmStatic
+  fun getHeight(layout: Layout?): Int {
     if (layout == null) {
-      return 0;
+      return 0
     }
 
-    return layout.getHeight();
+    return layout.height
   }
 
   /**
@@ -63,16 +64,17 @@ public class LayoutMeasureUtil {
    * layout's left bound and its content's (lines) leftmost bound, e.g. StaticLayout when the text
    * alignment is not ALIGN_NORMAL.
    */
-  public static int getContentLeft(Layout layout) {
-    if (layout == null || layout.getLineCount() == 0) {
-      return 0;
+  @JvmStatic
+  fun getContentLeft(layout: Layout?): Int {
+    if (layout == null || layout.lineCount == 0) {
+      return 0
     }
 
-    int left = Integer.MAX_VALUE;
-    for (int i = 0; i < layout.getLineCount(); i++) {
-      left = Math.min(left, (int) layout.getLineLeft(i));
+    var left = Int.MAX_VALUE
+    for (i in 0 until layout.lineCount) {
+      left = minOf(left, layout.getLineLeft(i).toInt())
     }
 
-    return left;
+    return left
   }
 }
