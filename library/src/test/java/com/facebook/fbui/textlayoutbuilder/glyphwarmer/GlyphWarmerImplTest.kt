@@ -54,4 +54,10 @@ class GlyphWarmerImplTest {
     shadowLooper.runOneTask()
     verify(layout).draw(any())
   }
+
+  @Test
+  fun testWarmGlyphForNullLayout() {
+    glyphWarmerImpl.warmLayout(null)
+    shadowLooper.runOneTask()
+  }
 }
