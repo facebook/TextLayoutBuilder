@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package com.facebook.fbui.textlayoutbuilder
+package com.facebook.fbui.textlayoutbuilder;
 
-import android.os.Build
-import android.text.Layout
-import android.text.StaticLayout
-import android.text.TextPaint
-import android.text.TextUtils.TruncateAt
-import androidx.core.text.TextDirectionHeuristicCompat
-import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy
+import android.os.Build;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
+import android.text.TextUtils;
+import androidx.annotation.Nullable;
+import androidx.core.text.TextDirectionHeuristicCompat;
+import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy;
+import com.facebook.infer.annotation.Nullsafe;
+import java.lang.reflect.Field;
 
-/** Helper class to get around the [StaticLayout] constructor limitation in ICS. */
-/* package */
-
-internal object StaticLayoutHelper {
+/** Helper class to get around the {@link StaticLayout} constructor limitation in ICS. */
+/* package */ @Nullsafe(Nullsafe.Mode.LOCAL)
+class StaticLayoutHelper {
 
   // Space and ellipsis to append at the end of a string to ellipsize it
-  private const val SPACE_AND_ELLIPSIS = " \u2026"
+  private static final String SPACE_AND_ELLIPSIS = " \u2026";
 
   /**
    * Returns a StaticLayout using ICS specific constructor if possible.
@@ -38,33 +40,32 @@ internal object StaticLayoutHelper {
    * @param text The text for the layout
    * @param start The start index
    * @param end The end index
-   * @param paint The [TextPaint] to be used
+   * @param paint The {@link TextPaint} to be used
    * @param width The width of the layout
-   * @param alignment The [Layout.Alignment]
+   * @param alignment The {@link Layout.Alignment}
    * @param spacingMult The line spacing multiplier
    * @param spacingAdd The line spacing extra
    * @param includePadding Whether to include font padding
-   * @param ellipsize The ellipsizing behavior specified by [TextUtils.TruncateAt]
+   * @param ellipsize The ellipsizing behavior specified by {@link TextUtils.TruncateAt}
    * @param ellipsisWidth The width of the ellipsis
    * @param maxLines The maximum number of lines for this layout
    * @param textDirection The text direction
-   * @return A [StaticLayout]
+   * @return A {@link StaticLayout}
    */
-  private fun getStaticLayoutMaybeMaxLines(
-      text: CharSequence,
-      start: Int,
-      end: Int,
-      paint: TextPaint,
-      width: Int,
-      alignment: Layout.Alignment,
-      spacingMult: Float,
-      spacingAdd: Float,
-      includePadding: Boolean,
-      ellipsize: TruncateAt?,
-      ellipsisWidth: Int,
-      maxLines: Int,
-      textDirection: TextDirectionHeuristicCompat,
-  ): StaticLayout {
+  private static StaticLayout getStaticLayoutMaybeMaxLines(
+      CharSequence text,
+      int start,
+      int end,
+      TextPaint paint,
+      int width,
+      Layout.Alignment alignment,
+      float spacingMult,
+      float spacingAdd,
+      boolean includePadding,
+      @Nullable TextUtils.TruncateAt ellipsize,
+      int ellipsisWidth,
+      int maxLines,
+      TextDirectionHeuristicCompat textDirection) {
     try {
       return StaticLayoutProxy.create(
           text,
@@ -76,12 +77,12 @@ internal object StaticLayoutHelper {
           spacingMult,
           spacingAdd,
           includePadding,
-          ellipsize!!,
+          // NULLSAFE_FIXME[Parameter Not Nullable]
+          ellipsize,
           ellipsisWidth,
           maxLines,
-          textDirection,
-      )
-    } catch (e: LinkageError) {
+          textDirection);
+    } catch (LinkageError e) {
       // Use the publicly available constructor.
     }
 
@@ -96,8 +97,7 @@ internal object StaticLayoutHelper {
         spacingAdd,
         includePadding,
         ellipsize,
-        ellipsisWidth,
-    )
+        ellipsisWidth);
   }
 
   /**
@@ -106,42 +106,43 @@ internal object StaticLayoutHelper {
    * @param text The text for the layout
    * @param start The start index
    * @param end The end index
-   * @param paint The [TextPaint] to be used
+   * @param paint The {@link TextPaint} to be used
    * @param width The width of the layout
-   * @param alignment The [Layout.Alignment]
+   * @param alignment The {@link Layout.Alignment}
    * @param spacingMult The line spacing multiplier
    * @param spacingAdd The line spacing extra
    * @param includePadding Whether to include font padding
-   * @param ellipsize The ellipsizing behavior specified by [TextUtils.TruncateAt]
+   * @param ellipsize The ellipsizing behavior specified by {@link TextUtils.TruncateAt}
    * @param ellipsisWidth The width of the ellipsis
-   * @return A [StaticLayout] with no maxLines restriction
+   * @return A {@link StaticLayout} with no maxLines restriction
    */
-  private fun getStaticLayoutNoMaxLines(
-      text: CharSequence,
-      start: Int,
-      end: Int,
-      paint: TextPaint,
-      width: Int,
-      alignment: Layout.Alignment,
-      spacingMult: Float,
-      spacingAdd: Float,
-      includePadding: Boolean,
-      ellipsize: TruncateAt?,
-      ellipsisWidth: Int,
-  ): StaticLayout =
-      StaticLayout(
-          text,
-          start,
-          end,
-          paint,
-          width,
-          alignment,
-          spacingMult,
-          spacingAdd,
-          includePadding,
-          ellipsize,
-          ellipsisWidth,
-      )
+  private static StaticLayout getStaticLayoutNoMaxLines(
+      CharSequence text,
+      int start,
+      int end,
+      TextPaint paint,
+      int width,
+      Layout.Alignment alignment,
+      float spacingMult,
+      float spacingAdd,
+      boolean includePadding,
+      @Nullable TextUtils.TruncateAt ellipsize,
+      int ellipsisWidth) {
+
+    return new StaticLayout(
+        text,
+        start,
+        end,
+        paint,
+        width,
+        alignment,
+        spacingMult,
+        spacingAdd,
+        includePadding,
+        // NULLSAFE_FIXME[Parameter Not Nullable]
+        ellipsize,
+        ellipsisWidth);
+  }
 
   /**
    * Creates a StaticLayout will all the required properties.
@@ -149,13 +150,13 @@ internal object StaticLayoutHelper {
    * @param text The text for the layout
    * @param start The start index
    * @param end The end index
-   * @param paint The [TextPaint] to be used
+   * @param paint The {@link TextPaint} to be used
    * @param width The width of the layout
-   * @param alignment The [Layout.Alignment]
+   * @param alignment The {@link Layout.Alignment}
    * @param spacingMult The line spacing multiplier
    * @param spacingAdd The line spacing extra
    * @param includePadding Whether to include font padding
-   * @param ellipsize The ellipsizing behavior specified by [TextUtils.TruncateAt]
+   * @param ellipsize The ellipsizing behavior specified by {@link TextUtils.TruncateAt}
    * @param ellipsisWidth The width of the ellipsis
    * @param maxLines The maximum number of lines for this layout
    * @param textDirection The text direction
@@ -164,33 +165,31 @@ internal object StaticLayoutHelper {
    * @param leftIndents The array of left indent margins in pixels
    * @param rightIndents The array of left indent margins in pixels
    * @param useLineSpacingFromFallbacks Whether to use the fallback font's line spacing
-   * @return A [StaticLayout]
+   * @return A {@link StaticLayout}
    */
-  @JvmStatic
-  fun make(
-      text: CharSequence,
-      start: Int,
-      end: Int,
-      paint: TextPaint,
-      width: Int,
-      alignment: Layout.Alignment,
-      spacingMult: Float,
-      spacingAdd: Float,
-      includePadding: Boolean,
-      ellipsize: TruncateAt?,
-      ellipsisWidth: Int,
-      maxLines: Int,
-      textDirection: TextDirectionHeuristicCompat,
-      breakStrategy: Int,
-      hyphenationFrequency: Int,
-      justificationMode: Int,
-      leftIndents: IntArray?,
-      rightIndents: IntArray?,
-      useLineSpacingFromFallbacks: Boolean,
-  ): StaticLayout {
-    var end = end
+  public static StaticLayout make(
+      CharSequence text,
+      int start,
+      int end,
+      TextPaint paint,
+      int width,
+      Layout.Alignment alignment,
+      float spacingMult,
+      float spacingAdd,
+      boolean includePadding,
+      @Nullable TextUtils.TruncateAt ellipsize,
+      int ellipsisWidth,
+      int maxLines,
+      TextDirectionHeuristicCompat textDirection,
+      int breakStrategy,
+      int hyphenationFrequency,
+      int justificationMode,
+      @Nullable int[] leftIndents,
+      @Nullable int[] rightIndents,
+      boolean useLineSpacingFromFallbacks) {
+
     if (Build.VERSION.SDK_INT >= 23) {
-      val builder =
+      StaticLayout.Builder builder =
           StaticLayout.Builder.obtain(text, start, end, paint, width)
               .setAlignment(alignment)
               .setLineSpacing(spacingAdd, spacingMult)
@@ -201,20 +200,20 @@ internal object StaticLayoutHelper {
               .setTextDirection(StaticLayoutProxy.fromTextDirectionHeuristicCompat(textDirection))
               .setBreakStrategy(breakStrategy)
               .setHyphenationFrequency(hyphenationFrequency)
-              .setIndents(leftIndents, rightIndents)
+              .setIndents(leftIndents, rightIndents);
 
       if (Build.VERSION.SDK_INT >= 26) {
-        builder.setJustificationMode(justificationMode)
+        builder.setJustificationMode(justificationMode);
       }
 
       if (Build.VERSION.SDK_INT >= 28) {
-        builder.setUseLineSpacingFromFallbacks(useLineSpacingFromFallbacks)
+        builder.setUseLineSpacingFromFallbacks(useLineSpacingFromFallbacks);
       }
 
-      return builder.build()
+      return builder.build();
     }
 
-    var layout =
+    StaticLayout layout =
         getStaticLayoutMaybeMaxLines(
             text,
             start,
@@ -228,32 +227,31 @@ internal object StaticLayoutHelper {
             ellipsize,
             ellipsisWidth,
             maxLines,
-            textDirection,
-        )
+            textDirection);
 
     // Returned layout may not have correct line count (either because it is not supported
     // pre-ICS, or because there is a bug in Android pre-Lollipop that causes the text to span
     // over more lines than we asked for). We need to manually check if that happened and
     // re-create Layout with a substring that will fit into required number of lines.
     if (maxLines > 0) {
-      while (layout.lineCount > maxLines) {
-        var newEnd = layout.getLineStart(maxLines)
+      while (layout.getLineCount() > maxLines) {
+        int newEnd = layout.getLineStart(maxLines);
         if (newEnd >= end) {
           // to break out of a potential infinite loop
-          break
+          break;
         }
 
         // newEnd is where the next line starts, not where the previous line ends
         // we need to skip over the whitespace characters to get to the end of the line
         while (newEnd > start) {
-          if (Character.isSpace(text[newEnd - 1])) {
-            --newEnd
+          if (Character.isSpace(text.charAt(newEnd - 1))) {
+            --newEnd;
           } else {
-            break
+            break;
           }
         }
 
-        end = newEnd
+        end = newEnd;
 
         layout =
             getStaticLayoutMaybeMaxLines(
@@ -269,16 +267,15 @@ internal object StaticLayoutHelper {
                 ellipsize,
                 ellipsisWidth,
                 maxLines,
-                textDirection,
-            )
+                textDirection);
 
-        if (layout.lineCount >= maxLines && layout.getEllipsisCount(maxLines - 1) == 0) {
-          val ellipsizedText = text.subSequence(start, end).toString() + SPACE_AND_ELLIPSIS
+        if (layout.getLineCount() >= maxLines && layout.getEllipsisCount(maxLines - 1) == 0) {
+          CharSequence ellipsizedText = text.subSequence(start, end) + SPACE_AND_ELLIPSIS;
           layout =
               getStaticLayoutMaybeMaxLines(
                   ellipsizedText,
                   0,
-                  ellipsizedText.length,
+                  ellipsizedText.length(),
                   paint,
                   width,
                   alignment,
@@ -288,8 +285,7 @@ internal object StaticLayoutHelper {
                   ellipsize,
                   ellipsisWidth,
                   maxLines,
-                  textDirection,
-              )
+                  textDirection);
         }
       }
     }
@@ -298,59 +294,55 @@ internal object StaticLayoutHelper {
       // try again
     }
 
-    return layout
+    return layout;
   }
 
   /**
    * Attempts to fix a StaticLayout with wrong layout information that can result in
    * StringIndexOutOfBoundsException during layout.draw().
    *
-   * @param layout The [StaticLayout] to fix
+   * @param layout The {@link StaticLayout} to fix
    * @return Whether the layout was fixed or not
    */
-  @JvmStatic
-  fun fixLayout(layout: StaticLayout): Boolean {
-    var lineStart = layout.getLineStart(0)
-    var i = 0
-    val lineCount = layout.lineCount
-    while (i < lineCount) {
-      val lineEnd = layout.getLineEnd(i)
+  public static boolean fixLayout(StaticLayout layout) {
+    int lineStart = layout.getLineStart(0);
+    for (int i = 0, lineCount = layout.getLineCount(); i < lineCount; ++i) {
+      int lineEnd = layout.getLineEnd(i);
       if (lineEnd < lineStart) {
         // Bug, need to swap lineStart and lineEnd
         try {
-          val mLinesField = StaticLayout::class.java.getDeclaredField("mLines")
-          mLinesField.isAccessible = true
+          Field mLinesField = StaticLayout.class.getDeclaredField("mLines");
+          mLinesField.setAccessible(true);
 
-          val mColumnsField = StaticLayout::class.java.getDeclaredField("mColumns")
-          mColumnsField.isAccessible = true
+          Field mColumnsField = StaticLayout.class.getDeclaredField("mColumns");
+          mColumnsField.setAccessible(true);
 
-          val mLines = mLinesField[layout] as IntArray?
-          val mColumns = mColumnsField.getInt(layout)
+          int[] mLines = (int[]) mLinesField.get(layout);
+          int mColumns = mColumnsField.getInt(layout);
 
           // swap lineStart and lineEnd by swapping all the following data:
           // mLines[mColumns * i.. mColumns * i+1] <-> mLines[mColumns * (i+1)..mColumns * (i+2)]
-          for (j in 0..<mColumns) {
-            swap(mLines!!, mColumns * i + j, mColumns * i + j + mColumns)
+          for (int j = 0; j < mColumns; ++j) {
+            swap(mLines, mColumns * i + j, mColumns * i + j + mColumns);
           }
-        } catch (e: Exception) {
+        } catch (Exception e) {
           // something is wrong, bail out
-          break
+          break;
         }
 
         // start over
-        return false
+        return false;
       }
 
-      lineStart = lineEnd
-      ++i
+      lineStart = lineEnd;
     }
 
-    return true
+    return true;
   }
 
-  private fun swap(array: IntArray, i: Int, j: Int) {
-    val tmp = array[i]
-    array[i] = array[j]
-    array[j] = tmp
+  private static void swap(int[] array, int i, int j) {
+    int tmp = array[i];
+    array[i] = array[j];
+    array[j] = tmp;
   }
 }
