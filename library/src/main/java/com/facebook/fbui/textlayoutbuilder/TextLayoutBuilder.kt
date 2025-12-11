@@ -70,13 +70,13 @@ class TextLayoutBuilder {
   inner class Params {
     var paint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
 
-    var mShadowDx: Float = 0f
+    var shadowDx: Float = 0f
 
-    var mShadowDy: Float = 0f
+    var shadowDy: Float = 0f
 
-    var mShadowRadius: Float = 0f
+    var shadowRadius: Float = 0f
 
-    var mShadowColor: Int = 0
+    var shadowColor: Int = 0
 
     var width: Int = 0
 
@@ -118,7 +118,7 @@ class TextLayoutBuilder {
 
     var rightIndents: IntArray? = null
 
-    var mForceNewPaint: Boolean = false
+    var forceNewPaint: Boolean = false
 
     /** Create a new paint after the builder builds for the first time. */
     fun createNewPaintIfNeeded() {
@@ -126,11 +126,11 @@ class TextLayoutBuilder {
       // on the paint as we cache the text layouts.
       // Hence we create a new paint object,
       // if we ever change one of the paint's properties.
-      if (mForceNewPaint) {
+      if (forceNewPaint) {
         val newPaint = TextPaint(paint)
         newPaint.set(paint)
         this.paint = newPaint
-        mForceNewPaint = false
+        forceNewPaint = false
       }
     }
 
@@ -143,10 +143,10 @@ class TextLayoutBuilder {
       hashCode = 31 * hashCode + paint.color
       hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(paint.textSize)
       hashCode = 31 * hashCode + (if (paint.typeface != null) paint.typeface.hashCode() else 0)
-      hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(mShadowDx)
-      hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(mShadowDy)
-      hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(mShadowRadius)
-      hashCode = 31 * hashCode + mShadowColor
+      hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(shadowDx)
+      hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(shadowDy)
+      hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(shadowRadius)
+      hashCode = 31 * hashCode + shadowColor
       hashCode = 31 * hashCode + paint.linkColor
       hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(paint.density)
       hashCode = 31 * hashCode + paint.drawableState.contentHashCode()
@@ -174,7 +174,7 @@ class TextLayoutBuilder {
   }
 
   // Params for the builder.
-  @JvmField @VisibleForTesting val mParams: Params = Params()
+  @JvmField @VisibleForTesting val params: Params = Params()
 
   // Locally cached layout for an instance.
   private var savedLayout: Layout? = null
@@ -225,16 +225,16 @@ class TextLayoutBuilder {
    * @see .setWidth
    */
   fun setWidth(@Px width: Int, @MeasureMode measureMode: Int): TextLayoutBuilder {
-    if (mParams.width != width || mParams.measureMode != measureMode) {
-      mParams.width = width
-      mParams.measureMode = measureMode
+    if (params.width != width || params.measureMode != measureMode) {
+      params.width = width
+      params.measureMode = measureMode
       savedLayout = null
     }
     return this
   }
 
   val text: CharSequence?
-    get() = mParams.text
+    get() = params.text
 
   /**
    * Sets the text for the layout.
@@ -243,7 +243,7 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setText(text: CharSequence?): TextLayoutBuilder {
-    if (text === mParams.text) {
+    if (text === params.text) {
       return this
     }
 
@@ -261,17 +261,17 @@ class TextLayoutBuilder {
       }
     }
 
-    if (text != null && text == mParams.text) {
+    if (text != null && text == params.text) {
       return this
     }
 
-    mParams.text = text
+    params.text = text
     savedLayout = null
     return this
   }
 
   val textSize: Float
-    get() = mParams.paint.textSize
+    get() = params.paint.textSize
 
   /**
    * Sets the text size for the layout.
@@ -280,9 +280,9 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setTextSize(size: Int): TextLayoutBuilder {
-    if (mParams.paint.textSize != size.toFloat()) {
-      mParams.createNewPaintIfNeeded()
-      mParams.paint.textSize = size.toFloat()
+    if (params.paint.textSize != size.toFloat()) {
+      params.createNewPaintIfNeeded()
+      params.paint.textSize = size.toFloat()
       savedLayout = null
     }
     return this
@@ -290,7 +290,7 @@ class TextLayoutBuilder {
 
   @get:ColorInt
   val textColor: Int
-    get() = mParams.paint.color
+    get() = params.paint.color
 
   /**
    * Sets the text color for the layout.
@@ -299,9 +299,9 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setTextColor(@ColorInt color: Int): TextLayoutBuilder {
-    mParams.createNewPaintIfNeeded()
-    mParams.color = null
-    mParams.paint.color = color
+    params.createNewPaintIfNeeded()
+    params.color = null
+    params.paint.color = color
     savedLayout = null
     return this
   }
@@ -313,16 +313,16 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setTextColor(colorStateList: ColorStateList?): TextLayoutBuilder {
-    mParams.createNewPaintIfNeeded()
-    mParams.color = colorStateList
-    mParams.paint.color = if (mParams.color != null) mParams.color!!.defaultColor else Color.BLACK
+    params.createNewPaintIfNeeded()
+    params.color = colorStateList
+    params.paint.color = params.color?.defaultColor ?: Color.BLACK
     savedLayout = null
     return this
   }
 
   @get:ColorInt
   val linkColor: Int
-    get() = mParams.paint.linkColor
+    get() = params.paint.linkColor
 
   /**
    * Sets the link color for the text in the layout.
@@ -331,16 +331,16 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setLinkColor(@ColorInt linkColor: Int): TextLayoutBuilder {
-    if (mParams.paint.linkColor != linkColor) {
-      mParams.createNewPaintIfNeeded()
-      mParams.paint.linkColor = linkColor
+    if (params.paint.linkColor != linkColor) {
+      params.createNewPaintIfNeeded()
+      params.paint.linkColor = linkColor
       savedLayout = null
     }
     return this
   }
 
   val textSpacingExtra: Float
-    get() = mParams.spacingAdd
+    get() = params.spacingAdd
 
   /**
    * Sets the text extra spacing for the layout. Extra spacing will be ignored if
@@ -350,15 +350,15 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setTextSpacingExtra(spacingExtra: Float): TextLayoutBuilder {
-    if (mParams.lineHeight == DEFAULT_LINE_HEIGHT && mParams.spacingAdd != spacingExtra) {
-      mParams.spacingAdd = spacingExtra
+    if (params.lineHeight == DEFAULT_LINE_HEIGHT && params.spacingAdd != spacingExtra) {
+      params.spacingAdd = spacingExtra
       savedLayout = null
     }
     return this
   }
 
   val textSpacingMultiplier: Float
-    get() = mParams.spacingMult
+    get() = params.spacingMult
 
   /**
    * Sets the line spacing multiplier for the layout. Line spacing multiplier will be ignored if
@@ -368,15 +368,15 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setTextSpacingMultiplier(spacingMultiplier: Float): TextLayoutBuilder {
-    if (mParams.lineHeight == DEFAULT_LINE_HEIGHT && mParams.spacingMult != spacingMultiplier) {
-      mParams.spacingMult = spacingMultiplier
+    if (params.lineHeight == DEFAULT_LINE_HEIGHT && params.spacingMult != spacingMultiplier) {
+      params.spacingMult = spacingMultiplier
       savedLayout = null
     }
     return this
   }
 
   val lineHeight: Float
-    get() = mParams.getLineHeight().toFloat()
+    get() = params.getLineHeight().toFloat()
 
   /**
    * Sets the line height for this layout.
@@ -390,10 +390,10 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance.
    */
   fun setLineHeight(lineHeight: Float): TextLayoutBuilder {
-    if (mParams.lineHeight != lineHeight) {
-      mParams.lineHeight = lineHeight
-      mParams.spacingAdd = lineHeight - mParams.paint.getFontMetrics(null)
-      mParams.spacingMult = 1.0f
+    if (params.lineHeight != lineHeight) {
+      params.lineHeight = lineHeight
+      params.spacingAdd = lineHeight - params.paint.getFontMetrics(null)
+      params.spacingMult = 1.0f
       savedLayout = null
     }
     return this
@@ -401,7 +401,7 @@ class TextLayoutBuilder {
 
   @get:RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   val letterSpacing: Float
-    get() = mParams.paint.letterSpacing
+    get() = params.paint.letterSpacing
 
   /**
    * Sets text letter-spacing in em units. Typical values for slight expansion will be around 0.05.
@@ -413,15 +413,15 @@ class TextLayoutBuilder {
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   fun setLetterSpacing(letterSpacing: Float): TextLayoutBuilder {
     if (this.letterSpacing != letterSpacing) {
-      mParams.createNewPaintIfNeeded()
-      mParams.paint.letterSpacing = letterSpacing
+      params.createNewPaintIfNeeded()
+      params.paint.letterSpacing = letterSpacing
       savedLayout = null
     }
     return this
   }
 
   val includeFontPadding: Boolean
-    get() = mParams.includePadding
+    get() = params.includePadding
 
   /**
    * Set whether the text Layout includes extra top and bottom padding to make room for accents that
@@ -433,15 +433,15 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setIncludeFontPadding(shouldInclude: Boolean): TextLayoutBuilder {
-    if (mParams.includePadding != shouldInclude) {
-      mParams.includePadding = shouldInclude
+    if (params.includePadding != shouldInclude) {
+      params.includePadding = shouldInclude
       savedLayout = null
     }
     return this
   }
 
   val alignment: Layout.Alignment?
-    get() = mParams.alignment
+    get() = params.alignment
 
   /**
    * Sets text alignment for the layout.
@@ -450,15 +450,15 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setAlignment(alignment: Layout.Alignment): TextLayoutBuilder {
-    if (mParams.alignment != alignment) {
-      mParams.alignment = alignment
+    if (params.alignment != alignment) {
+      params.alignment = alignment
       savedLayout = null
     }
     return this
   }
 
   val textDirection: TextDirectionHeuristicCompat?
-    get() = mParams.textDirection
+    get() = params.textDirection
 
   /**
    * Sets the text direction heuristic for the layout.
@@ -470,8 +470,8 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setTextDirection(textDirection: TextDirectionHeuristicCompat): TextLayoutBuilder {
-    if (mParams.textDirection !== textDirection) {
-      mParams.textDirection = textDirection
+    if (params.textDirection !== textDirection) {
+      params.textDirection = textDirection
       savedLayout = null
     }
     return this
@@ -487,12 +487,12 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setShadowLayer(radius: Float, dx: Float, dy: Float, @ColorInt color: Int): TextLayoutBuilder {
-    mParams.createNewPaintIfNeeded()
-    mParams.mShadowRadius = radius
-    mParams.mShadowDx = dx
-    mParams.mShadowDy = dy
-    mParams.mShadowColor = color
-    mParams.paint.setShadowLayer(radius, dx, dy, color)
+    params.createNewPaintIfNeeded()
+    params.shadowRadius = radius
+    params.shadowDx = dx
+    params.shadowDy = dy
+    params.shadowColor = color
+    params.paint.setShadowLayer(radius, dx, dy, color)
     savedLayout = null
     return this
   }
@@ -506,7 +506,7 @@ class TextLayoutBuilder {
   fun setTextStyle(style: Int): TextLayoutBuilder = setTypeface(Typeface.defaultFromStyle(style))
 
   val typeface: Typeface
-    get() = mParams.paint.typeface
+    get() = params.paint.typeface
 
   /**
    * Sets the typeface used by this TextLayoutBuilder.
@@ -515,16 +515,16 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setTypeface(typeface: Typeface?): TextLayoutBuilder {
-    if (mParams.paint.typeface !== typeface) {
-      mParams.createNewPaintIfNeeded()
-      mParams.paint.setTypeface(typeface)
+    if (params.paint.typeface !== typeface) {
+      params.createNewPaintIfNeeded()
+      params.paint.setTypeface(typeface)
       savedLayout = null
     }
     return this
   }
 
   val drawableState: IntArray
-    get() = mParams.paint.drawableState
+    get() = params.paint.drawableState
 
   /**
    * Updates the text colors based on the drawable state.
@@ -533,19 +533,19 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setDrawableState(drawableState: IntArray?): TextLayoutBuilder {
-    mParams.createNewPaintIfNeeded()
-    mParams.paint.drawableState = drawableState
+    params.createNewPaintIfNeeded()
+    params.paint.drawableState = drawableState
 
-    if (mParams.color?.isStateful == true) {
-      val color = mParams.color!!.getColorForState(drawableState, 0)
-      mParams.paint.color = color
+    if (params.color?.isStateful == true) {
+      val color = params.color?.getColorForState(drawableState, 0) ?: return this
+      params.paint.color = color
       savedLayout = null
     }
     return this
   }
 
   val ellipsize: TruncateAt?
-    get() = mParams.ellipsize
+    get() = params.ellipsize
 
   /**
    * Sets the ellipsis location for the layout.
@@ -554,8 +554,8 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setEllipsize(ellipsize: TruncateAt?): TextLayoutBuilder {
-    if (mParams.ellipsize != ellipsize) {
-      mParams.ellipsize = ellipsize
+    if (params.ellipsize != ellipsize) {
+      params.ellipsize = ellipsize
       savedLayout = null
     }
     return this
@@ -572,8 +572,8 @@ class TextLayoutBuilder {
    */
   @RequiresApi(api = 28)
   fun setUseLineSpacingFromFallbacks(status: Boolean): TextLayoutBuilder {
-    if (mParams.useLineSpacingFromFallbacks != status) {
-      mParams.useLineSpacingFromFallbacks = status
+    if (params.useLineSpacingFromFallbacks != status) {
+      params.useLineSpacingFromFallbacks = status
       savedLayout = null
     }
     return this
@@ -584,10 +584,10 @@ class TextLayoutBuilder {
      * Returns whether to use line spacing from fallback fonts or not. See
      * [setUseLineSpacingFromFallbacks]
      */
-    get() = mParams.useLineSpacingFromFallbacks
+    get() = params.useLineSpacingFromFallbacks
 
   val singleLine: Boolean
-    get() = mParams.singleLine
+    get() = params.singleLine
 
   /**
    * Sets whether the text should be in a single line or not.
@@ -597,15 +597,15 @@ class TextLayoutBuilder {
    * @see .setMaxLines
    */
   fun setSingleLine(singleLine: Boolean): TextLayoutBuilder {
-    if (mParams.singleLine != singleLine) {
-      mParams.singleLine = singleLine
+    if (params.singleLine != singleLine) {
+      params.singleLine = singleLine
       savedLayout = null
     }
     return this
   }
 
   val maxLines: Int
-    get() = mParams.maxLines
+    get() = params.maxLines
 
   /**
    * Sets a maximum number of lines to be shown by the Layout.
@@ -618,15 +618,15 @@ class TextLayoutBuilder {
    * @see .setSingleLine
    */
   fun setMaxLines(maxLines: Int): TextLayoutBuilder {
-    if (mParams.maxLines != maxLines) {
-      mParams.maxLines = maxLines
+    if (params.maxLines != maxLines) {
+      params.maxLines = maxLines
       savedLayout = null
     }
     return this
   }
 
   val breakStrategy: Int
-    get() = mParams.breakStrategy
+    get() = params.breakStrategy
 
   /**
    * Sets a break strategy breaking paragraphs into lines.
@@ -635,15 +635,15 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setBreakStrategy(breakStrategy: Int): TextLayoutBuilder {
-    if (mParams.breakStrategy != breakStrategy) {
-      mParams.breakStrategy = breakStrategy
+    if (params.breakStrategy != breakStrategy) {
+      params.breakStrategy = breakStrategy
       savedLayout = null
     }
     return this
   }
 
   val hyphenationFrequency: Int
-    get() = mParams.hyphenationFrequency
+    get() = params.hyphenationFrequency
 
   /**
    * Sets the frequency of automatic hyphenation to use when determining word breaks.
@@ -652,8 +652,8 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setHyphenationFrequency(hyphenationFrequency: Int): TextLayoutBuilder {
-    if (mParams.hyphenationFrequency != hyphenationFrequency) {
-      mParams.hyphenationFrequency = hyphenationFrequency
+    if (params.hyphenationFrequency != hyphenationFrequency) {
+      params.hyphenationFrequency = hyphenationFrequency
       if (Build.VERSION.SDK_INT >= 23) {
         savedLayout = null
       }
@@ -662,10 +662,10 @@ class TextLayoutBuilder {
   }
 
   val leftIndents: IntArray?
-    get() = mParams.leftIndents
+    get() = params.leftIndents
 
   val rightIndents: IntArray?
-    get() = mParams.rightIndents
+    get() = params.rightIndents
 
   /**
    * Sets the left and right indents for this TextLayoutBuilder.
@@ -678,8 +678,8 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setIndents(leftIndents: IntArray?, rightIndents: IntArray?): TextLayoutBuilder {
-    mParams.leftIndents = leftIndents
-    mParams.rightIndents = rightIndents
+    params.leftIndents = leftIndents
+    params.rightIndents = rightIndents
     savedLayout = null
     return this
   }
@@ -820,7 +820,7 @@ class TextLayoutBuilder {
 
   val density: Float
     /** @return The density of this layout. If unset, defaults to 1.0 */
-    get() = mParams.paint.density
+    get() = params.paint.density
 
   /**
    * Sets the density of this layout. This should typically be set to your current display's density
@@ -829,9 +829,9 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder]
    */
   fun setDensity(density: Float): TextLayoutBuilder {
-    if (mParams.paint.density != density) {
-      mParams.createNewPaintIfNeeded()
-      mParams.paint.density = density
+    if (params.paint.density != density) {
+      params.createNewPaintIfNeeded()
+      params.paint.density = density
       savedLayout = null
     }
     return this
@@ -839,7 +839,7 @@ class TextLayoutBuilder {
 
   @get:RequiresApi(api = Build.VERSION_CODES.O)
   val justificationMode: Int
-    get() = mParams.justificationMode
+    get() = params.justificationMode
 
   /**
    * Set justification mode. The default value is JUSTIFICATION_MODE_NONE. If the last line is too
@@ -850,8 +850,8 @@ class TextLayoutBuilder {
    */
   @RequiresApi(api = Build.VERSION_CODES.O)
   fun setJustificationMode(justificationMode: Int): TextLayoutBuilder {
-    if (mParams.justificationMode != justificationMode) {
-      mParams.justificationMode = justificationMode
+    if (params.justificationMode != justificationMode) {
+      params.justificationMode = justificationMode
       if (Build.VERSION.SDK_INT >= 26) {
         savedLayout = null
       }
@@ -866,9 +866,9 @@ class TextLayoutBuilder {
    * @return This [TextLayoutBuilder] instance
    */
   fun setShouldLayoutZeroLengthText(shouldLayoutZeroLengthText: Boolean): TextLayoutBuilder {
-    if (mParams.shouldLayoutZeroLengthText != shouldLayoutZeroLengthText) {
-      mParams.shouldLayoutZeroLengthText = shouldLayoutZeroLengthText
-      if (mParams.text!!.length == 0) {
+    if (params.shouldLayoutZeroLengthText != shouldLayoutZeroLengthText) {
+      params.shouldLayoutZeroLengthText = shouldLayoutZeroLengthText
+      if (params.text?.length == 0) {
         savedLayout = null
       }
     }
@@ -888,31 +888,31 @@ class TextLayoutBuilder {
       return savedLayout
     }
 
-    if (
-        mParams.text == null || (mParams.text!!.length == 0 && !mParams.shouldLayoutZeroLengthText)
-    ) {
+    if (params.text == null || (params.text?.length == 0 && !params.shouldLayoutZeroLengthText)) {
       return null
     }
 
     var hasClickableSpans = false
     var hashCode = -1
 
-    if (shouldCacheLayout && mParams.text is Spannable) {
-      val spans =
-          (mParams.text as Spannable).getSpans(
-              0,
-              mParams.text!!.length - 1,
-              ClickableSpan::class.java,
-          )
-      hasClickableSpans = spans.size > 0
+    if (shouldCacheLayout && params.text is Spannable) {
+      params.text?.let {
+        val spans =
+            (text as Spannable).getSpans(
+                0,
+                it.length - 1,
+                ClickableSpan::class.java,
+            )
+        hasClickableSpans = spans.size > 0
+      }
     }
 
     // If the text has ClickableSpans, it will be bound to different
     // click listeners each time. It is unsafe to cache these text Layouts.
     // Hence they will not be in cache.
     if (shouldCacheLayout && !hasClickableSpans) {
-      hashCode = mParams.hashCode()
-      val cachedLayout = sCache[hashCode]
+      hashCode = params.hashCode()
+      val cachedLayout = cache[hashCode]
       if (cachedLayout != null) {
         return cachedLayout
       }
@@ -920,7 +920,7 @@ class TextLayoutBuilder {
 
     var metrics: BoringLayout.Metrics? = null
 
-    val numLines = if (mParams.singleLine) 1 else mParams.maxLines
+    val numLines = if (params.singleLine) 1 else params.maxLines
 
     // Try creating a boring layout only if singleLine is requested.
     if (numLines == 1) {
@@ -931,21 +931,21 @@ class TextLayoutBuilder {
     // If we used a large static value it would break RTL due to drawing text at the very end of the
     // large value.
     var width =
-        when (mParams.measureMode) {
+        when (params.measureMode) {
           MEASURE_MODE_UNSPECIFIED ->
-              ceil(Layout.getDesiredWidth(mParams.text, mParams.paint).toDouble()).toInt()
+              ceil(Layout.getDesiredWidth(params.text, params.paint).toDouble()).toInt()
 
-          MEASURE_MODE_EXACTLY -> mParams.width
+          MEASURE_MODE_EXACTLY -> params.width
           MEASURE_MODE_AT_MOST ->
               min(
-                  ceil(Layout.getDesiredWidth(mParams.text, mParams.paint).toDouble()).toInt(),
-                  mParams.width,
+                  ceil(Layout.getDesiredWidth(params.text, params.paint).toDouble()).toInt(),
+                  params.width,
               )
 
-          else -> throw IllegalStateException("Unexpected measure mode ${mParams.measureMode}")
+          else -> throw IllegalStateException("Unexpected measure mode ${params.measureMode}")
         }
 
-    val lineHeight = mParams.getLineHeight()
+    val lineHeight = params.getLineHeight()
     width =
         if (maxWidthMode == EMS) {
           min(width, _maxWidth * lineHeight)
@@ -964,48 +964,51 @@ class TextLayoutBuilder {
     if (metrics != null) {
       layout =
           BoringLayout.make(
-              mParams.text,
-              mParams.paint,
+              params.text,
+              params.paint,
               width,
-              mParams.alignment,
-              mParams.spacingMult,
-              mParams.spacingAdd,
+              params.alignment,
+              params.spacingMult,
+              params.spacingAdd,
               metrics,
-              mParams.includePadding,
-              mParams.ellipsize,
+              params.includePadding,
+              params.ellipsize,
               width,
           )
     } else {
       while (true) {
         try {
+          val text = params.text ?: return null
+          val alignment = params.alignment ?: return null
+          val textDirection = params.textDirection ?: return null
           layout =
               StaticLayoutHelper.make(
-                  mParams.text!!,
+                  text,
                   0,
-                  mParams.text!!.length,
-                  mParams.paint,
+                  text.length,
+                  params.paint,
                   width,
-                  mParams.alignment!!,
-                  mParams.spacingMult,
-                  mParams.spacingAdd,
-                  mParams.includePadding,
-                  mParams.ellipsize,
+                  alignment,
+                  params.spacingMult,
+                  params.spacingAdd,
+                  params.includePadding,
+                  params.ellipsize,
                   width,
                   numLines,
-                  mParams.textDirection!!,
-                  mParams.breakStrategy,
-                  mParams.hyphenationFrequency,
-                  mParams.justificationMode,
-                  mParams.leftIndents,
-                  mParams.rightIndents,
-                  mParams.useLineSpacingFromFallbacks,
+                  textDirection,
+                  params.breakStrategy,
+                  params.hyphenationFrequency,
+                  params.justificationMode,
+                  params.leftIndents,
+                  params.rightIndents,
+                  params.useLineSpacingFromFallbacks,
               )
         } catch (e: IndexOutOfBoundsException) {
           // Workaround for https://code.google.com/p/android/issues/detail?id=35412
-          if (mParams.text !is String) {
+          if (params.text !is String) {
             // remove all Spannables and re-try
             Log.e("TextLayoutBuilder", "Hit bug #35412, retrying with Spannables removed", e)
-            mParams.text = mParams.text.toString()
+            params.text = params.text.toString()
             continue
           } else {
             // If it still happens with all Spannables removed we'll bubble the exception up
@@ -1020,15 +1023,15 @@ class TextLayoutBuilder {
     // Do not cache if the text has ClickableSpans.
     if (shouldCacheLayout && !hasClickableSpans) {
       savedLayout = layout
-      sCache.put(hashCode, layout)
+      cache.put(hashCode, layout)
     }
 
     // Force a new paint.
-    mParams.mForceNewPaint = true
+    params.forceNewPaint = true
 
-    if (shouldWarmText && glyphWarmer != null) {
+    if (shouldWarmText) {
       // Draw the text in a background thread to warm the cache.
-      glyphWarmer!!.warmLayout(layout)
+      glyphWarmer?.warmLayout(layout)
     }
 
     return layout
@@ -1037,7 +1040,7 @@ class TextLayoutBuilder {
   private val isBoringLayout: BoringLayout.Metrics?
     get() {
       try {
-        return BoringLayout.isBoring(mParams.text, mParams.paint)
+        return BoringLayout.isBoring(params.text, params.paint)
       } catch (e: NullPointerException) {
         // On older Samsung devices (< M), we sometimes run into a NPE here where a FontMetricsInt
         // object created within BoringLayout is not properly null-checked within TextLine.
@@ -1065,9 +1068,7 @@ class TextLayoutBuilder {
     private const val EMS = 1
     private const val PIXELS = 2
 
-    private const val IS_BORING_CALL_TIMEOUT = 500L
-
     // Cache for text layouts.
-    @JvmField @VisibleForTesting val sCache: LruCache<Int, Layout> = LruCache(100)
+    @JvmField @VisibleForTesting val cache: LruCache<Int, Layout> = LruCache(100)
   }
 }
