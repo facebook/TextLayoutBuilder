@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.facebook.fbui.textlayoutbuilder;
+package com.facebook.fbui.textlayoutbuilder
 
-import android.text.Layout;
+import android.text.Layout
 
 /**
- * Specifies an interface that a class has to implement to warm the text {@link Layout} in the
- * background. This approach helps in drawing text in post Android 4.0 devices.
+ * Specifies an interface that a class has to implement to warm the text [Layout] in the background.
+ * This approach helps in drawing text in post Android 4.0 devices.
  */
-public interface GlyphWarmer {
+fun interface GlyphWarmer {
   /**
    * Warms the text layout.
    *
    * @param layout The layout
    */
-  void warmLayout(Layout layout);
+  fun warmLayout(layout: Layout?)
 }

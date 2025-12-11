@@ -394,14 +394,14 @@ class TextLayoutBuilderTest {
   }
 
   private class FakeGlyphWarmer : GlyphWarmer {
-    private var mLayout: Layout? = null
+    private var layout: Layout? = null
 
-    override fun warmLayout(layout: Layout) {
-      mLayout = layout
+    override fun warmLayout(layout: Layout?) {
+      this.layout = layout
     }
 
     fun getLayout(): Layout? {
-      return mLayout
+      return layout
     }
   }
 
