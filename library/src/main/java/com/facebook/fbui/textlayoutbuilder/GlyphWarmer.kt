@@ -23,5 +23,10 @@ import android.text.Layout
  * This approach helps in drawing text in post Android 4.0 devices.
  */
 fun interface GlyphWarmer {
+  /**
+   * Warms the text layout.
+   *
+   * @param layout The layout
+   */
   fun warmLayout(layout: Layout?)
 }

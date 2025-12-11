@@ -318,19 +318,19 @@ internal object StaticLayoutHelper {
       if (lineEnd < lineStart) {
         // Bug, need to swap lineStart and lineEnd
         try {
-          val linesField = StaticLayout::class.java.getDeclaredField("lines")
-          linesField.isAccessible = true
+          val mLinesField = StaticLayout::class.java.getDeclaredField("mLines")
+          mLinesField.isAccessible = true
 
-          val columnsField = StaticLayout::class.java.getDeclaredField("columns")
-          columnsField.isAccessible = true
+          val mColumnsField = StaticLayout::class.java.getDeclaredField("mColumns")
+          mColumnsField.isAccessible = true
 
-          val lines = linesField[layout] as IntArray?
-          val columns = columnsField.getInt(layout)
+          val mLines = mLinesField[layout] as IntArray?
+          val mColumns = mColumnsField.getInt(layout)
 
           // swap lineStart and lineEnd by swapping all the following data:
           // mLines[mColumns * i.. mColumns * i+1] <-> mLines[mColumns * (i+1)..mColumns * (i+2)]
-          for (j in 0..<columns) {
-            lines?.let { swap(it, columns * i + j, columns * i + j + columns) }
+          for (j in 0..<mColumns) {
+            swap(mLines!!, mColumns * i + j, mColumns * i + j + mColumns)
           }
         } catch (e: Exception) {
           // something is wrong, bail out
