@@ -15,10 +15,10 @@
  */
 
 /**
- * Provides the classes to build text {@link android.text.Layout}s easily.
+ * Provides the classes to build text [android.text.Layout]s easily.
  *
- * <p>{@link com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder} is an utility class that creates
- * text {@link android.text.Layout}s easily. This package contains classes that interact with {@link
- * com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder}.
+ * [com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder] is an utility class that creates text
+ * [android.text.Layout]s easily. This package contains classes that interact with
+ * [com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder].
  */
-package com.facebook.fbui.textlayoutbuilder;
+package com.facebook.fbui.textlayoutbuilder
