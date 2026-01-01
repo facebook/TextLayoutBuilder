@@ -17,9 +17,9 @@
 package com.facebook.fbui.textlayoutbuilder
 
 import android.graphics.Typeface
-import com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_AT_MOST
-import com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_EXACTLY
-import com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.MEASURE_MODE_UNSPECIFIED
+import com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.Companion.MEASURE_MODE_AT_MOST
+import com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.Companion.MEASURE_MODE_EXACTLY
+import com.facebook.fbui.textlayoutbuilder.TextLayoutBuilder.Companion.MEASURE_MODE_UNSPECIFIED
 import com.facebook.fbui.textlayoutbuilder.shadows.ShadowLayout
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
