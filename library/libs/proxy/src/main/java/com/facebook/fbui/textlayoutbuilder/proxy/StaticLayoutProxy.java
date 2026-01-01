@@ -26,6 +26,7 @@ import androidx.core.text.TextDirectionHeuristicCompat;
 import androidx.core.text.TextDirectionHeuristicsCompat;
 import com.facebook.common.preconditions.Preconditions;
 import com.facebook.infer.annotation.Nullsafe;
+import javax.annotation.Nullable;
 
 @Nullsafe(Nullsafe.Mode.LOCAL)
 public class StaticLayoutProxy {
@@ -39,7 +40,7 @@ public class StaticLayoutProxy {
       float spacingMult,
       float spacingAdd,
       boolean includePadding,
-      TextUtils.TruncateAt ellipsize,
+      @Nullable TextUtils.TruncateAt ellipsize,
       int ellipsisWidth,
       int maxLines,
       TextDirectionHeuristicCompat textDirection) {
@@ -55,6 +56,7 @@ public class StaticLayoutProxy {
           spacingMult,
           spacingAdd,
           includePadding,
+          // NULLSAFE_FIXME[Parameter Not Nullable]
           ellipsize,
           ellipsisWidth,
           maxLines);
@@ -73,6 +75,7 @@ public class StaticLayoutProxy {
             spacingMult,
             spacingAdd,
             includePadding,
+            // NULLSAFE_FIXME[Parameter Not Nullable]
             ellipsize,
             ellipsisWidth,
             maxLines);
