@@ -26,7 +26,6 @@ import android.text.Layout
 import androidx.annotation.VisibleForTesting
 import com.facebook.fbui.textlayoutbuilder.GlyphWarmer
 import com.facebook.fbui.textlayoutbuilder.util.LayoutMeasureUtil
-import com.google.common.base.Preconditions
 
 /**
  * Default [GlyphWarmer] that runs a [HandlerThread] to draw a text [Layout] on a [Picture]. This
@@ -75,7 +74,7 @@ class GlyphWarmerImpl : GlyphWarmer {
                 LayoutMeasureUtil.getWidth(layout),
                 LayoutMeasureUtil.getHeight(layout),
             )
-        Preconditions.checkNotNull(layout).draw(canvas)
+        checkNotNull(layout).draw(canvas)
         picture.endRecording()
       } catch (e: Exception) {
         // Do nothing.
