@@ -962,19 +962,54 @@ class TextLayoutBuilder {
 
     var layout: Layout
     if (metrics != null) {
-      layout =
-          BoringLayout.make(
-              mParams.text,
-              mParams.paint,
-              width,
-              mParams.alignment,
-              mParams.spacingMult,
-              mParams.spacingAdd,
-              metrics,
-              mParams.includePadding,
-              mParams.ellipsize,
-              width,
-          )
+      try {
+        layout =
+            BoringLayout.make(
+                mParams.text,
+                mParams.paint,
+                width,
+                mParams.alignment,
+                mParams.spacingMult,
+                mParams.spacingAdd,
+                metrics,
+                mParams.includePadding,
+                mParams.ellipsize,
+                width,
+            )
+      } catch (e: NullPointerException) {
+        // Workaround for OEM vendor bug (e.g. MIUI) where custom font management code
+        // (FontNameUtil.isNameOf) crashes with NPE due to null font name in their internal
+        // font matching system during BoringLayout creation.
+        // Fall back to StaticLayout, consistent with the existing workaround in
+        // isBoringLayout getter for similar Samsung OEM NPE bugs.
+        Log.e(
+            "TextLayoutBuilder",
+            "Hit OEM font NPE in BoringLayout.make, falling back to StaticLayout",
+            e,
+        )
+        layout =
+            StaticLayoutHelper.make(
+                mParams.text!!,
+                0,
+                mParams.text!!.length,
+                mParams.paint,
+                width,
+                mParams.alignment!!,
+                mParams.spacingMult,
+                mParams.spacingAdd,
+                mParams.includePadding,
+                mParams.ellipsize,
+                width,
+                numLines,
+                mParams.textDirection!!,
+                mParams.breakStrategy,
+                mParams.hyphenationFrequency,
+                mParams.justificationMode,
+                mParams.leftIndents,
+                mParams.rightIndents,
+                mParams.useLineSpacingFromFallbacks,
+            )
+      }
     } else {
       while (true) {
         try {
