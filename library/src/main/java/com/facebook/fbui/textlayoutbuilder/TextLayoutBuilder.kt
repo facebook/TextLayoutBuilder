@@ -517,7 +517,23 @@ class TextLayoutBuilder {
   fun setTypeface(typeface: Typeface?): TextLayoutBuilder {
     if (mParams.paint.typeface !== typeface) {
       mParams.createNewPaintIfNeeded()
-      mParams.paint.setTypeface(typeface)
+      try {
+        mParams.paint.setTypeface(typeface)
+      } catch (e: NullPointerException) {
+        // Workaround for OEM vendor bug (e.g. MIUI) where custom font management code
+        // (FontNameUtil.isNameOf) crashes with NPE due to a null font name in their
+        // internal font matching system when Paint.setTypeface is invoked. The vendor
+        // hook (MutablePaintStubImpl.setTypeface -> useMiuiVarFont -> TypefaceUtils ->
+        // FontNameUtil) calls String.startsWith on a null reference inside MIUI code we
+        // cannot fix. Suppress the NPE so the layout falls back to the previously set
+        // typeface; this matches the existing workaround pattern in the same file for
+        // BoringLayout.make and isBoringLayout NPEs from OEM font hooks.
+        Log.e(
+            "TextLayoutBuilder",
+            "Hit OEM font NPE in Paint.setTypeface, keeping previous typeface",
+            e,
+        )
+      }
       savedLayout = null
     }
     return this
