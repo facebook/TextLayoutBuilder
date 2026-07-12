@@ -128,20 +128,19 @@ internal object StaticLayoutHelper {
       includePadding: Boolean,
       ellipsize: TruncateAt?,
       ellipsisWidth: Int,
-  ): StaticLayout =
-      StaticLayout(
-          text,
-          start,
-          end,
-          paint,
-          width,
-          alignment,
-          spacingMult,
-          spacingAdd,
-          includePadding,
-          ellipsize,
-          ellipsisWidth,
-      )
+  ): StaticLayout = StaticLayout(
+      text,
+      start,
+      end,
+      paint,
+      width,
+      alignment,
+      spacingMult,
+      spacingAdd,
+      includePadding,
+      ellipsize,
+      ellipsisWidth,
+  )
 
   /**
    * Creates a StaticLayout will all the required properties.
@@ -214,22 +213,21 @@ internal object StaticLayoutHelper {
       return builder.build()
     }
 
-    var layout =
-        getStaticLayoutMaybeMaxLines(
-            text,
-            start,
-            end,
-            paint,
-            width,
-            alignment,
-            spacingMult,
-            spacingAdd,
-            includePadding,
-            ellipsize,
-            ellipsisWidth,
-            maxLines,
-            textDirection,
-        )
+    var layout = getStaticLayoutMaybeMaxLines(
+        text,
+        start,
+        end,
+        paint,
+        width,
+        alignment,
+        spacingMult,
+        spacingAdd,
+        includePadding,
+        ellipsize,
+        ellipsisWidth,
+        maxLines,
+        textDirection,
+    )
 
     // Returned layout may not have correct line count (either because it is not supported
     // pre-ICS, or because there is a bug in Android pre-Lollipop that causes the text to span
