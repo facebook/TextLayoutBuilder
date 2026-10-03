@@ -292,8 +292,11 @@ internal object StaticLayoutHelper {
       }
     }
 
-    while (!fixLayout(layout)) {
-      // try again
+    // fixLayout may never converge on corrupted line data.
+    var fixAttempts = 0
+    val maxFixAttempts = layout.lineCount * 2
+    while (!fixLayout(layout) && fixAttempts < maxFixAttempts) {
+      fixAttempts++
     }
 
     return layout
