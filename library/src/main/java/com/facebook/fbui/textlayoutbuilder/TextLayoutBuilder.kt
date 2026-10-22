@@ -153,6 +153,10 @@ class TextLayoutBuilder {
 
       hashCode = 31 * hashCode + width
       hashCode = 31 * hashCode + measureMode
+      hashCode = 31 * hashCode + _minWidth
+      hashCode = 31 * hashCode + minWidthMode
+      hashCode = 31 * hashCode + _maxWidth
+      hashCode = 31 * hashCode + maxWidthMode
       hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(spacingMult)
       hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(spacingAdd)
       hashCode = 31 * hashCode + java.lang.Float.floatToIntBits(lineHeight)
@@ -758,8 +762,11 @@ class TextLayoutBuilder {
    * @see .setMinWidth
    */
   fun setMinEms(minEms: Int): TextLayoutBuilder {
-    _minWidth = minEms
-    minWidthMode = EMS
+    if (_minWidth != minEms || minWidthMode != EMS) {
+      _minWidth = minEms
+      minWidthMode = EMS
+      savedLayout = null
+    }
     return this
   }
 
@@ -782,8 +789,11 @@ class TextLayoutBuilder {
    * @see .setMinEms
    */
   fun setMinWidth(@Px minWidth: Int): TextLayoutBuilder {
-    this._minWidth = minWidth
-    minWidthMode = PIXELS
+    if (_minWidth != minWidth || minWidthMode != PIXELS) {
+      _minWidth = minWidth
+      minWidthMode = PIXELS
+      savedLayout = null
+    }
     return this
   }
 
@@ -805,8 +815,11 @@ class TextLayoutBuilder {
    * @see .setMinEms
    */
   fun setMaxEms(maxEms: Int): TextLayoutBuilder {
-    _maxWidth = maxEms
-    maxWidthMode = EMS
+    if (_maxWidth != maxEms || maxWidthMode != EMS) {
+      _maxWidth = maxEms
+      maxWidthMode = EMS
+      savedLayout = null
+    }
     return this
   }
 
@@ -829,8 +842,11 @@ class TextLayoutBuilder {
    * @see .setMinWidth
    */
   fun setMaxWidth(@Px maxWidth: Int): TextLayoutBuilder {
-    this._maxWidth = maxWidth
-    maxWidthMode = PIXELS
+    if (_maxWidth != maxWidth || maxWidthMode != PIXELS) {
+      _maxWidth = maxWidth
+      maxWidthMode = PIXELS
+      savedLayout = null
+    }
     return this
   }
 
@@ -884,7 +900,7 @@ class TextLayoutBuilder {
   fun setShouldLayoutZeroLengthText(shouldLayoutZeroLengthText: Boolean): TextLayoutBuilder {
     if (mParams.shouldLayoutZeroLengthText != shouldLayoutZeroLengthText) {
       mParams.shouldLayoutZeroLengthText = shouldLayoutZeroLengthText
-      if (mParams.text!!.length == 0) {
+      if (mParams.text?.length == 0) {
         savedLayout = null
       }
     }

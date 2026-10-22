@@ -276,6 +276,35 @@ class TextLayoutBuilderTest {
   }
 
   @Test
+  fun testMaxWidthInvalidatesCachedLayout() {
+    mLayout = mBuilder.setText(LONG_TEXT).setWidth(1000).build()
+    assertThat(mLayout?.width).isEqualTo(1000)
+
+    mBuilder.setMaxWidth(50)
+    val newLayout = mBuilder.build()
+    assertThat(newLayout).isNotEqualTo(mLayout)
+    assertThat(newLayout?.width).isEqualTo(50)
+  }
+
+  @Test
+  fun testMinWidthInvalidatesCachedLayout() {
+    mLayout = mBuilder.setText(LONG_TEXT).setWidth(100).build()
+    assertThat(mLayout?.width).isEqualTo(100)
+
+    mBuilder.setMinWidth(500)
+    val newLayout = mBuilder.build()
+    assertThat(newLayout).isNotEqualTo(mLayout)
+    assertThat(newLayout?.width).isEqualTo(500)
+  }
+
+  @Test
+  fun testSetShouldLayoutZeroLengthTextWithNullText() {
+    // The flag must be settable before any text is provided without crashing.
+    mBuilder.setShouldLayoutZeroLengthText(true)
+    assertThat(mBuilder.build()).isNull()
+  }
+
+  @Test
   fun testDensity() {
     mBuilder.setDensity(1.5f).build()
     assertThat(mBuilder.density).isEqualTo(1.5f)
@@ -340,6 +369,15 @@ class TextLayoutBuilderTest {
     val newBuilder = TextLayoutBuilder()
     val newLayout = newBuilder.setText(TEST).setShouldCacheLayout(true).build()
     assertThat(newLayout).isEqualTo(mLayout)
+  }
+
+  @Test
+  fun testTwoBuildersWithDifferentMaxWidthDoNotShareCache() {
+    mLayout = mBuilder.setText(TEST).setWidth(1000).setMaxWidth(500).build()
+
+    val newBuilder = TextLayoutBuilder()
+    val newLayout = newBuilder.setText(TEST).setWidth(1000).setMaxWidth(100).build()
+    assertThat(newLayout).isNotEqualTo(mLayout)
   }
 
   @Test
