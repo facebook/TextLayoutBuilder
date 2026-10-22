@@ -23,6 +23,7 @@ import android.text.TextPaint
 import android.text.TextUtils.TruncateAt
 import androidx.core.text.TextDirectionHeuristicCompat
 import com.facebook.fbui.textlayoutbuilder.proxy.StaticLayoutProxy
+import java.lang.reflect.Method
 
 /** Helper class to get around the [StaticLayout] constructor limitation in ICS. */
 /* package */
@@ -31,6 +32,35 @@ internal object StaticLayoutHelper {
 
   // Space and ellipsis to append at the end of a string to ellipsize it
   private const val SPACE_AND_ELLIPSIS = " \u2026"
+
+  private const val VERSION_CODE_VANILLA_ICE_CREAM = 35
+
+  // Android 15 StaticLayout.Builder setters, looked up reflectively because some internal targets
+  // still compile against Android 14.
+  private val setUseBoundsForWidthMethod: Method? by lazy {
+    builderSetter("setUseBoundsForWidth")
+  }
+
+  private val setShiftDrawingOffsetForStartOverhangMethod: Method? by lazy {
+    builderSetter("setShiftDrawingOffsetForStartOverhang")
+  }
+
+  private fun builderSetter(name: String): Method? {
+    if (Build.VERSION.SDK_INT < VERSION_CODE_VANILLA_ICE_CREAM) {
+      return null
+    }
+    return try {
+      StaticLayout.Builder::class.java.getMethod(name, Boolean::class.javaPrimitiveType)
+    } catch (_: ReflectiveOperationException) {
+      null
+    }
+  }
+
+  private fun invokeBuilderSetter(method: Method?, builder: StaticLayout.Builder, value: Boolean) {
+    try {
+      method?.invoke(builder, value)
+    } catch (_: ReflectiveOperationException) {}
+  }
 
   /**
    * Returns a StaticLayout using ICS specific constructor if possible.
@@ -208,6 +238,14 @@ internal object StaticLayoutHelper {
 
       if (Build.VERSION.SDK_INT >= 28) {
         builder.setUseLineSpacingFromFallbacks(useLineSpacingFromFallbacks)
+      }
+
+      if (
+          Build.VERSION.SDK_INT >= VERSION_CODE_VANILLA_ICE_CREAM &&
+              TextLayoutBuilderConfiguration.resetStaticLayoutBoundsForWidth
+      ) {
+        invokeBuilderSetter(setUseBoundsForWidthMethod, builder, false)
+        invokeBuilderSetter(setShiftDrawingOffsetForStartOverhangMethod, builder, false)
       }
 
       return builder.build()
