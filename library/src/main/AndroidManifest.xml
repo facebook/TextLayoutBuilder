@@ -20,7 +20,7 @@
     package="com.facebook.fbui.textlayoutbuilder"
     >
   <uses-sdk
-    android:minSdkVersion="21"
+    android:minSdkVersion="23"
     />
 
 </manifest>
